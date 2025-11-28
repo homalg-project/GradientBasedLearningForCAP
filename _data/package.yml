@@ -1,7 +1,7 @@
-name: MachineLearningForCAP
-version: "2024.09-01"
+name: GradientDescentForCAP
+version: "2025.11-01"
 license: "GPL-2.0-or-later"
-date: 2024-09-14
+date: 2025-11-28
 description: |
     Exploring categorical machine learning in CAP
 
@@ -13,7 +13,7 @@ maintainers:
     - name: Kamal Saleh
       url: https://github.com/kamalsaleh
 
-GAP: ">= 4.13.0"
+GAP: ">= 4.15.1"
 
 needed-pkgs:
     - name: "GAPDoc"
@@ -36,17 +36,17 @@ suggested-pkgs:
     - name: "ToolsForHigherHomologicalAlgebra"
       version: ">= 2023.01-01"
 
-www: https://homalg-project.github.io/pkg/MachineLearningForCAP
+www: https://homalg-project.github.io/pkg/GradientDescentForCAP
 readme: README.md
-packageinfo: https://homalg-project.github.io/MachineLearningForCAP/PackageInfo.g
+packageinfo: https://homalg-project.github.io/GradientDescentForCAP/PackageInfo.g
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/homalg-project/MachineLearningForCAP/releases/download/v2024.09-01/MachineLearningForCAP-2024.09-01.tar.gz
+      url: https://github.com/homalg-project/GradientDescentForCAP/releases/download/v2025.11-01/GradientDescentForCAP-2025.11-01.tar.gz
     - name: .zip
-      url: https://github.com/homalg-project/MachineLearningForCAP/releases/download/v2024.09-01/MachineLearningForCAP-2024.09-01.zip
+      url: https://github.com/homalg-project/GradientDescentForCAP/releases/download/v2025.11-01/GradientDescentForCAP-2025.11-01.zip
 
-pdf: https://github.com/homalg-project/MachineLearningForCAP/releases/download/v2024.09-01/MachineLearningForCAP-2024.09-01-manual.pdf
+pdf: https://github.com/homalg-project/GradientDescentForCAP/releases/download/v2025.11-01/GradientDescentForCAP-2025.11-01-manual.pdf
 
 abstract: |
 
@@ -57,30 +57,30 @@ keywords: |
     Explore Categorical Machine Learning.
 citeas: |
     <p class='BibEntry'>
-    [<span class='BibKey'>Sal14</span>]   <b class='BibAuthor'>Saleh, K.</b>,
-     <i class='BibTitle'>MachineLearningForCAP, Exploring categorical machine learning in CAP,
-             Version 2024.09-01</i>
-     (<span class='BibYear'>9-14</span>)<br />
+    [<span class='BibKey'>Sal28</span>]   <b class='BibAuthor'>Saleh, K.</b>,
+     <i class='BibTitle'>GradientDescentForCAP, Exploring categorical machine learning in CAP,
+             Version 2025.11-01</i>
+     (<span class='BibYear'>1-28</span>)<br />
     (<span class='BibNote'>GAP package</span>),
-    <span class='BibHowpublished'><a href="https://homalg-project.github.io/pkg/MachineLearningForCAP">https://homalg-project.github.io/pkg/MachineLearningForCAP</a></span>.
+    <span class='BibHowpublished'><a href="https://homalg-project.github.io/pkg/GradientDescentForCAP">https://homalg-project.github.io/pkg/GradientDescentForCAP</a></span>.
     </p>
     
 
 bibtex: |
-    @misc{ MachineLearningForCAP,
+    @misc{ GradientDescentForCAP,
       author =           {Saleh, K.},
-      title =            {{MachineLearningForCAP}, Exploring categorical machine
-                          learning           in          CAP,          {V}ersion
-                          2024.09\texttt{\symbol{45}}01},
-      month =            {4\texttt{\symbol{45}}},
-      year =             {9\texttt{\symbol{45}}14},
+      title =            {{GradientDescentForCAP},     {Exploring    categorical
+                          machine      learning      in      CAP},     {V}ersion
+                          2025.11\texttt{\symbol{45}}01},
+      month =            {5\texttt{\symbol{45}}},
+      year =             {1\texttt{\symbol{45}}28},
       note =             {GAP package},
       howpublished =     {\href
-                          {https://homalg-project.github.io/pkg/MachineLearningForCAP}
+                          {https://homalg-project.github.io/pkg/GradientDescentForCAP}
                           {\texttt{https://homalg\texttt{\symbol{45}}project.github.io/}\discretionary
                           {}{}{}\texttt{pkg/}\discretionary
-                          {}{}{}\texttt{MachineLearningForCAP}}},
+                          {}{}{}\texttt{GradientDescentForCAP}}},
       keywords =         {Explore Categorical Machine Learning},
-      printedkey =       {Sal14}
+      printedkey =       {Sal28}
     }
 

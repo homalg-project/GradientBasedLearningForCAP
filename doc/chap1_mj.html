@@ -8,7 +8,7 @@
 <script type="text/javascript"
   src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
 </script>
-<title>GAP (MachineLearningForCAP) - Chapter 1: Examples and Tests</title>
+<title>GAP (GradientDescentForCAP) - Chapter 1: Examples and Tests</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="GAPDoc2HTML" />
 <link rel="stylesheet" type="text/css" href="manual.css" />
@@ -341,8 +341,8 @@ Put Morphism:
 
 ‣ x1 + x5 ^ 2
 ‣ x2 + x6 ^ 2
-‣ x3 + 0.01 * x5 / (1.e-07 + Sqrt( (x1 + x5 ^ 2) ))
-‣ x4 + 0.01 * x6 / (1.e-07 + Sqrt( (x2 + x6 ^ 2) ))
+‣ x3 + 0.01 * x5 / (1.e-07 + Sqrt( x1 + x5 ^ 2 ))
+‣ x4 + 0.01 * x6 / (1.e-07 + Sqrt( x2 + x6 ^ 2 ))
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Lenses.AdamOptimizer(</span>
 <span class="GAPprompt">&gt;</span> <span class="GAPinput">          :learning_rate := 0.01, beta_1 := 0.9, beta_2 := 0.999 )( 2 ) );</span>
 (ℝ^7, ℝ^7) -&gt; (ℝ^2, ℝ^2) defined by:
@@ -637,7 +637,7 @@ true
 
 ‣ 3 * (x1 ^ 2 + Sin( x2 ))
 ‣ Exp( Exp( x1 ) + 3 * x2 )
-‣ (x1 ^ 2 + Sin( x2 )) ^ 3 + Log( (Exp( x1 ) + 3 * x2) )
+‣ (x1 ^ 2 + Sin( x2 )) ^ 3 + Log( Exp( x1 ) + 3 * x2 )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x;</span>
 [ 0.2, 0.3 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Map( h )( x );</span>
@@ -663,7 +663,7 @@ true
 
 ‣ 3 * x1 ^ 2 + 3 * Sin( x2 )
 ‣ Exp( 3 * x2 + Exp( x1 ) )
-‣ (x1 ^ 2 + Sin( x2 )) ^ 3 + Log( (3 * x2 + Exp( x1 )) )
+‣ (x1 ^ 2 + Sin( x2 )) ^ 3 + Log( 3 * x2 + Exp( x1 ) )
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R2 := Smooth.( 2 );</span>
 ℝ^2
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R3 := Smooth.( 3 );</span>
@@ -790,8 +790,8 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Smooth.Sigmoid( 2 ) );</span>
 ℝ^2 -&gt; ℝ^2
 
-‣ 1 / (1 + Exp( (- x1) ))
-‣ 1 / (1 + Exp( (- x2) ))
+‣ 1 / (1 + Exp( - x1 ))
+‣ 1 / (1 + Exp( - x2 ))
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Smooth.Softmax( 2 ) );</span>
 ℝ^2 -&gt; ℝ^2
 
@@ -804,11 +804,11 @@ true
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Smooth.BinaryCrossEntropyLoss( 1 ) );</span>
 ℝ^2 -&gt; ℝ^1
 
-‣ - (x2 * Log( x1 ) + (1 - x2) * Log( (1 - x1) ))
+‣ - (x2 * Log( x1 ) + (1 - x2) * Log( 1 - x1 ))
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Smooth.SigmoidBinaryCrossEntropyLoss( 1 ) );</span>
 ℝ^2 -&gt; ℝ^1
 
-‣ Log( 1 + Exp( (- x1) ) ) + (1 - x2) * x1
+‣ Log( 1 + Exp( - x1 ) ) + (1 - x2) * x1
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Smooth.CrossEntropyLoss( 3 ) );</span>
 ℝ^6 -&gt; ℝ^1
 
@@ -863,7 +863,7 @@ x + Sin( y ) * Log( z ) + (x * y + Sin( z )) ^ 2
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e1 * e2;</span>
 (x + Sin( y ) * Log( z )) * (x * y + Sin( z )) ^ 2
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e := Sin( e1 ) / e2;</span>
-Sin( (x + Sin( y ) * Log( z )) ) / (x * y + Sin( z )) ^ 2
+Sin( x + Sin( y ) * Log( z ) ) / (x * y + Sin( z )) ^ 2
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := AsFunction( e );</span>
 function( vec ) ... end
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( f );</span>
@@ -873,7 +873,7 @@ function ( vec )
     x := vec[1];
     y := vec[2];
     z := vec[3];
-    return Sin( (x + Sin( y ) * Log( z )) ) / (x * y + Sin( z )) ^ 2;
+    return Sin( x + Sin( y ) * Log( z ) ) / (x * y + Sin( z )) ^ 2;
 end
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := [ 3, 2, 4 ];</span>
 [ 3, 2, 4 ]
@@ -882,7 +882,7 @@ end
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">dummy_input := ConvertToExpressions( [ "x1", "x2", "x3" ] );</span>
 [ x1, x2, x3 ]
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f( dummy_input );</span>
-Sin( (x1 + Sin( x2 ) * Log( x3 )) ) / (x1 * x2 + Sin( x3 )) ^ 2
+Sin( x1 + Sin( x2 ) * Log( x3 ) ) / (x1 * x2 + Sin( x3 )) ^ 2
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AssignExpressions( dummy_input );</span>
 #I  MakeReadWriteGlobal: x1 already read-write
 #I  MakeReadWriteGlobal: x2 already read-write

@@ -1,8 +1,8 @@
   
-  [1X2 [33X[0;0YMachineLearningForCAP automatic generated documentation[133X[101X
+  [1X2 [33X[0;0YGradientDescentForCAP automatic generated documentation[133X[101X
   
   
-  [1X2.1 [33X[0;0YMachineLearningForCAP automatic generated documentation of categories[133X[101X
+  [1X2.1 [33X[0;0YGradientDescentForCAP automatic generated documentation of categories[133X[101X
   
   [1X2.1-1 IsObjectInCategoryOfLenses[101X
   

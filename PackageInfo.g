@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# MachineLearningForCAP: Exploring categorical machine learning in CAP
+# GradientDescentForCAP: Exploring categorical machine learning in CAP
 #
 # This file contains package meta data. For additional information on
 # the meaning and correct usage of these fields, please consult the
@@ -8,10 +8,10 @@
 #
 SetPackageInfo( rec(
 
-PackageName := "MachineLearningForCAP",
+PackageName := "GradientDescentForCAP",
 Subtitle := "Exploring categorical machine learning in CAP",
-Version := "2024.09-01",
-Date := "2024-09-14",
+Version := "2025.11-01",
+Date := "2025-11-28",
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -34,13 +34,13 @@ Persons := [
 # BEGIN URLS
 SourceRepository := rec(
     Type := "git",
-    URL := "https://github.com/homalg-project/MachineLearningForCAP",
+    URL := "https://github.com/homalg-project/GradientDescentForCAP",
 ),
 IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
-PackageWWWHome  := "https://homalg-project.github.io/pkg/MachineLearningForCAP",
-PackageInfoURL  := "https://homalg-project.github.io/MachineLearningForCAP/PackageInfo.g",
-README_URL      := "https://homalg-project.github.io/MachineLearningForCAP/README.md",
-ArchiveURL      := Concatenation( "https://github.com/homalg-project/MachineLearningForCAP/releases/download/v", ~.Version, "/MachineLearningForCAP-", ~.Version ),
+PackageWWWHome  := "https://homalg-project.github.io/pkg/GradientDescentForCAP",
+PackageInfoURL  := "https://homalg-project.github.io/GradientDescentForCAP/PackageInfo.g",
+README_URL      := "https://homalg-project.github.io/GradientDescentForCAP/README.md",
+ArchiveURL      := Concatenation( "https://github.com/homalg-project/GradientDescentForCAP/releases/download/v", ~.Version, "/GradientDescentForCAP-", ~.Version ),
 # END URLS
 
 ArchiveFormats := ".tar.gz .zip",
@@ -58,7 +58,7 @@ Status := "dev",
 AbstractHTML   :=  "",
 
 PackageDoc := rec(
-  BookName  := "MachineLearningForCAP",
+  BookName  := "GradientDescentForCAP",
   ArchiveURLSubset := ["doc"],
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",
@@ -67,7 +67,7 @@ PackageDoc := rec(
 ),
 
 Dependencies := rec(
-  GAP := ">= 4.13.0",
+  GAP := ">= 4.15.1",
   NeededOtherPackages := [
                    [ "GAPDoc", ">= 1.5" ],
                    [ "CAP", ">= 2024.09-12" ],
