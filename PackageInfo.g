@@ -11,7 +11,7 @@ SetPackageInfo( rec(
 PackageName := "GradientBasedLearningForCAP",
 Subtitle := "Gradient Based Learning via Category Theory",
 Version := "2026.01-01",
-Date := (function ( ) if IsBound( GAPInfo.SystemEnvironment.GAP_PKG_RELEASE_DATE ) then return GAPInfo.SystemEnvironment.GAP_PKG_RELEASE_DATE; else return Concatenation( ~.Version{[ 1 .. 4 ]}, "-", ~.Version{[ 6, 7 ]}, "-01" ); fi; end)( ),
+Date := "2026-01-20",
 License := "GPL-2.0-or-later",
 
 Persons := [
