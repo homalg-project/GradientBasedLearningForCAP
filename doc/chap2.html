@@ -5,7 +5,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-<title>GAP (GradientDescentForCAP) - Chapter 2: GradientDescentForCAP automatic generated documentation</title>
+<title>GAP (GradientBasedLearningForCAP) - Chapter 2: Examples for neural networks</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="GAPDoc2HTML" />
 <link rel="stylesheet" type="text/css" href="manual.css" />
@@ -15,50 +15,352 @@
 <body class="chap2"  onload="jscontent()">
 
 
-<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap3.html">[Next Chapter]</a>&nbsp;  </div>
 
 <p id="mathjaxlink" class="pcenter"><a href="chap2_mj.html">[MathJax on]</a></p>
-<p><a id="X83A7436B838A5F5F" name="X83A7436B838A5F5F"></a></p>
-<div class="ChapSects"><a href="chap2.html#X83A7436B838A5F5F">2 <span class="Heading">GradientDescentForCAP automatic generated documentation</span></a>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X851E514C84448C3D">2.1 <span class="Heading">GradientDescentForCAP automatic generated documentation of categories</span></a>
+<p><a id="X7CD13EEE7A8D9AED" name="X7CD13EEE7A8D9AED"></a></p>
+<div class="ChapSects"><a href="chap2.html#X7CD13EEE7A8D9AED">2 <span class="Heading">Examples for neural networks</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X7EE5CB9181ACABBC">2.1 <span class="Heading">Binary-class neural network with binary cross-entropy loss function</span></a>
 </span>
-<div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X82DACCD780D120B5">2.1-1 IsObjectInCategoryOfLenses</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap2.html#X7B21A1408561C657">2.1-2 IsMorphismInCategoryOfLenses</a></span>
-</div></div>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X7AE7C91B827796AF">2.2 <span class="Heading">Multi-class neural network with cross-entropy loss function</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap2.html#X808FC2B27C916230">2.3 <span class="Heading">Neural network with quadratic loss function</span></a>
+</span>
+</div>
 </div>
 
-<h3>2 <span class="Heading">GradientDescentForCAP automatic generated documentation</span></h3>
+<h3>2 <span class="Heading">Examples for neural networks</span></h3>
 
-<p><a id="X851E514C84448C3D" name="X851E514C84448C3D"></a></p>
+<p><a id="X7EE5CB9181ACABBC" name="X7EE5CB9181ACABBC"></a></p>
 
-<h4>2.1 <span class="Heading">GradientDescentForCAP automatic generated documentation of categories</span></h4>
+<h4>2.1 <span class="Heading">Binary-class neural network with binary cross-entropy loss function</span></h4>
 
-<p><a id="X82DACCD780D120B5" name="X82DACCD780D120B5"></a></p>
+<p>This example demonstrates how to train a small feed-forward neural network for a binary classification task using the <span class="Math">\texttt{GradientBasedLearningForCAP}</span> package. We use the binary cross-entropy loss and optimise the network parameters with gradient descent.</p>
 
-<h5>2.1-1 IsObjectInCategoryOfLenses</h5>
+<p>The dataset consists of points <span class="Math">(x_1, x_2) \in \mathbb{R}^2</span> labelled by a non-linear decision rule describing two regions that form <span class="Math">\emph{class 0}</span>:</p>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsObjectInCategoryOfLenses</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
-<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
+<p>All remaining points belong to <span class="Math">\emph{class 1}</span>. Hence the classification boundary is not linearly separable and requires a non-linear model. We build a neural network with three hidden layers and a sigmoid output, fit it on the provided training examples for several epochs, and then evaluate the trained model on a grid of input points to visualise the learned decision regions.</p>
 
-<p>The <strong class="pkg">GAP</strong> category of objects in path categories.</p>
 
-<p><a id="X7B21A1408561C657" name="X7B21A1408561C657"></a></p>
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Smooth := SkeletalSmoothMaps;</span>
+SkeletalSmoothMaps
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Lenses := CategoryOfLenses( Smooth );</span>
+CategoryOfLenses( SkeletalSmoothMaps )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Para := CategoryOfParametrisedMorphisms( Smooth );</span>
+CategoryOfParametrisedMorphisms( SkeletalSmoothMaps )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">hidden_layers := [ 6, 6, 6 ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := NeuralNetworkLossMorphism( Para, 2, hidden_layers, 1, "Sigmoid" );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">optimizer := Lenses.GradientDescentOptimizer( : learning_rate := 0.01 );</span>
+function( n ) ... end
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">training_examples_path := Filename(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  DirectoriesPackageLibrary("GradientBasedLearningForCAP", "examples")[1],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  "NeuralNetwork_BinaryCrossEntropy/data/training_examples.txt" );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">batch_size := 2;</span>
+2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">one_epoch_update := OneEpochUpdateLens( f, optimizer,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                        training_examples_path, batch_size );</span>
+(ℝ^109, ℝ^109) -&gt; (ℝ^1, ℝ^0) defined by:
 
-<h5>2.1-2 IsMorphismInCategoryOfLenses</h5>
+Get Morphism:
+------------
+ℝ^109 -&gt; ℝ^1
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMorphismInCategoryOfLenses</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
-<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
+Put Morphism:
+------------
+ℝ^109 -&gt; ℝ^109
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">nr_weights := RankOfObject( Source( PutMorphism( one_epoch_update ) ) );</span>
+109
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rs := RandomSource( IsMersenneTwister, 1 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">w := List( [ 1 .. nr_weights ], i -&gt; 0.001 * Random( rs, [ -1000 .. 1000 ] ) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">w{[ 1 .. 5 ]};</span>
+[ 0.789, -0.767, -0.613, -0.542, 0.301 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">nr_epochs := 25;</span>
+25
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">w := Fit( one_epoch_update, nr_epochs, w : verbose := true );;</span>
+Epoch  0/25 - loss = 0.6274786697292678
+Epoch  1/25 - loss = 0.50764552556010512
+Epoch  2/25 - loss = 0.46701509497218296
+Epoch  3/25 - loss = 0.43998434603387304
+Epoch  4/25 - loss = 0.41390897205434185
+Epoch  5/25 - loss = 0.38668229524419645
+Epoch  6/25 - loss = 0.3615103023137366
+Epoch  7/25 - loss = 0.33852687543477167
+Epoch  8/25 - loss = 0.31713408584173464
+Epoch  9/25 - loss = 0.29842876608165969
+Epoch 10/25 - loss = 0.28310739567373933
+Epoch 11/25 - loss = 0.26735508537538627
+Epoch 12/25 - loss = 0.25227135017462571
+Epoch 13/25 - loss = 0.23858070423434527
+Epoch 14/25 - loss = 0.22557724727481232
+Epoch 15/25 - loss = 0.2151923109202202
+Epoch 16/25 - loss = 0.20589044111812799
+Epoch 17/25 - loss = 0.19857151366814263
+Epoch 18/25 - loss = 0.19229381748983518
+Epoch 19/25 - loss = 0.18814544378812006
+Epoch 20/25 - loss = 0.18465371077598913
+Epoch 21/25 - loss = 0.18166012790192537
+Epoch 22/25 - loss = 0.17685616213693178
+Epoch 23/25 - loss = 0.17665872918251943
+Epoch 24/25 - loss = 0.17073585936950184
+Epoch 25/25 - loss = 0.16744783175344116
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">w;</span>
+[ 1.47751, -0.285187, -1.87358, -1.87839, 0.687266,
+  -0.88329, -0.607225, 0.57876, 0.084489, 1.1218,
+  0.289778, -1.15844, 0.562299, -0.725222, 0.724775,
+  0.643942, 0.202536, 0.131565, 0.768751, -0.345379,
+  -0.147853, -1.52103, -1.26183, 1.39931, 0.00143737,
+  -0.819752, -0.90015, -0.534457, 0.74204, -0.768,
+  -1.85381, 0.225274, -0.384199, 1.1034, 0.82565,
+  0.423966, 0.719847, 0.487972, 0.266537, -0.442324,
+  0.520839, 0.306871, -0.205834, -0.314044, 0.0395323,
+  -0.489954, -0.368816, 0.305383, -0.181872, 0.775344,
+  -0.57507, -0.792, -0.937068, 1.39995, -0.0236236,
+  0.370827, -0.778542, -0.783943, 0.034, 0.343554,
+  -1.00419, 0.857391, -1.07632, -0.677147, 0.839605,
+  0.719, 1.40418, -0.221851, 1.29824, 0.510027,
+  0.217811, 0.344086, 0.579, 0.576412, 0.070248,
+  -0.145523, 0.468713, 0.680618, 0.199966, -0.497,
+  -0.408801, 0.0519444, -0.597412, 0.137205, 1.25696,
+  -0.0884903, -0.252, -0.721624, -1.25962, 0.894349,
+  0.447327, -1.00492, -1.54383, 0.464574, -0.723211,
+  -0.108064, -0.486439, -0.385, -0.484, -0.862,
+  -0.121845, 1.0856, 1.09068, 1.69466, 0.938733,
+  0.529301, -0.465345, 1.23872, 1.07609 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">predict := NeuralNetworkPredictionMorphism( Para, 2, hidden_layers, 1, "Sigmoid" );</span>
+ℝ^2 -&gt; ℝ^1 defined by:
 
-<p>The <strong class="pkg">GAP</strong> category of morphisms in path categories.</p>
+Underlying Object:
+-----------------
+ℝ^109
+
+Underlying Morphism:
+-------------------
+ℝ^111 -&gt; ℝ^1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">predict_given_w := ReparametriseMorphism( predict, Smooth.Constant( w ) );</span>
+ℝ^2 -&gt; ℝ^1 defined by:
+
+Underlying Object:
+-----------------
+ℝ^0
+
+Underlying Morphism:
+-------------------
+ℝ^2 -&gt; ℝ^1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">predict_using_w := UnderlyingMorphism( predict_given_w );</span>
+ℝ^2 -&gt; ℝ^1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">inputs := Cartesian( 0.1 * [ -10 .. 10 ], 0.1 * [ -10 .. 10 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">predictions := List( inputs, x -&gt; </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          SelectBasedOnCondition( predict_using_w( x )[1] &gt; 0.5, 1, 0 ) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput"># ScatterPlotUsingPython( inputs, predictions );</span>
+</pre></div>
+
+<p>Executing the command <span class="Math">\texttt{ScatterPlotUsingPython( inputs, predictions );}</span> produces the following plot:</p>
+
+<p><a id="X7AE7C91B827796AF" name="X7AE7C91B827796AF"></a></p>
+
+<h4>2.2 <span class="Heading">Multi-class neural network with cross-entropy loss function</span></h4>
+
+<p>This example demonstrates how to train a small feed-forward neural network for a multi-class classification task using the <span class="Math">\texttt{GradientBasedLearningForCAP}</span> package. We employ the cross-entropy loss function and optimise the network parameters with gradient descent.</p>
+
+<p>The dataset consists of points <span class="Math">(x_1, x_2) \in \mathbb{R}^2</span> labelled by a non-linear decision rule describing three regions that form We build a neural network with three hidden layers and a Softmax output, fit it on the provided training examples for several epochs, and then evaluate the trained model on a grid of input points to visualise the learned decision regions.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Smooth := SkeletalSmoothMaps;</span>
+SkeletalSmoothMaps
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Lenses := CategoryOfLenses( Smooth );</span>
+CategoryOfLenses( SkeletalSmoothMaps )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Para := CategoryOfParametrisedMorphisms( Smooth );</span>
+CategoryOfParametrisedMorphisms( SkeletalSmoothMaps )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">hidden_layers := [ 6, 6, 6 ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := NeuralNetworkLossMorphism( Para, 2, hidden_layers, 3, "Softmax" );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">optimizer := Lenses.GradientDescentOptimizer( : learning_rate := 0.1 );</span>
+function( n ) ... end
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">training_examples_path := Filename(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  DirectoriesPackageLibrary("GradientBasedLearningForCAP", "examples")[1],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  "NeuralNetwork_CrossEntropy/data/training_examples.txt" );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">batch_size := 4;</span>
+4
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">one_epoch_update := OneEpochUpdateLens( f, optimizer,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                        training_examples_path, batch_size );</span>
+(ℝ^123, ℝ^123) -&gt; (ℝ^1, ℝ^0) defined by:
+
+Get Morphism:
+------------
+ℝ^123 -&gt; ℝ^1
+
+Put Morphism:
+------------
+ℝ^123 -&gt; ℝ^123
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">nr_weights := RankOfObject( Source( PutMorphism( one_epoch_update ) ) );</span>
+123
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">rs := RandomSource( IsMersenneTwister, 1 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">w := List( [ 1 .. nr_weights ], i -&gt; 0.001 * Random( rs, [ -1000 .. 1000 ] ) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( w{[ 1 .. 5 ]} );</span>
+[ 0.789, -0.767, -0.613, -0.542, 0.301 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">nr_epochs := 16;</span>
+16
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">w := Fit( one_epoch_update, nr_epochs, w : verbose := true );;</span>
+Epoch  0/16 - loss = 0.80405334335407785
+Epoch  1/16 - loss = 0.18338542093217905
+Epoch  2/16 - loss = 0.1491650040794873
+Epoch  3/16 - loss = 0.13186409729963983
+Epoch  4/16 - loss = 0.12293129048146505
+Epoch  5/16 - loss = 0.11742704538825839
+Epoch  6/16 - loss = 0.11191588532335346
+Epoch  7/16 - loss = 0.10441947487056685
+Epoch  8/16 - loss = 0.095102838431592687
+Epoch  9/16 - loss = 0.092441708967385072
+Epoch 10/16 - loss = 0.097057579505470393
+Epoch 11/16 - loss = 0.093295953606638768
+Epoch 12/16 - loss = 0.082114375099200984
+Epoch 13/16 - loss = 0.082910416530212819
+Epoch 14/16 - loss = 0.082815082271383303
+Epoch 15/16 - loss = 0.085405485529683856
+Epoch 16/16 - loss = 0.087825108242740729
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">w;</span>
+[ 0.789, -1.09294, -1.43008, -0.66714, 1.27126, -1.12774, -0.240397, 0.213, 
+  -0.382376, 1.42204, 0.300837, -1.79451, 0.392967, -0.868913, 0.858, 
+  1.16231, 0.769031, 0.309303, 0.555253, -0.142223, 0.0703106, -0.997, 
+  -0.746, 0.9, -0.248, -0.801, -0.317, -0.826, 0.0491083, -1.51073, -1.01246, 
+  0.371752, -0.852, 0.342548, 1.01666, 1.39005, 0.958034, 0.357176, 0.3225, 
+  -0.29, -1.0095, 0.154876, -0.460859, -0.582425, 0.223943, -0.402, -0.368, 
+  0.275911, -0.0791975, 0.0986371, -0.487903, -0.699542, -0.553485, 0.766, 
+  1.88163, 0.903741, -0.895688, -0.949546, 0.034, 0.13, -0.91, 0.67043, 
+  -0.784672, -0.195688, 1.49813, 0.881451, 0.679593, -0.380004, 0.743062, 
+  0.529804, 0.221497, 0.487694, 1.12092, 1.38134, -0.313891, 0.780071, 
+  0.00526383, 0.422997, 0.287254, -0.42555, -0.0525988, -0.159442, -0.256285, 
+  -0.296361, 0.822117, -0.23663, -0.252, -0.986452, -0.955211, 0.52727, 
+  0.261295, -0.867, -0.787, -0.395, -0.871, -0.205, -0.315, -0.385, 
+  -0.292919, -1.46115, -0.634953, 0.818446, 0.903525, 0.833456, 1.59504, 
+  -0.500531, -0.191608, 0.390861, 0.808496, -1.94883, 0.445591, -1.62511, 
+  -0.601054, -0.154008, -1.20266, -0.255521, 0.989522, 0.29963, 0.372084, 
+  1.07529, -0.909025, 0.454265, 0.539106 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">predict := NeuralNetworkPredictionMorphism( Para, 2, hidden_layers, 3, "Softmax" );</span>
+ℝ^2 -&gt; ℝ^3 defined by:
+
+Underlying Object:
+-----------------
+ℝ^123
+
+Underlying Morphism:
+-------------------
+ℝ^125 -&gt; ℝ^3
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">predict_given_w := ReparametriseMorphism( predict, Smooth.Constant( w ) );</span>
+ℝ^2 -&gt; ℝ^3 defined by:
+
+Underlying Object:
+-----------------
+ℝ^0
+
+Underlying Morphism:
+-------------------
+ℝ^2 -&gt; ℝ^3
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">predict_using_w := UnderlyingMorphism( predict_given_w );</span>
+ℝ^2 -&gt; ℝ^3
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">inputs := Cartesian( 0.1 * [ -10 .. 10 ], 0.1 * [ -10 .. 10 ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">predictions := List( inputs, x -&gt;</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    -1 + Position( predict_using_w( x ), Maximum( predict_using_w( x ) ) ) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput"># ScatterPlotUsingPython( inputs, predictions );</span>
+</pre></div>
+
+<p>Executing the command <span class="Math">\texttt{ScatterPlotUsingPython( inputs, predictions );}</span> produces the following plot:</p>
+
+<p><a id="X808FC2B27C916230" name="X808FC2B27C916230"></a></p>
+
+<h4>2.3 <span class="Heading">Neural network with quadratic loss function</span></h4>
+
+<p>This example demonstrates how to train a small feed-forward neural network for a regression task using the <span class="Math">\texttt{GradientBasedLearningForCAP}</span> package. We employ the quadratic loss function and optimise the network parameters with gradient descent. The dataset consists of points <span class="Math">(x_1, x_2) \in \mathbb{R}^2</span> with corresponding outputs <span class="Math">y \in \mathbb{R}</span> generated by a linear function with some added noise. Concretely, the outputs are generated according to the formula We build a neural network with input dimension 2, no hidden layers, and output dimension 1. Hence, the affine map between input and output layer has the following matrix dimensions (together with bias vector): Where <span class="Math">W_1 \in \mathbb{R}^{2 \times 1}</span> and <span class="Math">b_1 \in \mathbb{R}^1</span> are the weights and bias to be learned. Equivalently, the network computes for an input <span class="Math">a_0 \in \mathbb{R}^2</span> the output Hence, the number of parameters to learn is 3 (two weights and one bias). We fit the neural network on the provided training examples for 30 epochs, and then compare the learned parameters to the perfect weights used to generate the dataset. We use the Adam optimiser for gradient descent. Hence, the initiat weights vector <span class="Math">(t, m_1, m_2, m_3, v_1, v_2, v_3, w_1, w_2, b_1) \in \mathbb{R}^{1+3+3+3}</span> contains additional parameters for the optimiser (the <span class="Math">m</span>'s and <span class="Math">v</span>'s). We initialise <span class="Math">t</span> to <span class="Math">1</span> and <span class="Math">m</span>'s and <span class="Math">v</span>'s to <span class="Math">0</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Smooth := SkeletalSmoothMaps;</span>
+SkeletalSmoothMaps
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Lenses := CategoryOfLenses( Smooth );</span>
+CategoryOfLenses( SkeletalSmoothMaps )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Para := CategoryOfParametrisedMorphisms( Smooth );</span>
+CategoryOfParametrisedMorphisms( SkeletalSmoothMaps )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := NeuralNetworkLossMorphism( Para, 2, [ ], 1, "IdFunc" );</span>
+ℝ^3 -&gt; ℝ^1 defined by:
+
+Underlying Object:
+-----------------
+ℝ^3
+
+Underlying Morphism:
+-------------------
+ℝ^6 -&gt; ℝ^1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">optimizer := Lenses.AdamOptimizer();</span>
+function( n ) ... end
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">training_examples_path := Filename(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    DirectoriesPackageLibrary("GradientBasedLearningForCAP", "examples")[1],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    "NeuralNetwork_QuadraticLoss/data/training_examples.txt" );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">batch_size := 5;</span>
+5
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">one_epoch_update := OneEpochUpdateLens( f, optimizer, </span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                        training_examples_path, batch_size );</span>
+(ℝ^10, ℝ^10) -&gt; (ℝ^1, ℝ^0) defined by:
+
+Get Morphism:
+------------
+ℝ^10 -&gt; ℝ^1
+
+Put Morphism:
+------------
+ℝ^10 -&gt; ℝ^10
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">w := [ 1, 0, 0, 0, 0, 0, 0, 0.21, -0.31, 0.7 ];</span>
+[ 1, 0, 0, 0, 0, 0, 0, 0.21, -0.31, 0.7 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">nr_epochs := 30;</span>
+30
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">w := Fit( one_epoch_update, nr_epochs, w );;</span>
+Epoch  0/30 - loss = 4.4574869198
+Epoch  1/30 - loss = 1.0904439656285798
+Epoch  2/30 - loss = 0.44893422753741707
+Epoch  3/30 - loss = 0.24718222552679428
+Epoch  4/30 - loss = 0.15816538314892969
+Epoch  5/30 - loss = 0.11009214898573197
+Epoch  6/30 - loss = 0.080765189573546586
+Epoch  7/30 - loss = 0.061445427900729599
+Epoch  8/30 - loss = 0.04803609207319106
+Epoch  9/30 - loss = 0.038370239087861441
+Epoch 10/30 - loss = 0.031199992288917108
+Epoch 11/30 - loss = 0.025760084031019172
+Epoch 12/30 - loss = 0.021557800050973547
+Epoch 13/30 - loss = 0.018263315597330656
+Epoch 14/30 - loss = 0.01564869258749324
+Epoch 15/30 - loss = 0.013552162640841157
+Epoch 16/30 - loss = 0.011856309185255345
+Epoch 17/30 - loss = 0.010474254262187581
+Epoch 18/30 - loss = 0.0093406409193010267
+Epoch 19/30 - loss = 0.008405587711401704
+Epoch 20/30 - loss = 0.0076305403249797375
+Epoch 21/30 - loss = 0.0069853659369945552
+Epoch 22/30 - loss = 0.0064462805409909937
+Epoch 23/30 - loss = 0.0059943461353685126
+Epoch 24/30 - loss = 0.0056143650058947617
+Epoch 25/30 - loss = 0.0052940553411779294
+Epoch 26/30 - loss = 0.0050234291867088457
+Epoch 27/30 - loss = 0.0047943179297568897
+Epoch 28/30 - loss = 0.0046000067074985669
+Epoch 29/30 - loss = 0.004434950161766555
+Epoch 30/30 - loss = 0.0042945495896027528
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">w;</span>
+[ 601, -0.00814765, -0.0328203, 0.00154532, 0.0208156, 0.0756998,
+0.047054, 2.01399, -2.9546, 0.989903 ]
+</pre></div>
+
+<p>We notice that the learned weights <span class="Math">w_1 \approx 2.01399</span>, <span class="Math">w_2 \approx -2.9546</span>, and <span class="Math">b_1 \approx 0.989903</span> are close to the perfect weights <span class="Math">2</span>, <span class="Math">-3</span>, and <span class="Math">1</span> used to generate the dataset.</p>
 
 
 <div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap1.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap3.html">[Next Chapter]</a>&nbsp;  </div>
 
 
-<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <hr />
 <p class="foot">generated by <a href="https://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>

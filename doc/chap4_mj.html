@@ -1,0 +1,924 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<script type="text/javascript"
+  src="https://cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<title>GAP (GradientBasedLearningForCAP) - Chapter 4: Skeletal Category of Smooth Maps</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap4"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap3_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap5_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap4.html">[MathJax off]</a></p>
+<p><a id="X7D1294497841A4A7" name="X7D1294497841A4A7"></a></p>
+<div class="ChapSects"><a href="chap4_mj.html#X7D1294497841A4A7">4 <span class="Heading">Skeletal Category of Smooth Maps</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4_mj.html#X86EC0F0A78ECBC10">4.1 <span class="Heading">Constructors</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X86E7C2E280521BF3">4.1-1 SkeletalCategoryOfSmoothMaps</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X7C1011C679EDBFD9">4.1-2 ObjectConstructor</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X7D401F8F82DF7008">4.1-3 MorphismConstructor</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X7F9AB9EE7F1E0318">4.1-4 SmoothMap</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4_mj.html#X7C701DBF7BAE649A">4.2 <span class="Heading">Attributes</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X786CBC387FC77E4D">4.2-1 RankOfObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X7AB3E0BD853B079E">4.2-2 Map</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X832C357584AD3393">4.2-3 JacobianMatrix</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4_mj.html#X7DE8E16C7C2D387B">4.3 <span class="Heading">Operations</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X7DCA46CC7C8AAC6D">4.3-1 Eval</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X7A02E72385C80BCC">4.3-2 EvalJacobianMatrix</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4_mj.html#X81B05C8D84487213">4.4 <span class="Heading">Available Smooth Maps</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X8309FD8286A3B4C1">4.4-1 AvailableSkeletalSmoothMaps</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X84B44D467CFDF34A">4.4-2 DummyInputForAffineTransformation</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4_mj.html#X7DA5FC5379955E0E">4.5 <span class="Heading">Supported CAP Operations</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X85B7341883E8D0A5">4.5-1 <span class="Heading">SkeletalSmoothMaps</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X7915096B840F8531">4.5-2 <span class="Heading">Generate Documentation</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4_mj.html#X7A489A5D79DA9E5C">4.6 <span class="Heading">Examples</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap4_mj.html#X7D03633A7D98026B">4.7 <span class="Heading">GAP Categories</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X8590E20280E6F36C">4.7-1 IsSkeletalCategoryOfSmoothMaps</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X863E782C83BF7CE6">4.7-2 IsObjectInSkeletalCategoryOfSmoothMaps</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap4_mj.html#X7FF033707B478712">4.7-3 IsMorphismInSkeletalCategoryOfSmoothMaps</a></span>
+</div></div>
+</div>
+
+<h3>4 <span class="Heading">Skeletal Category of Smooth Maps</span></h3>
+
+<p><a id="X86EC0F0A78ECBC10" name="X86EC0F0A78ECBC10"></a></p>
+
+<h4>4.1 <span class="Heading">Constructors</span></h4>
+
+<p><a id="X86E7C2E280521BF3" name="X86E7C2E280521BF3"></a></p>
+
+<h5>4.1-1 SkeletalCategoryOfSmoothMaps</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SkeletalCategoryOfSmoothMaps</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Returns: a category</p>
+
+<p>Construct the category of skeletal smooth maps. Objects in this category are the Euclidean spaces <span class="SimpleMath">\(\mathbb{R}^n\)</span> for non-negative integers <span class="SimpleMath">\(n\)</span>. Morphisms are smooth maps between these spaces, represented by a map function and its Jacobian matrix.</p>
+
+<p><a id="X7C1011C679EDBFD9" name="X7C1011C679EDBFD9"></a></p>
+
+<h5>4.1-2 ObjectConstructor</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ObjectConstructor</code>( <var class="Arg">Smooth</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: an object in the category of skeletal smooth maps</p>
+
+<p>Construct the object representing the Euclidean space <span class="SimpleMath">\(\mathbb{R}^{n}\)</span> in the category of skeletal smooth maps. Points in Euclidean spaces are represented as row vectors.</p>
+
+<p><a id="X7D401F8F82DF7008" name="X7D401F8F82DF7008"></a></p>
+
+<h5>4.1-3 MorphismConstructor</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MorphismConstructor</code>( <var class="Arg">Smooth</var>, <var class="Arg">source</var>, <var class="Arg">datum</var>, <var class="Arg">target</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a morphism in the category of skeletal smooth maps</p>
+
+<p>Construct a smooth morphism from <var class="Arg">source</var> to <var class="Arg">target</var> using the given <var class="Arg">datum</var>. The <var class="Arg">datum</var> should be a pair <code class="code">[ map_func, jacobian_func ]</code> where:</p>
+
+
+<ul>
+<li><p><var class="Arg">map_func</var> is a function that takes a list of <span class="SimpleMath">\(m\)</span> elements (where <span class="SimpleMath">\(m\)</span> is the rank of <var class="Arg">source</var>) and returns a list of <span class="SimpleMath">\(n\)</span> elements (where <span class="SimpleMath">\(n\)</span> is the rank of <var class="Arg">target</var>). This represents the smooth map <span class="SimpleMath">\(f: \mathbb{R}^m \to \mathbb{R}^n\)</span>, <span class="SimpleMath">\([x_1, x_2, \ldots, x_m] \mapsto [f_1(x_1, \ldots, x_m), f_2(x_1, \ldots, x_m), \ldots, f_n(x_1, \ldots, x_m)]\)</span>.</p>
+
+</li>
+<li><p><var class="Arg">jacobian_func</var> is a function that takes a list of <span class="SimpleMath">\(m\)</span> elements and returns an <span class="SimpleMath">\(n \times m\)</span> matrix (represented as a list of <span class="SimpleMath">\(n\)</span> lists, each containing <span class="SimpleMath">\(m\)</span> elements). This matrix represents the Jacobian <span class="SimpleMath">\(Df(x)\)</span> at point <span class="SimpleMath">\(x\)</span>, where entry <span class="SimpleMath">\((i,j)\)</span> is <span class="SimpleMath">\(\frac{\partial f_i}{\partial x_j}(x)\)</span>.</p>
+
+</li>
+</ul>
+<p><a id="X7F9AB9EE7F1E0318" name="X7F9AB9EE7F1E0318"></a></p>
+
+<h5>4.1-4 SmoothMap</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SmoothMap</code>( <var class="Arg">Smooth</var>, <var class="Arg">source</var>, <var class="Arg">datum</var>, <var class="Arg">target</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a morphism in the category of skeletal smooth maps</p>
+
+<p>Delegates to MorphismConstructor to create a smooth morphism.</p>
+
+<p><a id="X7C701DBF7BAE649A" name="X7C701DBF7BAE649A"></a></p>
+
+<h4>4.2 <span class="Heading">Attributes</span></h4>
+
+<p><a id="X786CBC387FC77E4D" name="X786CBC387FC77E4D"></a></p>
+
+<h5>4.2-1 RankOfObject</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; RankOfObject</code>( <var class="Arg">obj</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a non-negative integer</p>
+
+<p>The rank (dimension) of the Euclidean space represented by the object <var class="Arg">obj</var>. For an object representing <span class="SimpleMath">\(\mathbb{R}^n\)</span>, this returns <span class="SimpleMath">\(n\)</span>.</p>
+
+<p><a id="X7AB3E0BD853B079E" name="X7AB3E0BD853B079E"></a></p>
+
+<h5>4.2-2 Map</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Map</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a function</p>
+
+<p>The underlying map function of a smooth morphism <var class="Arg">f</var>. For a morphism <span class="SimpleMath">\(f: \mathbb{R}^m \to \mathbb{R}^n\)</span>, this is a function that takes a list of <span class="SimpleMath">\(m\)</span> elements and returns a list of <span class="SimpleMath">\(n\)</span> elements.</p>
+
+<p><a id="X832C357584AD3393" name="X832C357584AD3393"></a></p>
+
+<h5>4.2-3 JacobianMatrix</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; JacobianMatrix</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a function</p>
+
+<p>The Jacobian matrix function of a smooth morphism <var class="Arg">f</var>. For a morphism <span class="SimpleMath">\(f: \mathbb{R}^m \to \mathbb{R}^n\)</span>, this is a function that takes a list of <span class="SimpleMath">\(m\)</span> elements and returns an <span class="SimpleMath">\(n \times m\)</span> matrix representing the partial derivatives.</p>
+
+<p><a id="X7DE8E16C7C2D387B" name="X7DE8E16C7C2D387B"></a></p>
+
+<h4>4.3 <span class="Heading">Operations</span></h4>
+
+<p><a id="X7DCA46CC7C8AAC6D" name="X7DCA46CC7C8AAC6D"></a></p>
+
+<h5>4.3-1 Eval</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Eval</code>( <var class="Arg">f</var>, <var class="Arg">x</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a dense list</p>
+
+<p>Evaluate the smooth morphism <var class="Arg">f</var> at the point <var class="Arg">x</var>.</p>
+
+<p><a id="X7A02E72385C80BCC" name="X7A02E72385C80BCC"></a></p>
+
+<h5>4.3-2 EvalJacobianMatrix</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EvalJacobianMatrix</code>( <var class="Arg">f</var>, <var class="Arg">x</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a matrix (list of lists)</p>
+
+<p>Evaluate the Jacobian matrix of the smooth morphism <var class="Arg">f</var> at the point <var class="Arg">x</var>.</p>
+
+<p><a id="X81B05C8D84487213" name="X81B05C8D84487213"></a></p>
+
+<h4>4.4 <span class="Heading">Available Smooth Maps</span></h4>
+
+<p><a id="X8309FD8286A3B4C1" name="X8309FD8286A3B4C1"></a></p>
+
+<h5>4.4-1 AvailableSkeletalSmoothMaps</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AvailableSkeletalSmoothMaps</code>( <var class="Arg">Smooth</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Returns: a list of strings</p>
+
+<p>List the names of available skeletal smooth maps.</p>
+
+<p><a id="X84B44D467CFDF34A" name="X84B44D467CFDF34A"></a></p>
+
+<h5>4.4-2 DummyInputForAffineTransformation</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DummyInputForAffineTransformation</code>( <var class="Arg">m</var>, <var class="Arg">n</var>, <var class="Arg">weight_str</var>, <var class="Arg">bias_str</var>, <var class="Arg">logits_str</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Returns: a list of expressions</p>
+
+<p>Generate dummy input expressions for an affine transformation with <var class="Arg">m</var> inputs and <var class="Arg">n</var> outputs. Its length is <span class="SimpleMath">\((m+1)n + m\)</span>. Additional arguments specify the weight string, bias string, and a logits string. For example, for <var class="Arg">m</var>=2 and <var class="Arg">n</var>=3, with weight string "w", bias string "b", and logits string "z", the output is <code class="code">[ w1_1, w2_1, b_1, w1_2, w2_2, b_2, w1_3, w2_3, b_3, z1, z2 ]</code>.</p>
+
+<p><a id="X7DA5FC5379955E0E" name="X7DA5FC5379955E0E"></a></p>
+
+<h4>4.5 <span class="Heading">Supported CAP Operations</span></h4>
+
+<p><a id="X85B7341883E8D0A5" name="X85B7341883E8D0A5"></a></p>
+
+<h5>4.5-1 <span class="Heading">SkeletalSmoothMaps</span></h5>
+
+<p>The following CAP operations are supported:</p>
+
+
+<ul>
+<li><p><code class="func">AdditionForMorphisms</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap3_mj.html#X83B77FBB85927F14"><span class="RefLink">CAP: AdditionForMorphisms for IsCapCategoryMorphism, IsCapCategoryMorphism</span></a>)</p>
+
+</li>
+<li><p><code class="func">AdditiveInverseForMorphisms</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap3_mj.html#X83177713785DCFFC"><span class="RefLink">CAP: AdditiveInverseForMorphisms for IsCapCategoryMorphism</span></a>)</p>
+
+</li>
+<li><p><code class="func">AssociatorLeftToRight</code> (<a href="/home/kamal/.gap/pkg/CAP_project/MonoidalCategories/doc/chap1_mj.html#X7C5A064C7E1995F1"><span class="RefLink">MonoidalCategories: AssociatorLeftToRight for IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">AssociatorLeftToRightWithGivenTensorProducts</code> (<a href="/home/kamal/.gap/pkg/CAP_project/MonoidalCategories/doc/chap1_mj.html#X7C59D73F8389E389"><span class="RefLink">MonoidalCategories: AssociatorLeftToRightWithGivenTensorProducts for IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">AssociatorRightToLeft</code> (<a href="/home/kamal/.gap/pkg/CAP_project/MonoidalCategories/doc/chap1_mj.html#X84C2FAEA7B9678AA"><span class="RefLink">MonoidalCategories: AssociatorRightToLeft for IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">AssociatorRightToLeftWithGivenTensorProducts</code> (<a href="/home/kamal/.gap/pkg/CAP_project/MonoidalCategories/doc/chap1_mj.html#X85645C4D86060ED2"><span class="RefLink">MonoidalCategories: AssociatorRightToLeftWithGivenTensorProducts for IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">Braiding</code> (<a href="/home/kamal/.gap/pkg/CAP_project/MonoidalCategories/doc/chap1_mj.html#X7C6ADBFE7A8DD1E3"><span class="RefLink">MonoidalCategories: Braiding for IsCapCategoryObject, IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">BraidingInverse</code> (<a href="/home/kamal/.gap/pkg/CAP_project/MonoidalCategories/doc/chap1_mj.html#X8195EC5279D3E8D0"><span class="RefLink">MonoidalCategories: BraidingInverse for IsCapCategoryObject, IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">BraidingInverseWithGivenTensorProducts</code> (<a href="/home/kamal/.gap/pkg/CAP_project/MonoidalCategories/doc/chap1_mj.html#X854AFBC67C836769"><span class="RefLink">MonoidalCategories: BraidingInverseWithGivenTensorProducts for IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">BraidingWithGivenTensorProducts</code> (<a href="/home/kamal/.gap/pkg/CAP_project/MonoidalCategories/doc/chap1_mj.html#X7F4B09A87B2500C0"><span class="RefLink">MonoidalCategories: BraidingWithGivenTensorProducts for IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">CartesianAssociatorLeftToRight</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CartesianCategories/doc/chap1_mj.html#X865D1A0F8437F47C"><span class="RefLink">CartesianCategories: CartesianAssociatorLeftToRight for IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">CartesianAssociatorLeftToRightWithGivenDirectProducts</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CartesianCategories/doc/chap1_mj.html#X7F6DE499836B7399"><span class="RefLink">CartesianCategories: CartesianAssociatorLeftToRightWithGivenDirectProducts for IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">CartesianAssociatorRightToLeft</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CartesianCategories/doc/chap1_mj.html#X7EC5E6A97DBED717"><span class="RefLink">CartesianCategories: CartesianAssociatorRightToLeft for IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">CartesianAssociatorRightToLeftWithGivenDirectProducts</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CartesianCategories/doc/chap1_mj.html#X86506FEB7AE250F2"><span class="RefLink">CartesianCategories: CartesianAssociatorRightToLeftWithGivenDirectProducts for IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">CartesianBraiding</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CartesianCategories/doc/chap1_mj.html#X85FFD4FA7CFB0745"><span class="RefLink">CartesianCategories: CartesianBraiding for IsCapCategoryObject, IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">CartesianBraidingInverse</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CartesianCategories/doc/chap1_mj.html#X82703D9880887058"><span class="RefLink">CartesianCategories: CartesianBraidingInverse for IsCapCategoryObject, IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">CartesianBraidingInverseWithGivenDirectProducts</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CartesianCategories/doc/chap1_mj.html#X8709D1447DAE3B37"><span class="RefLink">CartesianCategories: CartesianBraidingInverseWithGivenDirectProducts for IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">CartesianBraidingWithGivenDirectProducts</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CartesianCategories/doc/chap1_mj.html#X862679EC826C55CA"><span class="RefLink">CartesianCategories: CartesianBraidingWithGivenDirectProducts for IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">CartesianDiagonal</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CartesianCategories/doc/chap1_mj.html#X7DEDC81082995204"><span class="RefLink">CartesianCategories: CartesianDiagonal for IsCapCategoryObject, IsInt</span></a>)</p>
+
+</li>
+<li><p><code class="func">CartesianDiagonalWithGivenCartesianPower</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CartesianCategories/doc/chap1_mj.html#X7E0548CF83DED2E2"><span class="RefLink">CartesianCategories: CartesianDiagonalWithGivenCartesianPower for IsCapCategoryObject, IsInt, IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">CartesianLeftUnitor</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CartesianCategories/doc/chap1_mj.html#X876C204380849A64"><span class="RefLink">CartesianCategories: CartesianLeftUnitor for IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">CartesianLeftUnitorInverse</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CartesianCategories/doc/chap1_mj.html#X7E5A8C69876CCD8B"><span class="RefLink">CartesianCategories: CartesianLeftUnitorInverse for IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">CartesianLeftUnitorInverseWithGivenDirectProduct</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CartesianCategories/doc/chap1_mj.html#X7CB816B57FB90AF0"><span class="RefLink">CartesianCategories: CartesianLeftUnitorInverseWithGivenDirectProduct for IsCapCategoryObject, IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">CartesianLeftUnitorWithGivenDirectProduct</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CartesianCategories/doc/chap1_mj.html#X7AA4207385D8E5F3"><span class="RefLink">CartesianCategories: CartesianLeftUnitorWithGivenDirectProduct for IsCapCategoryObject, IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">CartesianRightUnitor</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CartesianCategories/doc/chap1_mj.html#X816EB378858B96ED"><span class="RefLink">CartesianCategories: CartesianRightUnitor for IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">CartesianRightUnitorInverse</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CartesianCategories/doc/chap1_mj.html#X814B419087C73480"><span class="RefLink">CartesianCategories: CartesianRightUnitorInverse for IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">CartesianRightUnitorInverseWithGivenDirectProduct</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CartesianCategories/doc/chap1_mj.html#X8342E7EF85991C6D"><span class="RefLink">CartesianCategories: CartesianRightUnitorInverseWithGivenDirectProduct for IsCapCategoryObject, IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">CartesianRightUnitorWithGivenDirectProduct</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CartesianCategories/doc/chap1_mj.html#X7D457C3280F841C0"><span class="RefLink">CartesianCategories: CartesianRightUnitorWithGivenDirectProduct for IsCapCategoryObject, IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">ComponentOfMorphismIntoDirectProduct</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap6_mj.html#X7C5769577CEAF2C4"><span class="RefLink">CAP: ComponentOfMorphismIntoDirectProduct for IsCapCategoryMorphism, IsList, IsInt</span></a>)</p>
+
+</li>
+<li><p><code class="func">DirectProduct</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap6_mj.html#X861BA02C7902A4F4"><span class="RefLink">CAP: DirectProduct</span></a>)</p>
+
+</li>
+<li><p><code class="func">DirectProductFunctorial</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap6_mj.html#X79EB76507C8AB4A4"><span class="RefLink">CAP: DirectProductFunctorial for IsList, IsList, IsList</span></a>)</p>
+
+</li>
+<li><p><code class="func">DirectProductFunctorialWithGivenDirectProducts</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap6_mj.html#X7DD930FE78492D58"><span class="RefLink">CAP: DirectProductFunctorialWithGivenDirectProducts for IsCapCategoryObject, IsList, IsList, IsList, IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">DirectProductOnMorphisms</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CartesianCategories/doc/chap1_mj.html#X879D39F87DA6868C"><span class="RefLink">CartesianCategories: DirectProductOnMorphisms for IsCapCategoryMorphism, IsCapCategoryMorphism</span></a>)</p>
+
+</li>
+<li><p><code class="func">DirectProductOnMorphismsWithGivenDirectProducts</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CartesianCategories/doc/chap1_mj.html#X87BE42CF7889541B"><span class="RefLink">CartesianCategories: DirectProductOnMorphismsWithGivenDirectProducts for IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">IdentityMorphism</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap3_mj.html#X7C9F3D8086238443"><span class="RefLink">CAP: IdentityMorphism for IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">IsCongruentForMorphisms</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap3_mj.html#X7FABCFBF865F4179"><span class="RefLink">CAP: IsCongruentForMorphisms for IsCapCategoryMorphism, IsCapCategoryMorphism</span></a>)</p>
+
+</li>
+<li><p><code class="func">IsEndomorphism</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap3_mj.html#X81057B3E812B06CC"><span class="RefLink">CAP: IsEndomorphism for IsCapCategoryMorphism</span></a>)</p>
+
+</li>
+<li><p><code class="func">IsEqualForMorphisms</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap3_mj.html#X8004F1DA7D9BFA8B"><span class="RefLink">CAP: IsEqualForMorphisms for IsCapCategoryMorphism, IsCapCategoryMorphism</span></a>)</p>
+
+</li>
+<li><p><code class="func">IsEqualForMorphismsOnMor</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap3_mj.html#X8589E5A4814C3DA5"><span class="RefLink">CAP: IsEqualForMorphismsOnMor for IsCapCategoryMorphism, IsCapCategoryMorphism</span></a>)</p>
+
+</li>
+<li><p><code class="func">IsEqualForObjects</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap2_mj.html#X8337569D81C0BBEC"><span class="RefLink">CAP: IsEqualForObjects for IsCapCategoryObject, IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">IsEqualToIdentityMorphism</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap3_mj.html#X8211959783AFF307"><span class="RefLink">CAP: IsEqualToIdentityMorphism for IsCapCategoryMorphism</span></a>)</p>
+
+</li>
+<li><p><code class="func">IsEqualToZeroMorphism</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap3_mj.html#X79D407A3807309FC"><span class="RefLink">CAP: IsEqualToZeroMorphism for IsCapCategoryMorphism</span></a>)</p>
+
+</li>
+<li><p><code class="func">IsIdempotent</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap3_mj.html#X7BA4290882AFFCA3"><span class="RefLink">CAP: IsIdempotent for IsCapCategoryMorphism</span></a>)</p>
+
+</li>
+<li><p><code class="func">IsOne</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap3_mj.html#X7FA10AFB7F441434"><span class="RefLink">CAP: IsOne for IsCapCategoryMorphism</span></a>)</p>
+
+</li>
+<li><p><code class="func">IsTerminal</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap2_mj.html#X7D3542EE7A8448A7"><span class="RefLink">CAP: IsTerminal for IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">IsWellDefinedForMorphisms</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap3_mj.html#X7968A871832877B8"><span class="RefLink">CAP: IsWellDefinedForMorphisms for IsCapCategoryMorphism</span></a>)</p>
+
+</li>
+<li><p><code class="func">IsWellDefinedForMorphismsWithGivenSourceAndRange</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap3_mj.html#X820A29637F48E932"><span class="RefLink">CAP: IsWellDefinedForMorphismsWithGivenSourceAndRange for IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">IsWellDefinedForObjects</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap2_mj.html#X7F9A38A187D9ABFA"><span class="RefLink">CAP: IsWellDefinedForObjects for IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">IsZeroForMorphisms</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap3_mj.html#X844684AD86DCC2DC"><span class="RefLink">CAP: IsZeroForMorphisms for IsCapCategoryMorphism</span></a>)</p>
+
+</li>
+<li><p><code class="func">IsZeroForObjects</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap2_mj.html#X856FA5E084753312"><span class="RefLink">CAP: IsZeroForObjects for IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">JointPairwiseDifferencesOfMorphismsIntoDirectProduct</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap6_mj.html#X7DD2167B7836DF62"><span class="RefLink">CAP: JointPairwiseDifferencesOfMorphismsIntoDirectProduct for IsCapCategoryObject, IsList</span></a>)</p>
+
+</li>
+<li><p><code class="func">LeftUnitor</code> (<a href="/home/kamal/.gap/pkg/CAP_project/MonoidalCategories/doc/chap1_mj.html#X7EBCAFDD81BDB655"><span class="RefLink">MonoidalCategories: LeftUnitor for IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">LeftUnitorInverse</code> (<a href="/home/kamal/.gap/pkg/CAP_project/MonoidalCategories/doc/chap1_mj.html#X79A274078147A9F7"><span class="RefLink">MonoidalCategories: LeftUnitorInverse for IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">LeftUnitorInverseWithGivenTensorProduct</code> (<a href="/home/kamal/.gap/pkg/CAP_project/MonoidalCategories/doc/chap1_mj.html#X849609447CAE996B"><span class="RefLink">MonoidalCategories: LeftUnitorInverseWithGivenTensorProduct for IsCapCategoryObject, IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">LeftUnitorWithGivenTensorProduct</code> (<a href="/home/kamal/.gap/pkg/CAP_project/MonoidalCategories/doc/chap1_mj.html#X7ED284DF7BA21774"><span class="RefLink">MonoidalCategories: LeftUnitorWithGivenTensorProduct for IsCapCategoryObject, IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">LinearCombinationOfMorphisms</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap3_mj.html#X7C101B5C7AC9089C"><span class="RefLink">CAP: LinearCombinationOfMorphisms for IsCapCategoryObject, IsList, IsList, IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">MorphismBetweenDirectProducts</code> (<a href="/home/kamal/.gap/pkg/CategoricalTowers/ToolsForCategoricalTowers/doc/chap2_mj.html#X78C812697D083544"><span class="RefLink">ToolsForCategoricalTowers: MorphismBetweenDirectProducts for IsList, IsList, IsList</span></a>)</p>
+
+</li>
+<li><p><code class="func">MorphismBetweenDirectProductsWithGivenDirectProducts</code> (<a href="/home/kamal/.gap/pkg/CategoricalTowers/ToolsForCategoricalTowers/doc/chap2_mj.html#X81B6261387B9B090"><span class="RefLink">ToolsForCategoricalTowers: MorphismBetweenDirectProductsWithGivenDirectProducts for IsCapCategoryObject, IsList, IsList, IsList, IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">MorphismConstructor</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap3_mj.html#X7F1FB34F789ECB10"><span class="RefLink">CAP: MorphismConstructor for IsCapCategoryObject, IsObject, IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">MorphismDatum</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap3_mj.html#X7BBFB178866108FA"><span class="RefLink">CAP: MorphismDatum for IsCapCategoryMorphism</span></a>)</p>
+
+</li>
+<li><p><code class="func">MultiplicationForMorphisms</code> (<a href="/home/kamal/.gap/pkg/GradientBasedLearningForCAP/doc/chap9_mj.html#X870E0703869AA672"><span class="RefLink">GradientBasedLearningForCAP: MultiplicationForMorphisms for IsCapCategoryMorphism, IsCapCategoryMorphism</span></a>)</p>
+
+</li>
+<li><p><code class="func">MultiplyWithElementOfCommutativeRingForMorphisms</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap3_mj.html#X8187CAF17EB5D6D0"><span class="RefLink">CAP: MultiplyWithElementOfCommutativeRingForMorphisms for IsRingElement, IsCapCategoryMorphism</span></a>)</p>
+
+</li>
+<li><p><code class="func">ObjectConstructor</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap2_mj.html#X825D050A8674D377"><span class="RefLink">CAP: ObjectConstructor for IsCapCategory, IsObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">ObjectDatum</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap2_mj.html#X8521A36F7BBFF6BD"><span class="RefLink">CAP: ObjectDatum for IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">PostCompose</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap3_mj.html#X84293B8381256A08"><span class="RefLink">CAP: PostCompose for IsCapCategoryMorphism, IsCapCategoryMorphism</span></a>)</p>
+
+</li>
+<li><p><code class="func">PostComposeList</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap3_mj.html#X7BD83BF3835870E9"><span class="RefLink">CAP: PostComposeList for IsCapCategoryObject, IsList, IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">PreCompose</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap3_mj.html#X8244F7A0868BE27D"><span class="RefLink">CAP: PreCompose for IsCapCategoryMorphism, IsCapCategoryMorphism</span></a>)</p>
+
+</li>
+<li><p><code class="func">PreComposeList</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap3_mj.html#X87A5FFE97BB5190A"><span class="RefLink">CAP: PreComposeList for IsCapCategoryObject, IsList, IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">ProjectionInFactorOfDirectProduct</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap6_mj.html#X7FFBE9EC7BEE7673"><span class="RefLink">CAP: ProjectionInFactorOfDirectProduct for IsList, IsInt</span></a>)</p>
+
+</li>
+<li><p><code class="func">ProjectionInFactorOfDirectProductWithGivenDirectProduct</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap6_mj.html#X8288ABA984EF9DED"><span class="RefLink">CAP: ProjectionInFactorOfDirectProductWithGivenDirectProduct for IsList, IsInt, IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">RandomMorphismWithFixedSourceAndRangeByInteger</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap3_mj.html#X80F66E9D809EA6A7"><span class="RefLink">CAP: RandomMorphismWithFixedSourceAndRangeByInteger for IsCapCategoryObject, IsCapCategoryObject, IsInt</span></a>)</p>
+
+</li>
+<li><p><code class="func">ReverseDifferential</code> (<a href="/home/kamal/.gap/pkg/GradientBasedLearningForCAP/doc/chap9_mj.html#X816906B284DE1664"><span class="RefLink">GradientBasedLearningForCAP: ReverseDifferential for IsCapCategoryMorphism</span></a>)</p>
+
+</li>
+<li><p><code class="func">ReverseDifferentialWithGivenObjects</code> (<a href="/home/kamal/.gap/pkg/GradientBasedLearningForCAP/doc/chap9_mj.html#X83373EBD78A6FCEA"><span class="RefLink">GradientBasedLearningForCAP: ReverseDifferentialWithGivenObjects for IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">RightUnitor</code> (<a href="/home/kamal/.gap/pkg/CAP_project/MonoidalCategories/doc/chap1_mj.html#X82F758CB7A23468A"><span class="RefLink">MonoidalCategories: RightUnitor for IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">RightUnitorInverse</code> (<a href="/home/kamal/.gap/pkg/CAP_project/MonoidalCategories/doc/chap1_mj.html#X82DC825480E87301"><span class="RefLink">MonoidalCategories: RightUnitorInverse for IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">RightUnitorInverseWithGivenTensorProduct</code> (<a href="/home/kamal/.gap/pkg/CAP_project/MonoidalCategories/doc/chap1_mj.html#X85A8A87C87B33008"><span class="RefLink">MonoidalCategories: RightUnitorInverseWithGivenTensorProduct for IsCapCategoryObject, IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">RightUnitorWithGivenTensorProduct</code> (<a href="/home/kamal/.gap/pkg/CAP_project/MonoidalCategories/doc/chap1_mj.html#X84C8F97F7BF2282D"><span class="RefLink">MonoidalCategories: RightUnitorWithGivenTensorProduct for IsCapCategoryObject, IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">SimplifyMorphism</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap3_mj.html#X7FCE611883F6A56B"><span class="RefLink">CAP: SimplifyMorphism for IsCapCategoryMorphism, IsObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">SubtractionForMorphisms</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap3_mj.html#X7B6461F5873F3F9D"><span class="RefLink">CAP: SubtractionForMorphisms for IsCapCategoryMorphism, IsCapCategoryMorphism</span></a>)</p>
+
+</li>
+<li><p><code class="func">SumOfMorphisms</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap3_mj.html#X7D50F754822C30D7"><span class="RefLink">CAP: SumOfMorphisms for IsCapCategoryObject, IsList, IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">TensorProductOnMorphisms</code> (<a href="/home/kamal/.gap/pkg/CAP_project/MonoidalCategories/doc/chap1_mj.html#X84997A1E8188D6BE"><span class="RefLink">MonoidalCategories: TensorProductOnMorphisms for IsCapCategoryMorphism, IsCapCategoryMorphism</span></a>)</p>
+
+</li>
+<li><p><code class="func">TensorProductOnMorphismsWithGivenTensorProducts</code> (<a href="/home/kamal/.gap/pkg/CAP_project/MonoidalCategories/doc/chap1_mj.html#X85008BF07C2C0386"><span class="RefLink">MonoidalCategories: TensorProductOnMorphismsWithGivenTensorProducts for IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">TensorProductOnObjects</code> (<a href="/home/kamal/.gap/pkg/CAP_project/MonoidalCategories/doc/chap1_mj.html#X797034F17AA47EE0"><span class="RefLink">MonoidalCategories: TensorProductOnObjects for IsCapCategoryObject, IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">TensorUnit</code> (<a href="/home/kamal/.gap/pkg/CAP_project/MonoidalCategories/doc/chap1_mj.html#X7BF7FFDF8789474A"><span class="RefLink">MonoidalCategories: TensorUnit for IsCapCategory</span></a>)</p>
+
+</li>
+<li><p><code class="func">TerminalObject</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap6_mj.html#X7DC837217946D22D"><span class="RefLink">CAP: TerminalObject for IsCapCategory</span></a>)</p>
+
+</li>
+<li><p><code class="func">TerminalObjectFunctorial</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap6_mj.html#X7C616CD287760D2F"><span class="RefLink">CAP: TerminalObjectFunctorial for IsCapCategory</span></a>)</p>
+
+</li>
+<li><p><code class="func">TerminalObjectFunctorialWithGivenTerminalObjects</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap6_mj.html#X8511229882130F93"><span class="RefLink">CAP: TerminalObjectFunctorialWithGivenTerminalObjects for IsCapCategoryObject, IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">UniversalMorphismIntoDirectProduct</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap6_mj.html#X872189E4848F6863"><span class="RefLink">CAP: UniversalMorphismIntoDirectProduct for IsList, IsCapCategoryObject, IsList</span></a>)</p>
+
+</li>
+<li><p><code class="func">UniversalMorphismIntoDirectProductWithGivenDirectProduct</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap6_mj.html#X81A27DC180D751B8"><span class="RefLink">CAP: UniversalMorphismIntoDirectProductWithGivenDirectProduct for IsList, IsCapCategoryObject, IsList, IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">UniversalMorphismIntoTerminalObject</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap6_mj.html#X7BEA5AF67D63F4A5"><span class="RefLink">CAP: UniversalMorphismIntoTerminalObject for IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">UniversalMorphismIntoTerminalObjectWithGivenTerminalObject</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap6_mj.html#X8707AD1784DCBBFF"><span class="RefLink">CAP: UniversalMorphismIntoTerminalObjectWithGivenTerminalObject for IsCapCategoryObject, IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">ZeroMorphism</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap3_mj.html#X873412DB7BD0FBD3"><span class="RefLink">CAP: ZeroMorphism for IsCapCategoryObject, IsCapCategoryObject</span></a>)</p>
+
+</li>
+</ul>
+<p><a id="X7915096B840F8531" name="X7915096B840F8531"></a></p>
+
+<h5>4.5-2 <span class="Heading">Generate Documentation</span></h5>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoadPackage( "GradientBasedLearningForCAP", false );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CAP_INTERNAL_GENERATE_DOCUMENTATION_FOR_CATEGORY_INSTANCES(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    [</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        [ SkeletalSmoothMaps, "SkeletalSmoothMaps", 0 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    "GradientBasedLearningForCAP",</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    "SkeletalCategoryOfSmoothMaps.autogen.gd",</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    "Skeletal Category of Smooth Maps",</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    "Supported CAP Operations"</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">);</span>
+</pre></div>
+
+<p><a id="X7A489A5D79DA9E5C" name="X7A489A5D79DA9E5C"></a></p>
+
+<h4>4.6 <span class="Heading">Examples</span></h4>
+
+<p>In this example, we demonstrate the usage of the SkeletalCategoryOfSmoothMaps by constructing objects and morphisms, performing various operations, and utilizing built-in functions.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Smooth := SkeletalCategoryOfSmoothMaps( );</span>
+SkeletalSmoothMaps
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Smooth );</span>
+A CAP category with name SkeletalSmoothMaps:
+
+49 primitive operations were used to derive 92 operations for this category wh\
+ich algorithmically
+* IsCartesianCategory
+* IsLinearCategoryOverCommutativeRing
+* IsSymmetricMonoidalCategory
+and furthermore mathematically
+* IsStrictMonoidalCategory
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R2 := ObjectConstructor( Smooth, 2 );</span>
+ℝ^2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R2 = Smooth.2;</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r := RandomMorphism( R2, R2, 3 );</span>
+ℝ^2 -&gt; ℝ^2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( r );</span>
+ℝ^2 -&gt; ℝ^2
+
+‣ 0.766 * x1 ^ 1 + 0.234 * x2 ^ 2 + 1.
+‣ 0.388 * x1 ^ 1 + 0.459 * x2 ^ 2 + 0.278
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := MorphismConstructor( Smooth,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        Smooth.2,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        Pair(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          x -&gt; [ x[1] ^ 2 + Sin( x[2] ), Exp( x[1] ) + 3 * x[2] ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          x -&gt; [ [ 2 * x[1], Cos( x[2] ) ], [ Exp( x[1] ), 3 ] ] ),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        Smooth.2 );</span>
+ℝ^2 -&gt; ℝ^2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( f );</span>
+ℝ^2 -&gt; ℝ^2
+
+‣ x1 ^ 2 + Sin( x2 )
+‣ Exp( x1 ) + 3 * x2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">dummy_input := CreateContextualVariables( [ "x1", "x2" ] );</span>
+[ x1, x2 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Map( f )( dummy_input );</span>
+[ x1 ^ 2 + Sin( x2 ), Exp( x1 ) + 3 * x2 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">JacobianMatrix( f )( dummy_input );</span>
+[ [ 2 * x1, Cos( x2 ) ], [ Exp( x1 ), 3 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := [ 0.2, 0.3 ];</span>
+[ 0.2, 0.3 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Map( f )( x );</span>
+[ 0.33552, 2.1214 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">JacobianMatrix( f )( x );</span>
+[ [ 0.4, 0.955336 ], [ 1.2214, 3 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g := MorphismConstructor( Smooth,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        Smooth.2,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        Pair(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          x -&gt; [ 3 * x[1], Exp( x[2] ), x[1] ^ 3 + Log( x[2] ) ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          x -&gt; [ [ 3, 0 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                 [ 0, Exp( x[2] ) ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                 [ 3 * x[1] ^ 2, 1 / x[2] ] ] ),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        Smooth.3 );</span>
+ℝ^2 -&gt; ℝ^3
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( g );</span>
+ℝ^2 -&gt; ℝ^3
+
+‣ 3 * x1
+‣ Exp( x2 )
+‣ x1 ^ 3 + Log( x2 )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Map( g )( dummy_input );</span>
+[ 3 * x1, Exp( x2 ), x1 ^ 3 + Log( x2 ) ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">JacobianMatrix( g )( dummy_input );</span>
+[ [ 3, 0 ], [ 0, Exp( x2 ) ], [ 3 * x1 ^ 2, 1 / x2 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">h := PostCompose( g, f );</span>
+ℝ^2 -&gt; ℝ^3
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( h );</span>
+ℝ^2 -&gt; ℝ^3
+
+‣ 3 * (x1 ^ 2 + Sin( x2 ))
+‣ Exp( Exp( x1 ) + 3 * x2 )
+‣ (x1 ^ 2 + Sin( x2 )) ^ 3 + Log( Exp( x1 ) + 3 * x2 )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x;</span>
+[ 0.2, 0.3 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Map( h )( x );</span>
+[ 1.00656, 8.34283, 0.789848 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Eval( h, x );</span>
+[ 1.00656, 8.34283, 0.789848 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Map( g )( Map( f )( x ) );</span>
+[ 1.00656, 8.34283, 0.789848 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">JacobianMatrix( h )( x );</span>
+[ [ 1.2, 2.86601 ], [ 10.19, 25.0285 ], [ 0.710841, 1.7368 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">EvalJacobianMatrix( h, x );</span>
+[ [ 1.2, 2.86601 ], [ 10.19, 25.0285 ], [ 0.710841, 1.7368 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">JacobianMatrix( g )( Map( f )( x ) ) * JacobianMatrix( f )( x );</span>
+[ [ 1.2, 2.86601 ], [ 10.19, 25.0285 ], [ 0.710841, 1.7368 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCongruentForMorphisms( Smooth, f + f, 2 * f );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">IsCongruentForMorphisms( Smooth, 2 * f - f, f );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">s := SimplifyMorphism( h, infinity );</span>
+ℝ^2 -&gt; ℝ^3
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( s );</span>
+ℝ^2 -&gt; ℝ^3
+
+‣ 3 * x1 ^ 2 + 3 * Sin( x2 )
+‣ Exp( 3 * x2 + Exp( x1 ) )
+‣ (x1 ^ 2 + Sin( x2 )) ^ 3 + Log( 3 * x2 + Exp( x1 ) )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R2 := Smooth.( 2 );</span>
+ℝ^2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R3 := Smooth.( 3 );</span>
+ℝ^3
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">DirectProduct( R2, R3 );</span>
+ℝ^5
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">p1 := ProjectionInFactorOfDirectProduct( [ R2, R3 ], 1 );</span>
+ℝ^5 -&gt; ℝ^2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( p1 );</span>
+ℝ^5 -&gt; ℝ^2
+
+‣ x1
+‣ x2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">p2 := ProjectionInFactorOfDirectProduct( [ R2, R3 ], 2 );</span>
+ℝ^5 -&gt; ℝ^3
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( p2 );</span>
+ℝ^5 -&gt; ℝ^3
+
+‣ x3
+‣ x4
+‣ x5
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">u := UniversalMorphismIntoDirectProduct( Smooth, [ f, g ] );</span>
+ℝ^2 -&gt; ℝ^5
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( u );</span>
+ℝ^2 -&gt; ℝ^5
+
+‣ x1 ^ 2 + Sin( x2 )
+‣ Exp( x1 ) + 3 * x2
+‣ 3 * x1
+‣ Exp( x2 )
+‣ x1 ^ 3 + Log( x2 )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PreCompose( Smooth, u, p1 ) = f;</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">PreCompose( Smooth, u, p2 ) = g;</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( f );</span>
+ℝ^2 -&gt; ℝ^2
+
+‣ x1 ^ 2 + Sin( x2 )
+‣ Exp( x1 ) + 3 * x2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( g );</span>
+ℝ^2 -&gt; ℝ^3
+‣ 3 * x1
+‣ Exp( x2 )
+‣ x1 ^ 3 + Log( x2 )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">d := DirectProductFunctorial( Smooth, [ f, g ] );</span>
+ℝ^4 -&gt; ℝ^5
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( d );</span>
+ℝ^4 -&gt; ℝ^5
+
+‣ x1 ^ 2 + Sin( x2 )
+‣ Exp( x1 ) + 3 * x2
+‣ 3 * x3
+‣ Exp( x4 )
+‣ x3 ^ 3 + Log( x4 )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Rf := ReverseDifferential( f );</span>
+ℝ^4 -&gt; ℝ^2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Rf );</span>
+ℝ^4 -&gt; ℝ^2
+
+‣ x3 * (2 * x1) + x4 * Exp( x1 )
+‣ x3 * Cos( x2 ) + x4 * 3
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Smooth.Sqrt );</span>
+ℝ^1 -&gt; ℝ^1
+
+‣ Sqrt( x1 )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Smooth.Exp );</span>
+ℝ^1 -&gt; ℝ^1
+
+‣ Exp( x1 )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Smooth.Log );</span>
+ℝ^1 -&gt; ℝ^1
+
+‣ Log( x1 )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Smooth.Sin );</span>
+ℝ^1 -&gt; ℝ^1
+
+‣ Sin( x1 )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Smooth.Cos );</span>
+ℝ^1 -&gt; ℝ^1
+
+‣ Cos( x1 )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Smooth.Constant( [ 1.2, 3.4 ] ) );</span>
+ℝ^0 -&gt; ℝ^2
+
+‣ 1.2
+‣ 3.4
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Smooth.Zero( 2, 3 ) );</span>
+ℝ^2 -&gt; ℝ^3
+
+‣ 0
+‣ 0
+‣ 0
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Smooth.IdFunc( 2 ) );</span>
+ℝ^2 -&gt; ℝ^2
+
+‣ x1
+‣ x2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Smooth.Relu( 2 ) );</span>
+ℝ^2 -&gt; ℝ^2
+
+‣ Relu( x1 )
+‣ Relu( x2 )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Smooth.Mul( 3 ) );</span>
+ℝ^3 -&gt; ℝ^1
+
+‣ x1 * x2 * x3
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Smooth.Sum( 3 ) );</span>
+ℝ^3 -&gt; ℝ^1
+
+‣ x1 + x2 + x3
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Smooth.Mean( 3 ) );</span>
+ℝ^3 -&gt; ℝ^1
+
+‣ (x1 + x2 + x3) / 3
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Smooth.Variance( 3 ) );</span>
+ℝ^3 -&gt; ℝ^1
+
+‣ ((x1 - (x1 + x2 + x3) / 3) ^ 2 + (x2 - (x1 + x2 + x3) / 3) ^ 2
+   + (x3 - (x1 + x2 + x3) / 3) ^ 2) / 3
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Smooth.StandardDeviation( 3 ) );</span>
+ℝ^3 -&gt; ℝ^1
+
+‣ Sqrt( ((x1 - (x1 + x2 + x3) / 3) ^ 2 + (x2 - (x1 + x2 + x3) / 3) ^ 2
+  + (x3 - (x1 + x2 + x3) / 3) ^ 2) / 3 )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Smooth.Power( 6 ) );</span>
+ℝ^1 -&gt; ℝ^1
+
+‣ x1 ^ 6
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Smooth.PowerBase( 6 ) );</span>
+ℝ^1 -&gt; ℝ^1
+
+‣ 6 ^ x1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Smooth.Sigmoid( 2 ) );</span>
+ℝ^2 -&gt; ℝ^2
+
+‣ 1 / (1 + Exp( - x1 ))
+‣ 1 / (1 + Exp( - x2 ))
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Smooth.Softmax( 2 ) );</span>
+ℝ^2 -&gt; ℝ^2
+
+‣ Exp( x1 ) / (Exp( x1 ) + Exp( x2 ))
+‣ Exp( x2 ) / (Exp( x1 ) + Exp( x2 ))
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Smooth.QuadraticLoss( 2 ) );</span>
+ℝ^4 -&gt; ℝ^1
+
+‣ ((x1 - x3) ^ 2 + (x2 - x4) ^ 2) / 2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Smooth.BinaryCrossEntropyLoss( 1 ) );</span>
+ℝ^2 -&gt; ℝ^1
+
+‣ - (x2 * Log( x1 ) + (1 - x2) * Log( 1 - x1 ))
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Smooth.SigmoidBinaryCrossEntropyLoss( 1 ) );</span>
+ℝ^2 -&gt; ℝ^1
+
+‣ Log( 1 + Exp( - x1 ) ) + (1 - x2) * x1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Smooth.CrossEntropyLoss( 3 ) );</span>
+ℝ^6 -&gt; ℝ^1
+
+‣ (- (Log( x1 ) * x4 + Log( x2 ) * x5 + Log( x3 ) * x6)) / 3
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Smooth.SoftmaxCrossEntropyLoss( 3 ) );</span>
+ℝ^6 -&gt; ℝ^1
+
+‣ ((Log( Exp( x1 ) + Exp( x2 ) + Exp( x3 ) ) - x1) * x4
+  + (Log( Exp( x1 ) + Exp( x2 ) + Exp( x3 ) ) - x2) * x5
+  + (Log( Exp( x1 ) + Exp( x2 ) + Exp( x3 ) ) - x3) * x6) / 3
+</pre></div>
+
+<p>In this example, we illustrate the various convenience ways to construct smooth maps. For instance, the smooth map:</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Smooth := SkeletalCategoryOfSmoothMaps( );</span>
+SkeletalSmoothMaps
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">dummy_input := CreateContextualVariables( [ "x1", "x2" ] );</span>
+[ x1, x2 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g1 := MorphismConstructor( Smooth,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        Smooth.2,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        Pair(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          x -&gt; [ 3 * x[1], Exp( x[2] ), x[1] ^ 3 + Log( x[2] ) ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">          x -&gt; [ [ 3, 0 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                 [ 0, Exp( x[2] ) ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                 [ 3 * x[1] ^ 2, 1 / x[2] ] ] ),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        Smooth.3 );</span>
+ℝ^2 -&gt; ℝ^3
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( g1 );</span>
+ℝ^2 -&gt; ℝ^3
+‣ 3 * x1
+‣ Exp( x2 )
+‣ x1 ^ 3 + Log( x2 )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Map( g1 )( dummy_input );</span>
+[ 3 * x1, Exp( x2 ), x1 ^ 3 + Log( x2 ) ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">JacobianMatrix( g1 )( dummy_input );</span>
+[ [ 3, 0 ], [ 0, Exp( x2 ) ], [ 3 * x1 ^ 2, 1 / x2 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">"# Use python to compute the Jacobian Matrix";;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g2 := SmoothMap( Smooth,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        Smooth.2,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        x -&gt; [ 3 * x[1], Exp( x[2] ), x[1] ^ 3 + Log( x[2] ) ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        Smooth.3,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        true</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">      );</span>
+ℝ^2 -&gt; ℝ^3
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g1 = g2;</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">"# Use python to compute the Jacobian Matrix";;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g3 := SmoothMap( Smooth,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        Smooth.2,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        [ "3 * x1", "Exp( x2 )", "x1 ^ 3 + Log( x2 )" ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        Smooth.3,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        true</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">      );</span>
+ℝ^2 -&gt; ℝ^3
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g3 = g1;</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">"# Lazy evaluation of the Jacobian Matrix";;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g4 := SmoothMap( Smooth,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        Smooth.2,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        [ "3 * x1", "Exp( x2 )", "x1 ^ 3 + Log( x2 )" ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        Smooth.3,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        false</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">      );</span>
+ℝ^2 -&gt; ℝ^3
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g4 = g1;</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Map( g4 )( dummy_input );</span>
+[ 3 * x1, Exp( x2 ), x1 ^ 3 + Log( x2 ) ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">J := JacobianMatrix( g4 )( [ 1, 2 ] );</span>
+[ [ Diff( [ "x1", "x2" ], "3 * x1", 1 )( [ 1, 2 ] ),
+      Diff( [ "x1", "x2" ], "3 * x1", 2 )( [ 1, 2 ] ) ], 
+  [ Diff( [ "x1", "x2" ], "Exp( x2 )", 1 )( [ 1, 2 ] ),
+      Diff( [ "x1", "x2" ], "Exp( x2 )", 2 )( [ 1, 2 ] ) ], 
+  [ Diff( [ "x1", "x2" ], "x1 ^ 3 + Log( x2 )", 1 )( [ 1, 2 ] ), 
+      Diff( [ "x1", "x2" ], "x1 ^ 3 + Log( x2 )", 2 )( [ 1, 2 ] ) ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">"# Evaluation uses python to compute the derivatives";;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Eval( J[3][2] );</span>
+1/2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Diff( [ "x1", "x2" ], "x1 ^ 3 + Log( x2 )", 2 )( [ 1, 2 ] );</span>
+1/2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Eval( J );</span>
+[ [ 3, 0 ], [ 0, 7.38906 ], [ 3, 1/2 ] ]
+</pre></div>
+
+<p>In the following example, we demonstrate the construction and usage of an affine transformation morphism within the SkeletalCategoryOfSmoothMaps.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Smooth := SkeletalCategoryOfSmoothMaps( );</span>
+SkeletalSmoothMaps
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">affine_trans := Smooth.AffineTransformation( 2, 3 );</span>
+ℝ^11 -&gt; ℝ^3
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( affine_trans );</span>
+ℝ^11 -&gt; ℝ^3
+
+‣ x1 * x10 + x2 * x11 + x3
+‣ x4 * x10 + x5 * x11 + x6
+‣ x7 * x10 + x8 * x11 + x9
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">dummy_input := DummyInputForAffineTransformation( 2, 3, "w", "b", "z" );</span>
+[ w1_1, w2_1, b_1, w1_2, w2_2, b_2, w1_3, w2_3, b_3, z1, z2 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Map( affine_trans )( dummy_input );</span>
+[ w1_1 * z1 + w2_1 * z2 + b_1,
+  w1_2 * z1 + w2_2 * z2 + b_2,
+  w1_3 * z1 + w2_3 * z2 + b_3 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">JacobianMatrix( affine_trans )( dummy_input );</span>
+[ [ z1, z2, 1, 0, 0, 0, 0, 0, 0, w1_1, w2_1 ],
+  [ 0, 0, 0, z1, z2, 1, 0, 0, 0, w1_2, w2_2 ],
+  [ 0, 0, 0, 0, 0, 0, z1, z2, 1, w1_3, w2_3 ] ]
+</pre></div>
+
+<p><a id="X7D03633A7D98026B" name="X7D03633A7D98026B"></a></p>
+
+<h4>4.7 <span class="Heading">GAP Categories</span></h4>
+
+<p><a id="X8590E20280E6F36C" name="X8590E20280E6F36C"></a></p>
+
+<h5>4.7-1 IsSkeletalCategoryOfSmoothMaps</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSkeletalCategoryOfSmoothMaps</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
+
+<p>The <strong class="pkg">GAP</strong> category of a category of skeletal smooth maps.</p>
+
+<p><a id="X863E782C83BF7CE6" name="X863E782C83BF7CE6"></a></p>
+
+<h5>4.7-2 IsObjectInSkeletalCategoryOfSmoothMaps</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsObjectInSkeletalCategoryOfSmoothMaps</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
+
+<p>The <strong class="pkg">GAP</strong> category of objects in a category of skeletal smooth maps.</p>
+
+<p><a id="X7FF033707B478712" name="X7FF033707B478712"></a></p>
+
+<h5>4.7-3 IsMorphismInSkeletalCategoryOfSmoothMaps</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMorphismInSkeletalCategoryOfSmoothMaps</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
+
+<p>The <strong class="pkg">GAP</strong> category of morphisms in a category of skeletal smooth maps.</p>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0_mj.html">[Top of Book]</a>&nbsp;  <a href="chap0_mj.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap3_mj.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap5_mj.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0_mj.html">Top</a>  <a href="chap1_mj.html">1</a>  <a href="chap2_mj.html">2</a>  <a href="chap3_mj.html">3</a>  <a href="chap4_mj.html">4</a>  <a href="chap5_mj.html">5</a>  <a href="chap6_mj.html">6</a>  <a href="chap7_mj.html">7</a>  <a href="chap8_mj.html">8</a>  <a href="chap9_mj.html">9</a>  <a href="chap10_mj.html">10</a>  <a href="chapInd_mj.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="https://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

@@ -1,0 +1,390 @@
+  
+  [1X6 [33X[0;0YNeural Networks[133X[101X
+  
+  
+  [1X6.1 [33X[0;0YDefinition[133X[101X
+  
+  [33X[0;0YA  neural  network  can  be  viewed  as a composition of parametrised affine
+  transformations  and non-linear activation functions (such as ReLU, Sigmoid,
+  Softmax, etc.).[133X
+  
+  
+  [1X6.2 [33X[0;0YOperations[133X[101X
+  
+  [1X6.2-1 NeuralNetworkLogitsMorphism[101X
+  
+  [33X[1;0Y[29X[2XNeuralNetworkLogitsMorphism[102X( [3XPara[103X, [3Xs[103X, [3Xhidden_layers_dims[103X, [3Xt[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya parametrised morphism[133X
+  
+  [33X[0;0YThe  arguments  are  [3XPara[103X,  a  parametrised morphism category, [3Xs[103X, a positive
+  integer  giving  the input dimension, [3Xhidden_layers_dims[103X, a list of positive
+  integers  giving  the sizes of the hidden layers in order, and [3Xt[103X, a positive
+  integer   giving   the   output   dimension.  This  operation  constructs  a
+  parametrised morphism that computes the logits (pre-activation outputs) of a
+  fully-connected   feed-forward   neural   network.   The  signature  of  the
+  parametrised  morphism is [23X\mathbb{R}^s \to \mathbb{R}^t[123X and is parameterised
+  by  the  network  weights  and  biases.  More specifically, the parametrised
+  morphism   represents   the  function  that  maps  an  input  vector  [23Xx  \in
+  \mathbb{R}^s[123X  and a parameter vector [23Xp \in \mathbb{R}^d[123X to the output vector
+  [23Xy \in \mathbb{R}^t[123X, where [23Xd[123X is the total number of weights and biases in the
+  network defined by the given architecture.[133X
+  
+  [30X    [33X[0;6YFor a layer with input dimension [23Xm_i[123X and output dimension [23Xm_{i+1}[123X, the
+        parameter  object  has  dimension [23X(m_i + 1) \times m_{i+1}[123X, accounting
+        for both the [23Xm_i \times m_{i+1}[123X weights matrix and the [23Xm_{i+1}[123X biases.[133X
+  
+  [30X    [33X[0;6YHidden  layers  use ReLU nonlinearity between linear layers. The final
+        layer  is  linear  (no  activation)  so the returned morphism produces
+        logits suitable for subsequent application of a loss or classification
+        activation.[133X
+  
+  [1X6.2-2 NeuralNetworkPredictionMorphism[101X
+  
+  [33X[1;0Y[29X[2XNeuralNetworkPredictionMorphism[102X( [3XPara[103X, [3Xs[103X, [3Xhidden_layers_dims[103X, [3Xt[103X, [3Xactivation[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya parametrised morphism[133X
+  
+  [33X[0;0YIt  composes  the logits morphisms with the specified activation function to
+  create  a  parametrised  morphism  representing  the predictions of a neural
+  network.    The    network    has   the   architecture   specified   by   [3Xs[103X,
+  [3Xhidden_layers_dims[103X,  and  [3Xt[103X, i.e., the source and target of the parametrised
+  morphism are [23X\mathbb{R}^{s}[123X and [23X\mathbb{R}^{t}[123X, respectively. The [3Xactivation[103X
+  determines the final activation function:[133X
+  
+  [30X    [33X[0;6Y[23X\mathbf{Softmax}[123X:  applies  the softmax activation to turn logits into
+        probabilities for multi-class classification.[133X
+  
+  [30X    [33X[0;6Y[23X\mathbf{Sigmoid}[123X:  applies  the sigmoid activation to turn logits into
+        probabilities for binary classification.[133X
+  
+  [30X    [33X[0;6Y[23X\mathbf{IdFunc}[123X:  applies  the  identity  function (no activation) for
+        regression tasks.[133X
+  
+  [1X6.2-3 NeuralNetworkLossMorphism[101X
+  
+  [33X[1;0Y[29X[2XNeuralNetworkLossMorphism[102X( [3XPara[103X, [3Xs[103X, [3Xhidden_layers_dims[103X, [3Xt[103X, [3Xactivation[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya parametrised morphism[133X
+  
+  [33X[0;0YConstruct  a  parametrised  morphism  representing  the  training  loss of a
+  fully-connected  feed-forward  neural  network with architecture given by [3Xs[103X,
+  [3Xhidden_layers_dims[103X   and   [3Xt[103X.   The   returned   parametrised   morphism  is
+  parameterised  by  the  network  weights  and biases and maps a pair (input,
+  target) to a scalar loss: its source is [23X\mathbb{R}^s \times \mathbb{R}^t[123X (an
+  input  vector  [23Xx[123X  and  a  target vector [23Xy[123X) and its target is [23X\mathbb{R}[123X (the
+  scalar loss).[133X
+  
+  [33X[0;0YThe behaviour of the loss depends on the [3Xactivation[103X argument:[133X
+  
+  [30X    [33X[0;6Y[23X\mathbf{Softmax}[123X:[133X
+  
+        [30X    [33X[0;12YUsed for multi-class classification.[133X
+  
+        [30X    [33X[0;12YSoftmax  is  applied  to  the  logits  to  convert  them  into a
+              probability distribution.[133X
+  
+        [30X    [33X[0;12YThe  loss  is the (negative) cross-entropy between the predicted
+              probabilities and the target distribution.[133X
+  
+        [30X    [33X[0;12YTargets  y  may  be one-hot vectors or probability distributions
+              over classes.[133X
+  
+  [30X    [33X[0;6Y[23X\mathbf{Sigmoid}[123X:[133X
+  
+        [30X    [33X[0;12YUsed for binary classification. Requires [23Xt = 1[123X.[133X
+  
+        [30X    [33X[0;12YApplies  the  logistic  sigmoid  to the single logit to obtain a
+              probability [23X\hat{y}[123X in [23X[0,1][123X.[133X
+  
+        [30X    [33X[0;12YThe   loss   is   binary  cross-entropy:  [23X\mathrm{loss}  =  -  (
+              y\log(\hat{y}) + (1-y)\log(1-\hat{y}) )[123X.[133X
+  
+  [30X    [33X[0;6Y[23X\mathbf{IdFunc}[123X:[133X
+  
+        [30X    [33X[0;12YUsed for regression.[133X
+  
+        [30X    [33X[0;12YNo  final  activation  is  applied. The loss is the mean squared
+              error (MSE).[133X
+  
+  
+  [1X6.3 [33X[0;0YExamples[133X[101X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XSmooth := SkeletalCategoryOfSmoothMaps( );[127X[104X
+    [4X[28XSkeletalSmoothMaps[128X[104X
+    [4X[25Xgap>[125X [27XPara := CategoryOfParametrisedMorphisms( Smooth );[127X[104X
+    [4X[28XCategoryOfParametrisedMorphisms( SkeletalSmoothMaps )[128X[104X
+    [4X[25Xgap>[125X [27XN213_Logits := NeuralNetworkLogitsMorphism( Para, 2, [ 1 ], 3 );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^3 defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Object:[128X[104X
+    [4X[28X-----------------[128X[104X
+    [4X[28Xℝ^9[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Morphism:[128X[104X
+    [4X[28X-------------------[128X[104X
+    [4X[28Xℝ^11 -> ℝ^3[128X[104X
+    [4X[25Xgap>[125X [27Xdummy_input := DummyInputForNeuralNetwork( 2, [ 1 ], 3 );[127X[104X
+    [4X[28X[ w2_1_1, b2_1, w2_1_2, b2_2, w2_1_3, b2_3, w1_1_1, w1_2_1, b1_1, z1, z2 ][128X[104X
+    [4X[25Xgap>[125X [27XDisplay( N213_Logits : dummy_input := dummy_input );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^3 defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Object:[128X[104X
+    [4X[28X-----------------[128X[104X
+    [4X[28Xℝ^9[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Morphism:[128X[104X
+    [4X[28X-------------------[128X[104X
+    [4X[28Xℝ^11 -> ℝ^3[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ w2_1_1 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_1[128X[104X
+    [4X[28X‣ w2_1_2 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_2[128X[104X
+    [4X[28X‣ w2_1_3 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_3[128X[104X
+    [4X[25Xgap>[125X [27XN213_Pred := NeuralNetworkPredictionMorphism( Para, 2, [ 1 ], 3, "IdFunc" );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^3 defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Object:[128X[104X
+    [4X[28X-----------------[128X[104X
+    [4X[28Xℝ^9[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Morphism:[128X[104X
+    [4X[28X-------------------[128X[104X
+    [4X[28Xℝ^11 -> ℝ^3[128X[104X
+    [4X[25Xgap>[125X [27XN213_Pred = N213_Logits;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XN213_Loss := NeuralNetworkLossMorphism( Para, 2, [ 1 ], 3, "IdFunc" );[127X[104X
+    [4X[28Xℝ^5 -> ℝ^1 defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Object:[128X[104X
+    [4X[28X-----------------[128X[104X
+    [4X[28Xℝ^9[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Morphism:[128X[104X
+    [4X[28X-------------------[128X[104X
+    [4X[28Xℝ^14 -> ℝ^1[128X[104X
+    [4X[25Xgap>[125X [27Xvars := Concatenation([127X[104X
+    [4X[25X>[125X [27X                DummyInputStringsForNeuralNetwork( 2, [ 1 ], 3 ),[127X[104X
+    [4X[25X>[125X [27X                DummyInputStrings( "y", 3 ) );[127X[104X
+    [4X[28X[ "w2_1_1", "b2_1", "w2_1_2", "b2_2", "w2_1_3", "b2_3", "w1_1_1", "w1_2_1", [128X[104X
+    [4X[28X  "b1_1", "z1", "z2", "y1", "y2", "y3" ][128X[104X
+    [4X[25Xgap>[125X [27Xdummy_input := CreateContextualVariables( vars );[127X[104X
+    [4X[28X[ w2_1_1, b2_1, w2_1_2, b2_2, w2_1_3, b2_3, w1_1_1, w1_2_1, b1_1, z1, z2,[128X[104X
+    [4X[28X  y1, y2, y3 ][128X[104X
+    [4X[25Xgap>[125X [27XDisplay( N213_Loss : dummy_input := dummy_input );[127X[104X
+    [4X[28Xℝ^5 -> ℝ^1 defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Object:[128X[104X
+    [4X[28X-----------------[128X[104X
+    [4X[28Xℝ^9[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Morphism:[128X[104X
+    [4X[28X-------------------[128X[104X
+    [4X[28Xℝ^14 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ ((w2_1_1 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_1 - y1) ^ 2[128X[104X
+    [4X[28X   + (w2_1_2 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_2 - y2) ^ 2[128X[104X
+    [4X[28X   + (w2_1_3 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_3 - y3) ^ 2) / 3[128X[104X
+  [4X[32X[104X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XSmooth := SkeletalCategoryOfSmoothMaps( );[127X[104X
+    [4X[28XSkeletalSmoothMaps[128X[104X
+    [4X[25Xgap>[125X [27XPara := CategoryOfParametrisedMorphisms( Smooth );[127X[104X
+    [4X[28XCategoryOfParametrisedMorphisms( SkeletalSmoothMaps )[128X[104X
+    [4X[25Xgap>[125X [27XN213_Logits := NeuralNetworkLogitsMorphism( Para, 1, [ ], 1 );[127X[104X
+    [4X[28Xℝ^1 -> ℝ^1 defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Object:[128X[104X
+    [4X[28X-----------------[128X[104X
+    [4X[28Xℝ^2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Morphism:[128X[104X
+    [4X[28X-------------------[128X[104X
+    [4X[28Xℝ^3 -> ℝ^1[128X[104X
+    [4X[25Xgap>[125X [27Xdummy_input := DummyInputForNeuralNetwork( 1, [ ], 1 );[127X[104X
+    [4X[28X[ w1_1_1, b1_1, z1 ][128X[104X
+    [4X[25Xgap>[125X [27XDisplay( N213_Logits : dummy_input := dummy_input );[127X[104X
+    [4X[28Xℝ^1 -> ℝ^1 defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Object:[128X[104X
+    [4X[28X-----------------[128X[104X
+    [4X[28Xℝ^2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Morphism:[128X[104X
+    [4X[28X-------------------[128X[104X
+    [4X[28Xℝ^3 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ w1_1_1 * z1 + b1_1[128X[104X
+    [4X[25Xgap>[125X [27XN213_Pred := PreCompose( N213_Logits, Para.Sigmoid( 1 ) );[127X[104X
+    [4X[28Xℝ^1 -> ℝ^1 defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Object:[128X[104X
+    [4X[28X-----------------[128X[104X
+    [4X[28Xℝ^2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Morphism:[128X[104X
+    [4X[28X-------------------[128X[104X
+    [4X[28Xℝ^3 -> ℝ^1[128X[104X
+    [4X[25Xgap>[125X [27XN213_Pred = NeuralNetworkPredictionMorphism( Para, 1, [ ], 1, "Sigmoid" );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( N213_Pred : dummy_input := dummy_input );[127X[104X
+    [4X[28Xℝ^1 -> ℝ^1 defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Object:[128X[104X
+    [4X[28X-----------------[128X[104X
+    [4X[28Xℝ^2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Morphism:[128X[104X
+    [4X[28X-------------------[128X[104X
+    [4X[28Xℝ^3 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ 1 / (1 + Exp( - (w1_1_1 * z1 + b1_1) ))[128X[104X
+    [4X[25Xgap>[125X [27XN213_Loss := NeuralNetworkLossMorphism( Para, 1, [ ], 1, "Sigmoid" );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^1 defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Object:[128X[104X
+    [4X[28X-----------------[128X[104X
+    [4X[28Xℝ^2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Morphism:[128X[104X
+    [4X[28X-------------------[128X[104X
+    [4X[28Xℝ^4 -> ℝ^1[128X[104X
+    [4X[25Xgap>[125X [27Xvars := Concatenation([127X[104X
+    [4X[25X>[125X [27X                DummyInputStringsForNeuralNetwork( 1, [ ], 1 ),[127X[104X
+    [4X[25X>[125X [27X                [ "y1" ] );[127X[104X
+    [4X[28X[ "w1_1_1", "b1_1", "z1", "y1" ][128X[104X
+    [4X[25Xgap>[125X [27Xdummy_input := CreateContextualVariables( vars );[127X[104X
+    [4X[28X[ w1_1_1, b1_1, z1, y1 ][128X[104X
+    [4X[25Xgap>[125X [27XDisplay( N213_Loss : dummy_input := dummy_input );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^1 defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Object:[128X[104X
+    [4X[28X-----------------[128X[104X
+    [4X[28Xℝ^2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Morphism:[128X[104X
+    [4X[28X-------------------[128X[104X
+    [4X[28Xℝ^4 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ Log( 1 + Exp( - (w1_1_1 * z1 + b1_1) ) ) + (1 - y1) * (w1_1_1 * z1 + b1_1)[128X[104X
+  [4X[32X[104X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XSmooth := SkeletalCategoryOfSmoothMaps( );[127X[104X
+    [4X[28XSkeletalSmoothMaps[128X[104X
+    [4X[25Xgap>[125X [27XPara := CategoryOfParametrisedMorphisms( Smooth );[127X[104X
+    [4X[28XCategoryOfParametrisedMorphisms( SkeletalSmoothMaps )[128X[104X
+    [4X[25Xgap>[125X [27XN213_Logits := NeuralNetworkLogitsMorphism( Para, 2, [ 1 ], 3 );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^3 defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Object:[128X[104X
+    [4X[28X-----------------[128X[104X
+    [4X[28Xℝ^9[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Morphism:[128X[104X
+    [4X[28X-------------------[128X[104X
+    [4X[28Xℝ^11 -> ℝ^3[128X[104X
+    [4X[25Xgap>[125X [27Xdummy_input := DummyInputForNeuralNetwork( 2, [ 1 ], 3 );[127X[104X
+    [4X[28X[ w2_1_1, b2_1, w2_1_2, b2_2, w2_1_3, b2_3, w1_1_1, w1_2_1, b1_1, z1, z2 ][128X[104X
+    [4X[25Xgap>[125X [27XDisplay( N213_Logits : dummy_input := dummy_input );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^3 defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Object:[128X[104X
+    [4X[28X-----------------[128X[104X
+    [4X[28Xℝ^9[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Morphism:[128X[104X
+    [4X[28X-------------------[128X[104X
+    [4X[28Xℝ^11 -> ℝ^3[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ w2_1_1 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_1[128X[104X
+    [4X[28X‣ w2_1_2 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_2[128X[104X
+    [4X[28X‣ w2_1_3 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_3[128X[104X
+    [4X[25Xgap>[125X [27XN213_Pred := PreCompose( N213_Logits, Para.Softmax( 3 ) );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^3 defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Object:[128X[104X
+    [4X[28X-----------------[128X[104X
+    [4X[28Xℝ^9[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Morphism:[128X[104X
+    [4X[28X-------------------[128X[104X
+    [4X[28Xℝ^11 -> ℝ^3[128X[104X
+    [4X[25Xgap>[125X [27XN213_Pred = NeuralNetworkPredictionMorphism( Para, 2, [ 1 ], 3, "Softmax" );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( N213_Pred : dummy_input := dummy_input );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^3 defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Object:[128X[104X
+    [4X[28X-----------------[128X[104X
+    [4X[28Xℝ^9[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Morphism:[128X[104X
+    [4X[28X-------------------[128X[104X
+    [4X[28Xℝ^11 -> ℝ^3[128X[104X
+    [4X[28X‣ Exp( w2_1_1 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_1 )[128X[104X
+    [4X[28X  / (Exp( w2_1_1 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_1 )[128X[104X
+    [4X[28X     + Exp( w2_1_2 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_2 )[128X[104X
+    [4X[28X       + Exp( w2_1_3 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_3 ))[128X[104X
+    [4X[28X‣ Exp( w2_1_2 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_2 )[128X[104X
+    [4X[28X  / (Exp( w2_1_1 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_1 )[128X[104X
+    [4X[28X     + Exp( w2_1_2 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_2 )[128X[104X
+    [4X[28X       + Exp( w2_1_3 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_3 ))[128X[104X
+    [4X[28X‣ Exp( w2_1_3 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_3 )[128X[104X
+    [4X[28X  / (Exp( w2_1_1 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_1 )[128X[104X
+    [4X[28X     + Exp( w2_1_2 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_2 )[128X[104X
+    [4X[28X       + Exp( w2_1_3 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_3 ))[128X[104X
+    [4X[25Xgap>[125X [27XN213_Loss := NeuralNetworkLossMorphism( Para, 2, [ 1 ], 3, "Softmax" );[127X[104X
+    [4X[28Xℝ^5 -> ℝ^1 defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Object:[128X[104X
+    [4X[28X-----------------[128X[104X
+    [4X[28Xℝ^9[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Morphism:[128X[104X
+    [4X[28X-------------------[128X[104X
+    [4X[28Xℝ^14 -> ℝ^1[128X[104X
+    [4X[25Xgap>[125X [27Xvars := Concatenation([127X[104X
+    [4X[25X>[125X [27X                DummyInputStringsForNeuralNetwork( 2, [ 1 ], 3 ),[127X[104X
+    [4X[25X>[125X [27X                DummyInputStrings( "y", 3 ) );[127X[104X
+    [4X[28X[ "w2_1_1", "b2_1", "w2_1_2", "b2_2", "w2_1_3", "b2_3", "w1_1_1", "w1_2_1", [128X[104X
+    [4X[28X  "b1_1", "z1", "z2", "y1", "y2", "y3" ][128X[104X
+    [4X[25Xgap>[125X [27Xdummy_input := CreateContextualVariables( vars );[127X[104X
+    [4X[28X[ w2_1_1, b2_1, w2_1_2, b2_2, w2_1_3, b2_3, w1_1_1, w1_2_1, b1_1, z1, z2,[128X[104X
+    [4X[28X  y1, y2, y3 ][128X[104X
+    [4X[25Xgap>[125X [27XDisplay( N213_Loss : dummy_input := dummy_input );[127X[104X
+    [4X[28Xℝ^5 -> ℝ^1 defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Object:[128X[104X
+    [4X[28X-----------------[128X[104X
+    [4X[28Xℝ^9[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Morphism:[128X[104X
+    [4X[28X-------------------[128X[104X
+    [4X[28Xℝ^14 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ ([128X[104X
+    [4X[28X    ([128X[104X
+    [4X[28X      Log([128X[104X
+    [4X[28X        Exp( w2_1_1 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_1 ) +[128X[104X
+    [4X[28X        Exp( w2_1_2 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_2 ) +[128X[104X
+    [4X[28X        Exp( w2_1_3 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_3 )[128X[104X
+    [4X[28X      )[128X[104X
+    [4X[28X      - (w2_1_1 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_1)[128X[104X
+    [4X[28X    ) * y1 +[128X[104X
+    [4X[28X    ([128X[104X
+    [4X[28X      Log( Exp( w2_1_1 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_1 ) +[128X[104X
+    [4X[28X           Exp( w2_1_2 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_2 ) +[128X[104X
+    [4X[28X           Exp( w2_1_3 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_3 )[128X[104X
+    [4X[28X      )[128X[104X
+    [4X[28X      - (w2_1_2 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_2)[128X[104X
+    [4X[28X    ) * y2[128X[104X
+    [4X[28X    +[128X[104X
+    [4X[28X    ([128X[104X
+    [4X[28X      Log( Exp( w2_1_1 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_1 ) +[128X[104X
+    [4X[28X           Exp( w2_1_2 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_2 ) +[128X[104X
+    [4X[28X           Exp( w2_1_3 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_3 )[128X[104X
+    [4X[28X      )[128X[104X
+    [4X[28X      - (w2_1_3 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_3)[128X[104X
+    [4X[28X    ) * y3[128X[104X
+    [4X[28X  ) / 3[128X[104X
+  [4X[32X[104X
+  

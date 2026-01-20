@@ -1,15 +1,15 @@
   
   
-                            [1X GradientDescentForCAP [101X
+                         [1X GradientBasedLearningForCAP [101X
   
   
-                [1X Exploring categorical machine learning in CAP [101X
+                 [1X Gradient Based Learning via Category Theory [101X
   
   
-                                   2025.11-01
+                                   2026.01-01
   
   
-                                28 November 2025
+                                 1 January 2026
   
   
                                   Kamal Saleh
@@ -28,22 +28,148 @@
   -------------------------------------------------------
   
   
-  [1XContents (GradientDescentForCAP)[101X
+  [1XContents (GradientBasedLearningForCAP)[101X
   
-  1 [33X[0;0YExamples and Tests[133X
-    1.1 [33X[0;0YCategory of Lenses[133X
-    1.2 [33X[0;0YCategory of Parametrised Morphisms[133X
-    1.3 [33X[0;0YCategory of Smooth Maps[133X
-    1.4 [33X[0;0YExpressions[133X
-  2 [33X[0;0YGradientDescentForCAP automatic generated documentation[133X
-    2.1 [33X[0;0YGradientDescentForCAP automatic generated documentation of categories[133X
-      2.1-1 IsObjectInCategoryOfLenses
-      2.1-2 IsMorphismInCategoryOfLenses
-  3 [33X[0;0Yoperations for machine learning in CAP[133X
-    3.1 [33X[0;0YAdd-methods[133X
-      3.1-1 AddMultiplicationForMorphisms
-      3.1-2 AddReverseDifferential
-      3.1-3 AddReverseDifferentialWithGivenObjects
+  1 [33X[0;0YIntroduction[133X
+    1.1 [33X[0;0YOverview[133X
+  2 [33X[0;0YExamples for neural networks[133X
+    2.1 [33X[0;0YBinary-class neural network with binary cross-entropy loss function[133X
+    2.2 [33X[0;0YMulti-class neural network with cross-entropy loss function[133X
+    2.3 [33X[0;0YNeural network with quadratic loss function[133X
+  3 [33X[0;0YExpressions[133X
+    3.1 [33X[0;0YConstructors[133X
+      3.1-1 Expression
+      3.1-2 ConstantExpression
+    3.2 [33X[0;0YAttributes[133X
+      3.2-1 Variables
+      3.2-2 String
+      3.2-3 AsFunction
+    3.3 [33X[0;0YOperations[133X
+      3.3-1 DummyInput
+    3.4 [33X[0;0YGlobal Functions[133X
+      3.4-1 ConvertToConstantExpressions
+      3.4-2 CreateContextualVariables
+      3.4-3 AssignExpressions
+    3.5 [33X[0;0YExamples[133X
+    3.6 [33X[0;0YGAP Categories[133X
+      3.6-1 IsExpression
+      3.6-2 IsConstantExpression
+  4 [33X[0;0YSkeletal Category of Smooth Maps[133X
+    4.1 [33X[0;0YConstructors[133X
+      4.1-1 SkeletalCategoryOfSmoothMaps
+      4.1-2 ObjectConstructor
+      4.1-3 MorphismConstructor
+      4.1-4 SmoothMap
+    4.2 [33X[0;0YAttributes[133X
+      4.2-1 RankOfObject
+      4.2-2 Map
+      4.2-3 JacobianMatrix
+    4.3 [33X[0;0YOperations[133X
+      4.3-1 Eval
+      4.3-2 EvalJacobianMatrix
+    4.4 [33X[0;0YAvailable Smooth Maps[133X
+      4.4-1 AvailableSkeletalSmoothMaps
+      4.4-2 DummyInputForAffineTransformation
+    4.5 [33X[0;0YSupported CAP Operations[133X
+      4.5-1 [33X[0;0YSkeletalSmoothMaps[133X
+      4.5-2 [33X[0;0YGenerate Documentation[133X
+    4.6 [33X[0;0YExamples[133X
+    4.7 [33X[0;0YGAP Categories[133X
+      4.7-1 IsSkeletalCategoryOfSmoothMaps
+      4.7-2 IsObjectInSkeletalCategoryOfSmoothMaps
+      4.7-3 IsMorphismInSkeletalCategoryOfSmoothMaps
+  5 [33X[0;0YCategory of Parametrised Morphisms[133X
+    5.1 [33X[0;0YDefinition[133X
+    5.2 [33X[0;0YConstructors[133X
+      5.2-1 CategoryOfParametrisedMorphisms
+      5.2-2 ObjectConstrutor
+      5.2-3 MorphismConstructor
+    5.3 [33X[0;0YAttributes[133X
+      5.3-1 UnderlyingCategory
+      5.3-2 UnderlyingObject
+      5.3-3 UnderlyingObject
+      5.3-4 UnderlyingMorphism
+    5.4 [33X[0;0YOperations[133X
+      5.4-1 ReparametriseMorphism
+      5.4-2 FlipParameterAndSource
+      5.4-3 Batchify
+      5.4-4 NaturalEmbedding
+      5.4-5 EmbeddingIntoCategoryOfParametrisedMorphisms
+    5.5 [33X[0;0YAvailable Parametrised Morphisms[133X
+    5.6 [33X[0;0YSupported CAP Operations[133X
+      5.6-1 [33X[0;0YCategory of Parametrised Smooth Maps[133X
+      5.6-2 [33X[0;0YGenerate Documentation[133X
+    5.7 [33X[0;0YExamples[133X
+    5.8 [33X[0;0YGAP Categories[133X
+      5.8-1 IsCategoryOfParametrisedMorphisms
+      5.8-2 IsObjectInCategoryOfParametrisedMorphisms
+      5.8-3 IsMorphismInCategoryOfParametrisedMorphisms
+  6 [33X[0;0YNeural Networks[133X
+    6.1 [33X[0;0YDefinition[133X
+    6.2 [33X[0;0YOperations[133X
+      6.2-1 NeuralNetworkLogitsMorphism
+      6.2-2 NeuralNetworkPredictionMorphism
+      6.2-3 NeuralNetworkLossMorphism
+    6.3 [33X[0;0YExamples[133X
+  7 [33X[0;0YCategory of Lenses[133X
+    7.1 [33X[0;0YDefinition[133X
+    7.2 [33X[0;0YConstructors[133X
+      7.2-1 CategoryOfLenses
+      7.2-2 ObjectConstructor
+      7.2-3 MorphismConstructor
+    7.3 [33X[0;0YAttributes[133X
+      7.3-1 UnderlyingPairOfObjects
+      7.3-2 UnderlyingPairOfMorphisms
+      7.3-3 GetMorphism
+      7.3-4 PutMorphism
+    7.4 [33X[0;0YOperations[133X
+      7.4-1 ReverseDifferentialLensFunctor
+    7.5 [33X[0;0YOptimizers[133X
+    7.6 [33X[0;0YSupported CAP Operations[133X
+      7.6-1 [33X[0;0YCategory of Lenses of Smooth Maps[133X
+    7.7 [33X[0;0YExamples[133X
+    7.8 [33X[0;0YGAP Categories[133X
+      7.8-1 IsCategoryOfLenses
+      7.8-2 IsObjectInCategoryOfLenses
+      7.8-3 IsMorphismInCategoryOfLenses
+  8 [33X[0;0YFitting Parameters[133X
+    8.1 [33X[0;0YIntroduction[133X
+    8.2 [33X[0;0YNotes on Batching[133X
+    8.3 [33X[0;0YOperations[133X
+      8.3-1 OneEpochUpdateLens
+      8.3-2 OneEpochUpdateLens
+      8.3-3 Fit
+    8.4 [33X[0;0YExamples[133X
+  9 [33X[0;0YCAP Operations for GradientBasedLearningForCAP[133X
+    9.1 [33X[0;0YBasic Operations[133X
+      9.1-1 MultiplicationForMorphisms
+      9.1-2 ReverseDifferentialWithGivenObjects
+      9.1-3 ReverseDifferential
+    9.2 [33X[0;0YAdd-Methods[133X
+      9.2-1 AddMultiplicationForMorphisms
+      9.2-2 AddReverseDifferential
+      9.2-3 AddReverseDifferentialWithGivenObjects
+  10 [33X[0;0YTools[133X
+    10.1 [33X[0;0YMathematical Operations[133X
+      10.1-1 Relu
+      10.1-2 KroneckerDelta
+      10.1-3 MultiplyMatrices
+    10.2 [33X[0;0YList Operations[133X
+      10.2-1 Enumerate
+      10.2-2 SplitDenseList
+      10.2-3 SplitDenseList
+    10.3 [33X[0;0YHelper Functions[133X
+      10.3-1 SelectBasedOnCondition
+      10.3-2 CallFuncListBasedOnCondition
+    10.4 [33X[0;0YPython Integration[133X
+      10.4-1 Diff
+      10.4-2 LazyDiff
+      10.4-3 JacobianMatrixUsingPython
+      10.4-4 LazyJacobianMatrix
+      10.4-5 ScatterPlotUsingPython
+      10.4-6 SimplifyExpressionUsingPython
+      10.4-7 LaTeXOutputUsingPython
+      10.4-8 AsCythonFunction
   
   
   [32X

@@ -1,0 +1,525 @@
+  
+  [1X5 [33X[0;0YCategory of Parametrised Morphisms[133X[101X
+  
+  
+  [1X5.1 [33X[0;0YDefinition[133X[101X
+  
+  [33X[0;0YLet  [23X(C,  \otimes,  I)[123X be a strict symmetric monoidal category. The category
+  [23XP(C)[123X of parametrized morphisms is given by the following data:[133X
+  
+  [30X    [33X[0;6Y[13XObjects[113X: [23X\mathrm{Obj}(P(C)) := \mathrm{Obj}(C)[123X[133X
+  
+  [30X    [33X[0;6Y[13XMorphisms[113X:  For two objects [23XA[123X and [23XB[123X in [23XP(C)[123X, a morphism [23Xf \colon A \to
+        B[123X in [23XP(C)[123X consists of:[133X
+  
+        [30X    [33X[0;12YA parameter object [23XP \in \mathrm{Obj}(C)[123X[133X
+  
+        [30X    [33X[0;12YA morphism [23Xf_P \colon P \otimes A \to B[123X in [23XC[123X[133X
+  
+  [30X    [33X[0;6Y[13XComposition[113X:  Given  two  morphisms  [23Xf=(P,f_P)  \colon  A  \to B[123X and [23Xg
+        =(Q,g_Q) \colon B \to C[123X in [23XP(C)[123X,[133X
+  
+  [33X[0;0Ytheir composition [23Xf \cdot g \colon A \to C[123X is given by the pair[133X
+  
+  [30X    [33X[0;6Y[13XIdentity  morphisms[113X:  For each object [23XA[123X in [23XP(C)[123X, the identity morphism
+        is given by[133X
+  
+  [33X[0;0Ythe  pair  [23X\mathrm{id}_A  = \left( I, (\mathrm{id}_A)_I := \mathrm{id}_A \in
+  \mathbf{Hom}_C(A, A)) \right)[123X.[133X
+  
+  
+  [1X5.2 [33X[0;0YConstructors[133X[101X
+  
+  [1X5.2-1 CategoryOfParametrisedMorphisms[101X
+  
+  [33X[1;0Y[29X[2XCategoryOfParametrisedMorphisms[102X( [3XC[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya category[133X
+  
+  [33X[0;0YConstruct the category of parametrised morphisms over the category [3XC[103X.[133X
+  
+  [1X5.2-2 ObjectConstrutor[101X
+  
+  [33X[1;0Y[29X[2XObjectConstrutor[102X( [3XPara[103X, [3XA[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yan object in the category of parametrised morphisms[133X
+  
+  [33X[0;0YConstruct an object in the category of parametrised morphisms.[133X
+  
+  [1X5.2-3 MorphismConstructor[101X
+  
+  [33X[1;0Y[29X[2XMorphismConstructor[102X( [3XPara[103X, [3XA[103X, [3Xdatum[103X, [3XB[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya morphism in the category of parametrised morphisms[133X
+  
+  [33X[0;0YConstruct a morphism in the category of parametrised morphisms. The datum is
+  a  pair consisting of the parameter object [23XP[123X and the underlying morphism [23Xf_P
+  \colon P \otimes A \to B[123X.[133X
+  
+  
+  [1X5.3 [33X[0;0YAttributes[133X[101X
+  
+  [1X5.3-1 UnderlyingCategory[101X
+  
+  [33X[1;0Y[29X[2XUnderlyingCategory[102X( [3XPara[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya category[133X
+  
+  [33X[0;0YReturns the underlying category of a category of parametrised morphisms.[133X
+  
+  [1X5.3-2 UnderlyingObject[101X
+  
+  [33X[1;0Y[29X[2XUnderlyingObject[102X( [3XA[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Yan object in the underlying category[133X
+  
+  [33X[0;0YReturns  the underlying object for an object in the category of parametrised
+  morphisms.[133X
+  
+  [1X5.3-3 UnderlyingObject[101X
+  
+  [33X[1;0Y[29X[2XUnderlyingObject[102X( [3Xf[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Yan object in the underlying category[133X
+  
+  [33X[0;0YReturns the parameter object (underlying object) of a parametrised morphism.[133X
+  
+  [1X5.3-4 UnderlyingMorphism[101X
+  
+  [33X[1;0Y[29X[2XUnderlyingMorphism[102X( [3Xf[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya morphism in the underlying category[133X
+  
+  [33X[0;0YReturns  the  underlying  morphism  [23Xf_p:P  \otimes  A  \to B \in C[123X in [23XC[123X of a
+  parametrised morphism [23Xf = (P, f_p:P \otimes A \to B):A \to B[123X in [23XP(C)[123X.[133X
+  
+  
+  [1X5.4 [33X[0;0YOperations[133X[101X
+  
+  [1X5.4-1 ReparametriseMorphism[101X
+  
+  [33X[1;0Y[29X[2XReparametriseMorphism[102X( [3Xf[103X, [3Xr[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya parametrised morphism[133X
+  
+  [33X[0;0YThe  input  is  a parametrised morphism [23Xf=(P,f_P: P\otimes A \to B): A \to B[123X
+  and  a  morphism  [23Xr: Q \to P[123X in [23XC[123X. The output is the reparametrised morphism
+  [23X\hat{f}=(Q,\hat{f}_Q:  Q  \otimes  A  \to  B): A \to B[123X where [23X\hat{f}_Q := (r
+  \otimes \mathrm{id}_A) \cdot f_P \colon Q \otimes A \to B[123X.[133X
+  
+  [1X5.4-2 FlipParameterAndSource[101X
+  
+  [33X[1;0Y[29X[2XFlipParameterAndSource[102X( [3Xf[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya parametrised morphism[133X
+  
+  [33X[0;0YThe  input  is a parametrised morphism [23Xf=(P,f_P: P\otimes A \to B): A \to B[123X.
+  The  output  is  the parametrised morphism [23X\hat{f}=(A,\hat{f}_A: A \otimes P
+  \to B): P \to A[123X where [23X\hat{f}_A := \sigma_{A,P} \cdot f_P \colon A \otimes P
+  \to  B[123X,  with  [23X\sigma_{A,P}:  A \otimes P \to P \otimes A[123X being the symmetry
+  isomorphism (braiding) in the underlying symmetric monoidal category [23XC[123X.[133X
+  
+  [1X5.4-3 Batchify[101X
+  
+  [33X[1;0Y[29X[2XBatchify[102X( [3Xf[103X, [3Xn[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya parametrised morphism[133X
+  
+  [33X[0;0YAdjusts   a   parametrised   morphism   to  process  a  batch  of  [3Xn[103X  inputs
+  simultaneously. Given a parametrised morphism [23Xf = (P, f_P \colon P \otimes A
+  \to B): A \to B[123X where the target [23XB[123X has rank 1, this operation produces a new
+  parametrised morphism that can handle [23Xn[123X copies of [23XA[123X at once (a batch of size
+  [23Xn[123X).[133X
+  
+  [33X[0;0YThe construction works as follows:[133X
+  
+  [30X    [33X[0;6YThe source becomes the direct product of [23Xn[123X copies of [23XA[123X: [23XA^n = A \times
+        \cdots \times A[123X[133X
+  
+  [30X    [33X[0;6YThe parameter object remains [23XP[123X[133X
+  
+  [30X    [33X[0;6YThe  underlying  morphism  is  constructed  by: [23X\alpha \cdot f_P^{(n)}
+        \cdot \mu_n \colon P \otimes A^n \to B[123X where:[133X
+  
+        [30X    [33X[0;12Y[23X\alpha:P  \otimes  A^n  \to (P \otimes A)^n[123X is the morphism that
+              reuses  the  parameter  [23XP[123X  across the [23Xn[123X components. For example,
+              when  [23Xn=2[123X,  [23X\alpha[123X  sends [23X(p, a_1, a_2) \in P \otimes A^2[123X to [23X(p,
+              a_1,  p, a_2) \in (P \otimes A)^2[123X, i.e., the same parameter [23Xp[123X is
+              paired with each input (training example) [23Xa_i[123X.[133X
+  
+        [30X    [33X[0;12Y[23Xf_P^{(n)}:  (P  \otimes  A)^n \to B^n[123X is the direct product of [23Xn[123X
+              copies of [23Xf_P[123X,[133X
+  
+        [30X    [33X[0;12Y[23X\mu_n:  B^n  \to  B[123X  is  the mean aggregator that averages the [23Xn[123X
+              outputs into a single output in [23XB[123X (since [23XB[123X has rank 1).[133X
+  
+  [1X5.4-4 NaturalEmbedding[101X
+  
+  [33X[1;0Y[29X[2XNaturalEmbedding[102X( [3XC[103X, [3XP[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya functor[133X
+  
+  [33X[0;0YNatural  embedding  functor  from  category  [3XC[103X into category of parametrised
+  morphisms  [3XP[103X  (of  [3XC[103X). Objects are mapped to themselves, and a morphism [23Xf: A
+  \to  B[123X  in  [3XC[103X  is  mapped  to the parametrised morphism [23X(I, f_I: I \otimes A
+  \xrightarrow{f}  B):  A  \to B[123X in [3XP[103X. Note that [23XI \otimes A = A[123X by the strict
+  monoidal  unit  property.  This  functor  reflects  the  fact  that ordinary
+  morphisms  can  be  viewed  as  parametrised morphisms with a trivial (unit)
+  parameter.[133X
+  
+  [1X5.4-5 EmbeddingIntoCategoryOfParametrisedMorphisms[101X
+  
+  [33X[1;0Y[29X[2XEmbeddingIntoCategoryOfParametrisedMorphisms[102X( [3XPara[103X, [3XPara_Lenses[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya functor[133X
+  
+  [33X[0;0YEmbedding  functor from category of parametrised morphisms [3XPara[103X into another
+  category of parametrised morphisms [3XPara_Lenses[103X.[133X
+  
+  
+  [1X5.5 [33X[0;0YAvailable Parametrised Morphisms[133X[101X
+  
+  [33X[0;0YAll  available  smooth  maps  can be lifted to parametrised morphisms in the
+  category  of  parametrised  morphisms  by  using  one  of  the following two
+  methods:[133X
+  
+  [30X    [33X[0;6YUsing  the  natural embedding functor from the category of smooth maps
+        into  the category of parametrised morphisms, which associates to each
+        smooth  map  [23Xf: A \to B[123X the parametrised morphism [23X(I, f_I: I \otimes A
+        \xrightarrow{f} B): A \to B[123X where [23XI[123X is the monoidal unit. For example,
+        [23X\mathrm{Cos}[123X, [23X\mathrm{Exp}[123X, [23X\mathrm{Log}[123X etc.[133X
+  
+  [30X    [33X[0;6YConstructing   parametrised   morphisms  directly  by  specifying  the
+        parameter  object  and  the  underlying  morphism.  For  instance, the
+        construction of an affine transformation as a parametrised morphism:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XSmooth := SkeletalCategoryOfSmoothMaps( );[127X[104X
+    [4X[28XSkeletalSmoothMaps[128X[104X
+    [4X[25Xgap>[125X [27XPara := CategoryOfParametrisedMorphisms( Smooth );[127X[104X
+    [4X[28XCategoryOfParametrisedMorphisms( SkeletalSmoothMaps )[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( Para.Relu( 2 ) );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^2 defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Object:[128X[104X
+    [4X[28X-----------------[128X[104X
+    [4X[28Xℝ^0[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Morphism:[128X[104X
+    [4X[28X-------------------[128X[104X
+    [4X[28Xℝ^2 -> ℝ^2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ Relu( x1 )[128X[104X
+    [4X[28X‣ Relu( x2 )[128X[104X
+    [4X[25Xgap>[125X [27Xdummy_input := DummyInputForAffineTransformation( 3, 2, "w", "b", "z" );[127X[104X
+    [4X[28X[ w1_1, w2_1, w3_1, b_1, w1_2, w2_2, w3_2, b_2, z1, z2, z3 ][128X[104X
+    [4X[25Xgap>[125X [27Xaffine_transformation := Para.AffineTransformation( 3, 2 );;[127X[104X
+    [4X[25Xgap>[125X [27XDisplay( affine_transformation : dummy_input := dummy_input );[127X[104X
+    [4X[28Xℝ^3 -> ℝ^2 defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Object:[128X[104X
+    [4X[28X-----------------[128X[104X
+    [4X[28Xℝ^8[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Morphism:[128X[104X
+    [4X[28X-------------------[128X[104X
+    [4X[28Xℝ^11 -> ℝ^2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ w1_1 * z1 + w2_1 * z2 + w3_1 * z3 + b_1[128X[104X
+    [4X[28X‣ w1_2 * z1 + w2_2 * z2 + w3_2 * z3 + b_2[128X[104X
+    [4X[25Xgap>[125X [27X"Let us convert these 2 togits to probabilities via softmax layer.";;[127X[104X
+    [4X[25Xgap>[125X [27Xsoftmax_layer := Para.Softmax( 2 );;[127X[104X
+    [4X[25Xgap>[125X [27XDisplay( softmax_layer );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^2 defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Object:[128X[104X
+    [4X[28X-----------------[128X[104X
+    [4X[28Xℝ^0[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Morphism:[128X[104X
+    [4X[28X-------------------[128X[104X
+    [4X[28Xℝ^2 -> ℝ^2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ Exp( x1 ) / (Exp( x1 ) + Exp( x2 ))[128X[104X
+    [4X[28X‣ Exp( x2 ) / (Exp( x1 ) + Exp( x2 ))[128X[104X
+    [4X[25Xgap>[125X [27Xprobs := PreCompose( affine_transformation, softmax_layer );;[127X[104X
+    [4X[25Xgap>[125X [27XDisplay( probs : dummy_input := dummy_input );[127X[104X
+    [4X[28Xℝ^3 -> ℝ^2 defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Object:[128X[104X
+    [4X[28X-----------------[128X[104X
+    [4X[28Xℝ^8[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Morphism:[128X[104X
+    [4X[28X-------------------[128X[104X
+    [4X[28Xℝ^11 -> ℝ^2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ Exp( w1_1 * z1 + w2_1 * z2 + w3_1 * z3 + b_1 )[128X[104X
+    [4X[28X   / (Exp( w1_1 * z1 + w2_1 * z2 + w3_1 * z3 + b_1 )[128X[104X
+    [4X[28X    + Exp( w1_2 * z1 + w2_2 * z2 + w3_2 * z3 + b_2 ))[128X[104X
+    [4X[28X‣ Exp( w1_2 * z1 + w2_2 * z2 + w3_2 * z3 + b_2 )[128X[104X
+    [4X[28X   / (Exp( w1_1 * z1 + w2_1 * z2 + w3_1 * z3 + b_1 )[128X[104X
+    [4X[28X    + Exp( w1_2 * z1 + w2_2 * z2 + w3_2 * z3 + b_2 ))[128X[104X
+    [4X[25Xgap>[125X [27Xparameters := [ 0.91, 0.24, 0.88, 0.59, 0.67, 0.05, 0.85, 0.31 ];;[127X[104X
+    [4X[25Xgap>[125X [27Xlogits := [ 1.0, 2.0, 3.0 ];;[127X[104X
+    [4X[25Xgap>[125X [27XEval( probs, [ parameters, logits ] );[127X[104X
+    [4X[28X[ 0.729088, 0.270912 ][128X[104X
+  [4X[32X[104X
+  
+  
+  [1X5.6 [33X[0;0YSupported CAP Operations[133X[101X
+  
+  
+  [1X5.6-1 [33X[0;0YCategory of Parametrised Smooth Maps[133X[101X
+  
+  [33X[0;0YThe following CAP operations are supported:[133X
+  
+  [30X    [33X[0;6Y[2XIdentityMorphism[102X ([14XCAP: IdentityMorphism for IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIsCongruentForMorphisms[102X      ([14XCAP:     IsCongruentForMorphisms     for
+        IsCapCategoryMorphism, IsCapCategoryMorphism[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIsEndomorphism[102X ([14XCAP: IsEndomorphism for IsCapCategoryMorphism[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIsEqualForMorphisms[102X        ([14XCAP:        IsEqualForMorphisms        for
+        IsCapCategoryMorphism, IsCapCategoryMorphism[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIsEqualForMorphismsOnMor[102X     ([14XCAP:     IsEqualForMorphismsOnMor    for
+        IsCapCategoryMorphism, IsCapCategoryMorphism[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIsEqualForObjects[102X  ([14XCAP:  IsEqualForObjects  for  IsCapCategoryObject,
+        IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIsEqualToIdentityMorphism[102X    ([14XCAP:    IsEqualToIdentityMorphism    for
+        IsCapCategoryMorphism[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIsIdempotent[102X ([14XCAP: IsIdempotent for IsCapCategoryMorphism[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIsOne[102X ([14XCAP: IsOne for IsCapCategoryMorphism[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIsWellDefinedForMorphisms[102X    ([14XCAP:    IsWellDefinedForMorphisms    for
+        IsCapCategoryMorphism[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIsWellDefinedForMorphismsWithGivenSourceAndRange[102X                 ([14XCAP:
+        IsWellDefinedForMorphismsWithGivenSourceAndRange                   for
+        IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIsWellDefinedForObjects[102X      ([14XCAP:     IsWellDefinedForObjects     for
+        IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XMorphismConstructor[102X ([14XCAP: MorphismConstructor for IsCapCategoryObject,
+        IsObject, IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XMorphismDatum[102X ([14XCAP: MorphismDatum for IsCapCategoryMorphism[114X)[133X
+  
+  [30X    [33X[0;6Y[2XObjectConstructor[102X ([14XCAP: ObjectConstructor for IsCapCategory, IsObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XObjectDatum[102X ([14XCAP: ObjectDatum for IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XPostCompose[102X     ([14XCAP:     PostCompose    for    IsCapCategoryMorphism,
+        IsCapCategoryMorphism[114X)[133X
+  
+  [30X    [33X[0;6Y[2XPostComposeList[102X ([14XCAP: PostComposeList for IsCapCategoryObject, IsList,
+        IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XPreCompose[102X     ([14XCAP:     PreCompose     for     IsCapCategoryMorphism,
+        IsCapCategoryMorphism[114X)[133X
+  
+  [30X    [33X[0;6Y[2XPreComposeList[102X  ([14XCAP:  PreComposeList for IsCapCategoryObject, IsList,
+        IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XSimplifyMorphism[102X  ([14XCAP:  SimplifyMorphism  for  IsCapCategoryMorphism,
+        IsObject[114X)[133X
+  
+  
+  [1X5.6-2 [33X[0;0YGenerate Documentation[133X[101X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XLoadPackage( "GradientBasedLearningForCAP", false );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XPara := CategoryOfParametrisedMorphisms( SkeletalSmoothMaps );;[127X[104X
+    [4X[25Xgap>[125X [27XCAP_INTERNAL_GENERATE_DOCUMENTATION_FOR_CATEGORY_INSTANCES([127X[104X
+    [4X[25X>[125X [27X    [[127X[104X
+    [4X[25X>[125X [27X        [ Para, "Category of Parametrised Smooth Maps", 0 ],[127X[104X
+    [4X[25X>[125X [27X    ],[127X[104X
+    [4X[25X>[125X [27X    "GradientBasedLearningForCAP",[127X[104X
+    [4X[25X>[125X [27X    "CategoryOfParametrisedMorphisms.autogen.gd",[127X[104X
+    [4X[25X>[125X [27X    "Category of Parametrised Morphisms",[127X[104X
+    [4X[25X>[125X [27X    "Supported CAP Operations"[127X[104X
+    [4X[25X>[125X [27X);[127X[104X
+    [4X[25Xgap>[125X [27XLenses := CategoryOfLenses( SkeletalSmoothMaps );;[127X[104X
+    [4X[25Xgap>[125X [27XCAP_INTERNAL_GENERATE_DOCUMENTATION_FOR_CATEGORY_INSTANCES([127X[104X
+    [4X[25X>[125X [27X    [[127X[104X
+    [4X[25X>[125X [27X        [ Lenses, "Category of Lenses of Smooth Maps", 0 ],[127X[104X
+    [4X[25X>[125X [27X    ],[127X[104X
+    [4X[25X>[125X [27X    "GradientBasedLearningForCAP",[127X[104X
+    [4X[25X>[125X [27X    "CategoryOfLenses.autogen.gd",[127X[104X
+    [4X[25X>[125X [27X    "Category of Lenses",[127X[104X
+    [4X[25X>[125X [27X    "Supported CAP Operations"[127X[104X
+    [4X[25X>[125X [27X);[127X[104X
+  [4X[32X[104X
+  
+  
+  [1X5.7 [33X[0;0YExamples[133X[101X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XSmooth := SkeletalCategoryOfSmoothMaps( );[127X[104X
+    [4X[28XSkeletalSmoothMaps[128X[104X
+    [4X[25Xgap>[125X [27XPara := CategoryOfParametrisedMorphisms( Smooth );[127X[104X
+    [4X[28XCategoryOfParametrisedMorphisms( SkeletalSmoothMaps )[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( Para );[127X[104X
+    [4X[28XA CAP category with name CategoryOfParametrisedMorphisms( SkeletalSmoothMaps ):[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X12 primitive operations were used to derive 21 operations for this category[128X[104X
+    [4X[25Xgap>[125X [27XR1 := Smooth.( 1 );[127X[104X
+    [4X[28Xℝ^1[128X[104X
+    [4X[25Xgap>[125X [27XR2 := Smooth.( 2 );[127X[104X
+    [4X[28Xℝ^2[128X[104X
+    [4X[25Xgap>[125X [27XR3 := Smooth.( 3 );[127X[104X
+    [4X[28Xℝ^3[128X[104X
+    [4X[25Xgap>[125X [27XR1 / Para;[127X[104X
+    [4X[28Xℝ^1[128X[104X
+    [4X[25Xgap>[125X [27XPara.( 1 );[127X[104X
+    [4X[28Xℝ^1[128X[104X
+    [4X[25Xgap>[125X [27XPara.( 1 ) = R1 / Para;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xf := Para.Sin;;[127X[104X
+    [4X[25Xgap>[125X [27XDisplay( f );[127X[104X
+    [4X[28Xℝ^1 -> ℝ^1 defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Object:[128X[104X
+    [4X[28X-----------------[128X[104X
+    [4X[28Xℝ^0[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Morphism:[128X[104X
+    [4X[28X-------------------[128X[104X
+    [4X[28Xℝ^1 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ Sin( x1 )[128X[104X
+    [4X[25Xgap>[125X [27Xp1 := ProjectionInFactorOfDirectProduct( Smooth, [ R3, R3 ], 1 );;[127X[104X
+    [4X[25Xgap>[125X [27XDisplay( p1 );[127X[104X
+    [4X[28Xℝ^6 -> ℝ^3[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ x1[128X[104X
+    [4X[28X‣ x2[128X[104X
+    [4X[28X‣ x3[128X[104X
+    [4X[25Xgap>[125X [27Xp2 := ProjectionInFactorOfDirectProduct( Smooth, [ R3, R3 ], 2 );;[127X[104X
+    [4X[25Xgap>[125X [27XDisplay( p2 );[127X[104X
+    [4X[28Xℝ^6 -> ℝ^3[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ x4[128X[104X
+    [4X[28X‣ x5[128X[104X
+    [4X[28X‣ x6[128X[104X
+    [4X[25Xgap>[125X [27Xm := MultiplicationForMorphisms( p1, p2 );[127X[104X
+    [4X[28Xℝ^6 -> ℝ^3[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( m );[127X[104X
+    [4X[28Xℝ^6 -> ℝ^3[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ x1 * x4[128X[104X
+    [4X[28X‣ x2 * x5[128X[104X
+    [4X[28X‣ x3 * x6[128X[104X
+    [4X[25Xgap>[125X [27Xh := MorphismConstructor( Para, Para.(3), [ R3, m ], Para.(3) );;[127X[104X
+    [4X[25Xgap>[125X [27XDisplay( h );[127X[104X
+    [4X[28Xℝ^3 -> ℝ^3 defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Object:[128X[104X
+    [4X[28X-----------------[128X[104X
+    [4X[28Xℝ^3[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Morphism:[128X[104X
+    [4X[28X-------------------[128X[104X
+    [4X[28Xℝ^6 -> ℝ^3[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ x1 * x4[128X[104X
+    [4X[28X‣ x2 * x5[128X[104X
+    [4X[28X‣ x3 * x6[128X[104X
+    [4X[25Xgap>[125X [27Xdummy_input := CreateContextualVariables([127X[104X
+    [4X[25X>[125X [27X                  [ "w1", "w2", "w3", "z1", "z2", "z3" ] );[127X[104X
+    [4X[28X[ w1, w2, w3, z1, z2, z3 ][128X[104X
+    [4X[25Xgap>[125X [27XDisplay( h : dummy_input := dummy_input );[127X[104X
+    [4X[28Xℝ^3 -> ℝ^3 defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Object:[128X[104X
+    [4X[28X-----------------[128X[104X
+    [4X[28Xℝ^3[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Morphism:[128X[104X
+    [4X[28X-------------------[128X[104X
+    [4X[28Xℝ^6 -> ℝ^3[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ w1 * z1[128X[104X
+    [4X[28X‣ w2 * z2[128X[104X
+    [4X[28X‣ w3 * z3[128X[104X
+    [4X[25Xgap>[125X [27Xr := DirectProductFunctorial( Smooth,[127X[104X
+    [4X[25X>[125X [27X        [ Smooth.Sqrt, Smooth.Log, Smooth.Exp ] );;[127X[104X
+    [4X[25Xgap>[125X [27XDisplay( r );[127X[104X
+    [4X[28Xℝ^3 -> ℝ^3[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ Sqrt( x1 )[128X[104X
+    [4X[28X‣ Log( x2 )[128X[104X
+    [4X[28X‣ Exp( x3 )[128X[104X
+    [4X[25Xgap>[125X [27Xg := ReparametriseMorphism( h, r );;[127X[104X
+    [4X[25Xgap>[125X [27XDisplay( g : dummy_input := dummy_input );[127X[104X
+    [4X[28Xℝ^3 -> ℝ^3 defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Object:[128X[104X
+    [4X[28X-----------------[128X[104X
+    [4X[28Xℝ^3[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Morphism:[128X[104X
+    [4X[28X-------------------[128X[104X
+    [4X[28Xℝ^6 -> ℝ^3[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ Sqrt( w1 ) * z1[128X[104X
+    [4X[28X‣ Log( w2 ) * z2[128X[104X
+    [4X[28X‣ Exp( w3 ) * z3[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YLet  us illustrate the natural embedding functor from the category of smooth
+  maps into the category of parametrised morphisms.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XSmooth := SkeletalCategoryOfSmoothMaps( );[127X[104X
+    [4X[28XSkeletalSmoothMaps[128X[104X
+    [4X[25Xgap>[125X [27XPara := CategoryOfParametrisedMorphisms( Smooth );[127X[104X
+    [4X[28XCategoryOfParametrisedMorphisms( SkeletalSmoothMaps )[128X[104X
+    [4X[25Xgap>[125X [27Xiota := NaturalEmbedding( Smooth, Para );[127X[104X
+    [4X[28XNatural embedding into category of parametrised morphisms[128X[104X
+    [4X[25Xgap>[125X [27XApplyFunctor( iota, Smooth.( 1 ) );[127X[104X
+    [4X[28Xℝ^1[128X[104X
+    [4X[25Xgap>[125X [27Xpsi := ApplyFunctor( iota, Smooth.Sum( 2 ) );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^1 defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Object:[128X[104X
+    [4X[28X-----------------[128X[104X
+    [4X[28Xℝ^0[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Morphism:[128X[104X
+    [4X[28X-------------------[128X[104X
+    [4X[28Xℝ^2 -> ℝ^1[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( psi );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^1 defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Object:[128X[104X
+    [4X[28X-----------------[128X[104X
+    [4X[28Xℝ^0[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Morphism:[128X[104X
+    [4X[28X-------------------[128X[104X
+    [4X[28Xℝ^2 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ x1 + x2[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X5.8 [33X[0;0YGAP Categories[133X[101X
+  
+  [1X5.8-1 IsCategoryOfParametrisedMorphisms[101X
+  
+  [33X[1;0Y[29X[2XIsCategoryOfParametrisedMorphisms[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YThe [5XGAP[105X category of a category of parametrised morphisms.[133X
+  
+  [1X5.8-2 IsObjectInCategoryOfParametrisedMorphisms[101X
+  
+  [33X[1;0Y[29X[2XIsObjectInCategoryOfParametrisedMorphisms[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YThe [5XGAP[105X category of objects in a category of parametrised morphisms.[133X
+  
+  [1X5.8-3 IsMorphismInCategoryOfParametrisedMorphisms[101X
+  
+  [33X[1;0Y[29X[2XIsMorphismInCategoryOfParametrisedMorphisms[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YThe [5XGAP[105X category of morphisms in a category of parametrised morphisms.[133X
+  

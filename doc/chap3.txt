@@ -1,46 +1,180 @@
   
-  [1X3 [33X[0;0Yoperations for machine learning in CAP[133X[101X
+  [1X3 [33X[0;0YExpressions[133X[101X
   
   
-  [1X3.1 [33X[0;0YAdd-methods[133X[101X
+  [1X3.1 [33X[0;0YConstructors[133X[101X
   
-  [1X3.1-1 AddMultiplicationForMorphisms[101X
+  [1X3.1-1 Expression[101X
   
-  [33X[1;0Y[29X[2XAddMultiplicationForMorphisms[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XAddMultiplicationForMorphisms[102X( [3XC[103X, [3XF[103X, [3Xweight[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  [33X[1;0Y[29X[2XExpression[102X( [3Xvariables[103X, [3Xstring[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yan expression[133X
   
-  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
-  given    function    [23XF[123X   to   the   category   for   the   basic   operation
-  [10XMultiplicationForMorphisms[110X.  Optionally,  a  weight  (default:  100)  can be
-  specified which should roughly correspond to the computational complexity of
-  the  function  (lower weight = less complex = faster execution). [23XF: ( alpha,
-  beta ) \mapsto \mathtt{MultiplicationForMorphisms}(alpha, beta)[123X.[133X
+  [33X[0;0YCreate an expression from a list of [3Xvariables[103X and a [3Xstring[103X representation.[133X
   
-  [1X3.1-2 AddReverseDifferential[101X
+  [1X3.1-2 ConstantExpression[101X
   
-  [33X[1;0Y[29X[2XAddReverseDifferential[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XAddReverseDifferential[102X( [3XC[103X, [3XF[103X, [3Xweight[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  [33X[1;0Y[29X[2XConstantExpression[102X( [3Xstring[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya constant expression[133X
   
-  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
-  given    function    [23XF[123X   to   the   category   for   the   basic   operation
-  [10XReverseDifferential[110X.  Optionally,  a  weight (default: 100) can be specified
-  which  should  roughly  correspond  to  the  computational complexity of the
-  function  (lower  weight  =  less  complex = faster execution). [23XF: ( alpha )
-  \mapsto \mathtt{ReverseDifferential}(alpha)[123X.[133X
+  [33X[0;0YCreate  a  constant  expression  from  a [3Xstring[103X. The expression will have no
+  variables and will also be registered as a global constant.[133X
   
-  [1X3.1-3 AddReverseDifferentialWithGivenObjects[101X
   
-  [33X[1;0Y[29X[2XAddReverseDifferentialWithGivenObjects[102X( [3XC[103X, [3XF[103X ) [32X operation[133X
-  [33X[1;0Y[29X[2XAddReverseDifferentialWithGivenObjects[102X( [3XC[103X, [3XF[103X, [3Xweight[103X ) [32X operation[133X
-  [6XReturns:[106X  [33X[0;10Ynothing[133X
+  [1X3.2 [33X[0;0YAttributes[133X[101X
   
-  [33X[0;0YThe  arguments  are  a  category [23XC[123X and a function [23XF[123X. This operation adds the
-  given    function    [23XF[123X   to   the   category   for   the   basic   operation
-  [10XReverseDifferentialWithGivenObjects[110X. Optionally, a weight (default: 100) can
-  be specified which should roughly correspond to the computational complexity
-  of  the  function  (lower  weight  =  less complex = faster execution). [23XF: (
-  source,             alpha,             range            )            \mapsto
-  \mathtt{ReverseDifferentialWithGivenObjects}(source, alpha, range)[123X.[133X
+  [1X3.2-1 Variables[101X
+  
+  [33X[1;0Y[29X[2XVariables[102X( [3Xe[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya list of strings[133X
+  
+  [33X[0;0YThe list of variables of an expression.[133X
+  
+  [1X3.2-2 String[101X
+  
+  [33X[1;0Y[29X[2XString[102X( [3Xe[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya string[133X
+  
+  [33X[0;0YThe string representation of an expression.[133X
+  
+  [1X3.2-3 AsFunction[101X
+  
+  [33X[1;0Y[29X[2XAsFunction[102X( [3Xe[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya function[133X
+  
+  [33X[0;0YConvert an expression to a [5XGAP[105X function that can be evaluated numerically.[133X
+  
+  
+  [1X3.3 [33X[0;0YOperations[133X[101X
+  
+  [1X3.3-1 DummyInput[101X
+  
+  [33X[1;0Y[29X[2XDummyInput[102X( [3Xvar[103X, [3Xn[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya list of expressions[133X
+  
+  [33X[0;0YGenerate  a list of dummy input expressions using base name [3Xvar[103X with indices
+  from  1  to  [3Xn[103X.  For  example,  [10XDummyInput("x",  3)[110X  returns a list of three
+  expressions  [10Xx1,  x2,  x3[110X.  Those  can  be used as input to smooth morphisms
+  constructed from expressions.[133X
+  
+  
+  [1X3.4 [33X[0;0YGlobal Functions[133X[101X
+  
+  [1X3.4-1 ConvertToConstantExpressions[101X
+  
+  [33X[1;0Y[29X[2XConvertToConstantExpressions[102X( [3Xconstants[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ya list of constant expressions[133X
+  
+  [33X[0;0YAssign  to  each string in [3Xconstants[103X a global constant expression defined by
+  that  string. The variables of these expressions will be empty. For example,
+  [10XConvertToConstantExpressions( ["Pi"] )[110X returns [10X[ Pi ][110X, and [10XVariables(Pi)=[][110X.[133X
+  
+  [1X3.4-2 CreateContextualVariables[101X
+  
+  [33X[1;0Y[29X[2XCreateContextualVariables[102X( [3Xvariables[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ya list of expressions[133X
+  
+  [33X[0;0YAssigns  to  each  string in [3Xvariables[103X an expression with the same name. The
+  variables of these expressions equals the list [3Xvariables[103X itself. After that,
+  one  would  be  able for example to construct more complex expressions using
+  these  variables,  e.g.,  [10Xx1  +  Sin(x2)[110X. For example, [10XConvertToExpressions(
+  ["x1",  "x2"]  )[110X  returns a pair [10X[ x1, x2 ][110X, where [10Xx1[110X and [10Xx2[110X are expressions
+  with string representations "x1" and "x2", and [10XVariables(x1) = ["x1", "x2"][110X,
+  [10XVariables(x2) = ["x1", "x2"][110X.[133X
+  
+  [1X3.4-3 AssignExpressions[101X
+  
+  [33X[1;0Y[29X[2XAssignExpressions[102X( [3Xvars[103X ) [32X function[133X
+  
+  [33X[0;0YAssign  each expression in [3Xvars[103X to a global variable with the same name. For
+  example, if [10Xvars = [ x1, x2 ][110X, this function will create global variables [10Xx1[110X
+  and [10Xx2[110X corresponding to the expressions in the list.[133X
+  
+  
+  [1X3.5 [33X[0;0YExamples[133X[101X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xe1 := Expression( ["x", "y"], "x + Sin( y )" );[127X[104X
+    [4X[28Xx + Sin( y )[128X[104X
+    [4X[25Xgap>[125X [27Xe2 := Expression( ["y", "z"], "( y + Sin( z ) ) ^ 2" );[127X[104X
+    [4X[28X(y + Sin( z )) ^ 2[128X[104X
+    [4X[25Xgap>[125X [27XCategoriesOfObject( e1 );[127X[104X
+    [4X[28X[ "IsExtAElement", "IsNearAdditiveElement", "IsNearAdditiveElementWithZero",[128X[104X
+    [4X[28X  "IsNearAdditiveElementWithInverse", "IsAdditiveElement", "IsExtLElement",[128X[104X
+    [4X[28X  "IsExtRElement", "IsMultiplicativeElement", "IsExpression" ][128X[104X
+    [4X[25Xgap>[125X [27XKnownAttributesOfObject( e1 );[127X[104X
+    [4X[28X[ "String", "Variables" ][128X[104X
+    [4X[25Xgap>[125X [27XString( e1 );[127X[104X
+    [4X[28X"x + Sin( y )"[128X[104X
+    [4X[25Xgap>[125X [27XVariables( e1 );[127X[104X
+    [4X[28X[ "x", "y" ][128X[104X
+    [4X[25Xgap>[125X [27XVariables( e2 );[127X[104X
+    [4X[28X[ "y", "z" ][128X[104X
+    [4X[25Xgap>[125X [27Xe1 + e2;[127X[104X
+    [4X[28Xx + Sin( y ) + (y + Sin( z )) ^ 2[128X[104X
+    [4X[25Xgap>[125X [27Xe1 * e2;[127X[104X
+    [4X[28X(x + Sin( y )) * (y + Sin( z )) ^ 2[128X[104X
+    [4X[25Xgap>[125X [27Xe := Sin( e1 ) / e2;[127X[104X
+    [4X[28XSin( x + Sin( y ) ) / (y + Sin( z )) ^ 2[128X[104X
+    [4X[25Xgap>[125X [27XVariables( e );[127X[104X
+    [4X[28X[ "x", "y", "z" ][128X[104X
+    [4X[25Xgap>[125X [27XConstantExpression( "tau" );[127X[104X
+    [4X[28X#I  MakeReadWriteGlobal: tau already read-write[128X[104X
+    [4X[28Xtau[128X[104X
+    [4X[25Xgap>[125X [27XVariables( tau );[127X[104X
+    [4X[28X[  ][128X[104X
+    [4X[25Xgap>[125X [27Xe3 := e1 * Sin( tau );[127X[104X
+    [4X[28X(x + Sin( y )) * Sin( tau )[128X[104X
+    [4X[25Xgap>[125X [27XVariables( e3 );[127X[104X
+    [4X[28X[ "x", "y" ][128X[104X
+    [4X[25Xgap>[125X [27Xf := AsFunction( e );[127X[104X
+    [4X[28Xfunction( vec ) ... end[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( f );[127X[104X
+    [4X[28Xfunction ( vec )[128X[104X
+    [4X[28X    local x, y, z;[128X[104X
+    [4X[28X    Assert( 0, IsDenseList( vec ) and Length( vec ) = 3 );[128X[104X
+    [4X[28X    x := vec[1];[128X[104X
+    [4X[28X    y := vec[2];[128X[104X
+    [4X[28X    z := vec[3];[128X[104X
+    [4X[28X    return Sin( x + Sin( y ) ) / (y + Sin( z )) ^ 2;[128X[104X
+    [4X[28Xend[128X[104X
+    [4X[25Xgap>[125X [27Xx := [ 3, 2, 4 ];[127X[104X
+    [4X[28X[ 3, 2, 4 ][128X[104X
+    [4X[25Xgap>[125X [27Xf( x );[127X[104X
+    [4X[28X-0.449348[128X[104X
+    [4X[25Xgap>[125X [27Xdummy_input := CreateContextualVariables( [ "x1", "x2", "x3" ] );[127X[104X
+    [4X[28X[ x1, x2, x3 ][128X[104X
+    [4X[25Xgap>[125X [27Xf( dummy_input );[127X[104X
+    [4X[28XSin( x1 + Sin( x2 ) ) / (x2 + Sin( x3 )) ^ 2[128X[104X
+    [4X[25Xgap>[125X [27XAssignExpressions( dummy_input );[127X[104X
+    [4X[28X#I  MakeReadWriteGlobal: x1 already read-write[128X[104X
+    [4X[28X#I  MakeReadWriteGlobal: x2 already read-write[128X[104X
+    [4X[28X#I  MakeReadWriteGlobal: x3 already read-write[128X[104X
+    [4X[25Xgap>[125X [27Xx1;[127X[104X
+    [4X[28Xx1[128X[104X
+    [4X[25Xgap>[125X [27XVariables( x1 );[127X[104X
+    [4X[28X[ "x1", "x2", "x3" ][128X[104X
+    [4X[25Xgap>[125X [27X[ [ x1, x2 ] ] * [ [ x3 ], [ -x3 ] ];[127X[104X
+    [4X[28X[ [ x1 * x3 + x2 * (- x3) ] ][128X[104X
+  [4X[32X[104X
+  
+  
+  [1X3.6 [33X[0;0YGAP Categories[133X[101X
+  
+  [1X3.6-1 IsExpression[101X
+  
+  [33X[1;0Y[29X[2XIsExpression[102X( [3Xe[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YThe  [5XGAP[105X category of symbolic expressions. Expressions are used to represent
+  mathematical formulas symbolically, allowing operations like differentiation
+  to be performed symbolically before evaluation.[133X
+  
+  [1X3.6-2 IsConstantExpression[101X
+  
+  [33X[1;0Y[29X[2XIsConstantExpression[102X( [3Xe[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YThe  [5XGAP[105X  category  of constant expressions (expressions with no variables).
+  Constant  expressions  represent fixed numerical values and can be evaluated
+  directly.[133X
   

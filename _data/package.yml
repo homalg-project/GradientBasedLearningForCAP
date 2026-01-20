@@ -1,9 +1,9 @@
-name: GradientDescentForCAP
-version: "2025.11-01"
+name: GradientBasedLearningForCAP
+version: "2026.01-01"
 license: "GPL-2.0-or-later"
-date: 2025-11-28
+date: 2026-01-01
 description: |
-    Exploring categorical machine learning in CAP
+    Gradient Based Learning via Category Theory
 
 authors:
     - name: Kamal Saleh
@@ -13,7 +13,7 @@ maintainers:
     - name: Kamal Saleh
       url: https://github.com/kamalsaleh
 
-GAP: ">= 4.15.1"
+GAP: ">= 4.13.0"
 
 needed-pkgs:
     - name: "GAPDoc"
@@ -35,18 +35,19 @@ needed-pkgs:
 suggested-pkgs:
     - name: "ToolsForHigherHomologicalAlgebra"
       version: ">= 2023.01-01"
+      url: "https://homalg-project.github.io/pkg/ToolsForHigherHomologicalAlgebra"
 
-www: https://homalg-project.github.io/pkg/GradientDescentForCAP
+www: https://homalg-project.github.io/pkg/GradientBasedLearningForCAP
 readme: README.md
-packageinfo: https://homalg-project.github.io/GradientDescentForCAP/PackageInfo.g
+packageinfo: https://homalg-project.github.io/GradientBasedLearningForCAP/PackageInfo.g
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/homalg-project/GradientDescentForCAP/releases/download/v2025.11-01/GradientDescentForCAP-2025.11-01.tar.gz
+      url: https://github.com/homalg-project/GradientBasedLearningForCAP/releases/download/v2026.01-01/GradientBasedLearningForCAP-2026.01-01.tar.gz
     - name: .zip
-      url: https://github.com/homalg-project/GradientDescentForCAP/releases/download/v2025.11-01/GradientDescentForCAP-2025.11-01.zip
+      url: https://github.com/homalg-project/GradientBasedLearningForCAP/releases/download/v2026.01-01/GradientBasedLearningForCAP-2026.01-01.zip
 
-pdf: https://github.com/homalg-project/GradientDescentForCAP/releases/download/v2025.11-01/GradientDescentForCAP-2025.11-01-manual.pdf
+pdf: https://github.com/homalg-project/GradientBasedLearningForCAP/releases/download/v2026.01-01/GradientBasedLearningForCAP-2026.01-01-manual.pdf
 
 abstract: |
 
@@ -57,30 +58,25 @@ keywords: |
     Explore Categorical Machine Learning.
 citeas: |
     <p class='BibEntry'>
-    [<span class='BibKey'>Sal28</span>]   <b class='BibAuthor'>Saleh, K.</b>,
-     <i class='BibTitle'>GradientDescentForCAP, Exploring categorical machine learning in CAP,
-             Version 2025.11-01</i>
-     (<span class='BibYear'>1-28</span>)<br />
+    [<span class='BibKey'>Sal01</span>]   <b class='BibAuthor'>Saleh, K.</b>,
+     <i class='BibTitle'>GradientBasedLearningForCAP, Gradient Based Learning via Category Theory,
+             Version 2026.01-01</i>
+     (<span class='BibYear'>1-01</span>)<br />
     (<span class='BibNote'>GAP package</span>),
-    <span class='BibHowpublished'><a href="https://homalg-project.github.io/pkg/GradientDescentForCAP">https://homalg-project.github.io/pkg/GradientDescentForCAP</a></span>.
+    <span class='BibHowpublished'><a href="https://homalg-project.github.io/pkg/GradientBasedLearningForCAP">https://homalg-project.github.io/pkg/GradientBasedLearningForCAP</a></span>.
     </p>
     
 
 bibtex: |
-    @misc{ GradientDescentForCAP,
+    @misc{ GradientBasedLearningForCAP,
       author =           {Saleh, K.},
-      title =            {{GradientDescentForCAP},     {Exploring    categorical
-                          machine      learning      in      CAP},     {V}ersion
-                          2025.11\texttt{\symbol{45}}01},
-      month =            {5\texttt{\symbol{45}}},
-      year =             {1\texttt{\symbol{45}}28},
+      title =            {{GradientBasedLearningForCAP}, {Gradient Based Learning via Category Theory}, {V}ersion 2026.01\texttt{\symbol{45}}01},
+      month =            {6\texttt{\symbol{45}}},
+      year =             {1\texttt{\symbol{45}}01},
       note =             {GAP package},
-      howpublished =     {\href
-                          {https://homalg-project.github.io/pkg/GradientDescentForCAP}
-                          {\texttt{https://homalg\texttt{\symbol{45}}project.github.io/}\discretionary
-                          {}{}{}\texttt{pkg/}\discretionary
-                          {}{}{}\texttt{GradientDescentForCAP}}},
+      howpublished =     {\href         {https://homalg-project.github.io/pkg/GradientBasedLearningForCAP}        {\texttt{https://homalg\texttt{\symbol{45}}project.github.io/}\discretionary
+                          {}{}{}\texttt{pkg/}\discretionary {}{}{}\texttt{GradientBasedLearningForCAP}}},
       keywords =         {Explore Categorical Machine Learning},
-      printedkey =       {Sal28}
+      printedkey =       {Sal01}
     }
 

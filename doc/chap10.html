@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (GradientBasedLearningForCAP) - Chapter 10: Tools</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap10"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap9.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapInd.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap10_mj.html">[MathJax on]</a></p>
+<p><a id="X8508AEF8845565A1" name="X8508AEF8845565A1"></a></p>
+<div class="ChapSects"><a href="chap10.html#X8508AEF8845565A1">10 <span class="Heading">Tools</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10.html#X87B6780178314628">10.1 <span class="Heading">Mathematical Operations</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X8753BF687E04329F">10.1-1 Relu</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7C0610E1861E285C">10.1-2 KroneckerDelta</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7CB378E8829AB54C">10.1-3 MultiplyMatrices</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10.html#X879CFE0985DBA041">10.2 <span class="Heading">List Operations</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X860555F182DA636A">10.2-1 Enumerate</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X78914B3584485256">10.2-2 SplitDenseList</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X85706EA97AA164FE">10.2-3 SplitDenseList</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10.html#X7BD4785D8488BAD5">10.3 <span class="Heading">Helper Functions</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7FB926177AA1503C">10.3-1 SelectBasedOnCondition</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7AEC20EB82EF6351">10.3-2 CallFuncListBasedOnCondition</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap10.html#X8105E14D82E6B130">10.4 <span class="Heading">Python Integration</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X7A5C14F87E055AC3">10.4-1 Diff</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X82B5329F815573D1">10.4-2 LazyDiff</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X79112CEB85C65A98">10.4-3 JacobianMatrixUsingPython</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X81AEB95A85EE2C51">10.4-4 LazyJacobianMatrix</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X78F030FD835C505A">10.4-5 ScatterPlotUsingPython</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X786C9AD18052A0B3">10.4-6 SimplifyExpressionUsingPython</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X828484E78274D65E">10.4-7 LaTeXOutputUsingPython</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap10.html#X8294FF81801E7D86">10.4-8 AsCythonFunction</a></span>
+</div></div>
+</div>
+
+<h3>10 <span class="Heading">Tools</span></h3>
+
+<p><a id="X87B6780178314628" name="X87B6780178314628"></a></p>
+
+<h4>10.1 <span class="Heading">Mathematical Operations</span></h4>
+
+<p><a id="X8753BF687E04329F" name="X8753BF687E04329F"></a></p>
+
+<h5>10.1-1 Relu</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Relu</code>( <var class="Arg">a</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a float</p>
+
+<p>The ReLU (Rectified Linear Unit) activation function. Returns <code class="code">Maximum(a, 0)</code> for a float <var class="Arg">a</var>.</p>
+
+<p><a id="X7C0610E1861E285C" name="X7C0610E1861E285C"></a></p>
+
+<h5>10.1-2 KroneckerDelta</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; KroneckerDelta</code>( <var class="Arg">a</var>, <var class="Arg">b</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Returns: 0 or 1</p>
+
+<p>The Kronecker delta function. Returns 1 if <var class="Arg">a</var> equals <var class="Arg">b</var>, otherwise 0.</p>
+
+<p><a id="X7CB378E8829AB54C" name="X7CB378E8829AB54C"></a></p>
+
+<h5>10.1-3 MultiplyMatrices</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MultiplyMatrices</code>( <var class="Arg">m_1</var>, <var class="Arg">mat_1</var>, <var class="Arg">n_1</var>, <var class="Arg">m_2</var>, <var class="Arg">mat_2</var>, <var class="Arg">n_2</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Returns: a matrix</p>
+
+<p>Multiply two matrices with explicit dimensions. <var class="Arg">mat_1</var> is an <var class="Arg">m_1</var> x <var class="Arg">n_1</var> matrix, <var class="Arg">mat_2</var> is an <var class="Arg">m_2</var> x <var class="Arg">n_2</var> matrix. Requires <var class="Arg">n_1</var> = <var class="Arg">m_2</var>.</p>
+
+<p><a id="X879CFE0985DBA041" name="X879CFE0985DBA041"></a></p>
+
+<h4>10.2 <span class="Heading">List Operations</span></h4>
+
+<p><a id="X860555F182DA636A" name="X860555F182DA636A"></a></p>
+
+<h5>10.2-1 Enumerate</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Enumerate</code>( <var class="Arg">l</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a list of pairs</p>
+
+<p>Create enumerated pairs from a list. Returns a list of pairs <code class="code">[i, l[i]]</code> for each element in <var class="Arg">l</var>.</p>
+
+<p><a id="X78914B3584485256" name="X78914B3584485256"></a></p>
+
+<h5>10.2-2 SplitDenseList</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SplitDenseList</code>( <var class="Arg">l</var>, <var class="Arg">dims</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a list of lists</p>
+
+<p>Split a dense list <var class="Arg">l</var> according to the dimensions in <var class="Arg">dims</var>. The sum of dimensions must equal the length of the list.</p>
+
+<p><a id="X85706EA97AA164FE" name="X85706EA97AA164FE"></a></p>
+
+<h5>10.2-3 SplitDenseList</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SplitDenseList</code>( <var class="Arg">l</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a list of lists</p>
+
+<p>Split a dense list <var class="Arg">l</var> into sublists of size <var class="Arg">n</var>. If the length of <var class="Arg">l</var> is not a multiple of <var class="Arg">n</var>, the last sublist will contain the remaining elements (i.e., will contain less than <var class="Arg">n</var> elements).</p>
+
+<p><a id="X7BD4785D8488BAD5" name="X7BD4785D8488BAD5"></a></p>
+
+<h4>10.3 <span class="Heading">Helper Functions</span></h4>
+
+<p><a id="X7FB926177AA1503C" name="X7FB926177AA1503C"></a></p>
+
+<h5>10.3-1 SelectBasedOnCondition</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SelectBasedOnCondition</code>( <var class="Arg">cond</var>, <var class="Arg">val_true</var>, <var class="Arg">val_false</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Returns: an element</p>
+
+<p>Select an element based on a condition. If <var class="Arg">cond</var> is true, returns <var class="Arg">val_true</var>, otherwise returns <var class="Arg">val_false</var>.</p>
+
+<p><a id="X7AEC20EB82EF6351" name="X7AEC20EB82EF6351"></a></p>
+
+<h5>10.3-2 CallFuncListBasedOnCondition</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CallFuncListBasedOnCondition</code>( <var class="Arg">cond</var>, <var class="Arg">func_1</var>, <var class="Arg">func_2</var>, <var class="Arg">args</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Returns: the result of the called function</p>
+
+<p>Call one of two functions based on a condition. If <var class="Arg">cond</var> is true, calls <var class="Arg">func_1</var>, otherwise calls <var class="Arg">func_2</var> on the arguments in <var class="Arg">args</var>. For example, <code class="code">CallFuncListBasedOnCondition( true, x -&gt; x^2, x -&gt; x^3, [ 2 ] );</code> returns <span class="Math">4</span>, while <code class="code">CallFuncListBasedOnCondition( false, x -&gt; x^2, x -&gt; x^3, [ 2 ] );</code> returns <span class="Math">8</span>.</p>
+
+<p><a id="X8105E14D82E6B130" name="X8105E14D82E6B130"></a></p>
+
+<h4>10.4 <span class="Heading">Python Integration</span></h4>
+
+<p><a id="X7A5C14F87E055AC3" name="X7A5C14F87E055AC3"></a></p>
+
+<h5>10.4-1 Diff</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Diff</code>( <var class="Arg">vars</var>, <var class="Arg">str</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a function</p>
+
+<p>Compute the partial derivative of an expression with respect to the <var class="Arg">i</var>-th variable. <var class="Arg">vars</var> is a list of variable names, <var class="Arg">str</var> is the expression string. See the example in the Expressions chapter.</p>
+
+<p><a id="X82B5329F815573D1" name="X82B5329F815573D1"></a></p>
+
+<h5>10.4-2 LazyDiff</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LazyDiff</code>( <var class="Arg">vars</var>, <var class="Arg">str</var>, <var class="Arg">i</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a function</p>
+
+<p>Compute the lazy partial derivative of an expression with respect to the <var class="Arg">i</var>-th variable. <var class="Arg">vars</var> is a list of variable names, <var class="Arg">str</var> is the expression string. See the example in the Expressions chapter.</p>
+
+<p><a id="X79112CEB85C65A98" name="X79112CEB85C65A98"></a></p>
+
+<h5>10.4-3 JacobianMatrixUsingPython</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; JacobianMatrixUsingPython</code>( <var class="Arg">vars</var>, <var class="Arg">exps</var>, <var class="Arg">indices</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a matrix of derivative expressions</p>
+
+<p>Compute the Jacobian matrix using Python's SymPy library. <var class="Arg">vars</var> is a list of variable names, <var class="Arg">exps</var> is a list of expression strings, <var class="Arg">indices</var> specifies which variables to differentiate with respect to.</p>
+
+<p><a id="X81AEB95A85EE2C51" name="X81AEB95A85EE2C51"></a></p>
+
+<h5>10.4-4 LazyJacobianMatrix</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LazyJacobianMatrix</code>( <var class="Arg">vars</var>, <var class="Arg">exps</var>, <var class="Arg">indices</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a function</p>
+
+<p>Compute a lazy Jacobian matrix (deferred computation). Returns a function that computes the Jacobian when evaluated.</p>
+
+<p><a id="X78F030FD835C505A" name="X78F030FD835C505A"></a></p>
+
+<h5>10.4-5 ScatterPlotUsingPython</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ScatterPlotUsingPython</code>( <var class="Arg">points</var>, <var class="Arg">labels</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: the directory containing the plot</p>
+
+<p>Create a scatter plot using Python's matplotlib. <var class="Arg">points</var> is a list of 2D points, <var class="Arg">labels</var> is a list of class labels.</p>
+
+<p><a id="X786C9AD18052A0B3" name="X786C9AD18052A0B3"></a></p>
+
+<h5>10.4-6 SimplifyExpressionUsingPython</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; SimplifyExpressionUsingPython</code>( <var class="Arg">vars</var>, <var class="Arg">exps</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a list of simplified expression strings</p>
+
+<p>Simplify expressions using Python's SymPy library. <var class="Arg">vars</var> is a list of variable names, <var class="Arg">exps</var> is a list of expression strings.</p>
+
+<p><a id="X828484E78274D65E" name="X828484E78274D65E"></a></p>
+
+<h5>10.4-7 LaTeXOutputUsingPython</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; LaTeXOutputUsingPython</code>( <var class="Arg">vars</var>, <var class="Arg">exps</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a list of LaTeX strings</p>
+
+<p>Convert expressions to LaTeX format using Python's SymPy library. <var class="Arg">vars</var> is a list of variable names, <var class="Arg">exps</var> is a list of expression strings.</p>
+
+<p><a id="X8294FF81801E7D86" name="X8294FF81801E7D86"></a></p>
+
+<h5>10.4-8 AsCythonFunction</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsCythonFunction</code>( <var class="Arg">vars</var>, <var class="Arg">function_names</var>, <var class="Arg">functions</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a string with instructions to use the compiled functions</p>
+
+<p>Compile functions to Cython for improved performance. <var class="Arg">vars</var> is a list of lists of variable names (one per function), <var class="Arg">function_names</var> is a list of function names, <var class="Arg">functions</var> is a list of function body strings.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">dummy_input := CreateContextualVariables( [ "a", "b", "c" ] );</span>
+[ a, b, c ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AssignExpressions( dummy_input );;</span>
+#I  MakeReadWriteGlobal: a already read-write
+#I  MakeReadWriteGlobal: b already read-write
+#I  MakeReadWriteGlobal: c already read-write
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e := Sin( a ) + Cos( b );</span>
+Sin( a ) + Cos( b )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Diff( e, 1 )( dummy_input );</span>
+Cos( a )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LazyDiff( e, 1 )( dummy_input );</span>
+Diff( [ "a", "b", "c" ], "(Sin(a))+(Cos(b))", 1 )( [ a, b, c ] )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">JacobianMatrixUsingPython( [ a*Cos(b)+Exp(c), a*b*c ], [ 1, 2, 3 ] );</span>
+[ [ "Cos(b)", "-a*Sin(b)", "Exp(c)" ], [ "b*c", "a*c", "a*b" ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">JacobianMatrix(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  [ "a", "b", "c" ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  [ "a*Cos(b)+Exp(c)", "a*b*c" ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  [ 1, 2, 3 ] )(dummy_input);</span>
+[ [ Cos(b), (-a)*Sin(b), Exp(c) ], [ b*c, a*c, a*b ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">SimplifyExpressionUsingPython(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  [ "a", "b" ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">  [ "Sin(a)^2 + Cos(a)^2", "Exp(Log(b))" ] );</span>
+[ "1", "b" ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LaTeXOutputUsingPython( e );</span>
+"\\sin{\\left(a \\right)} + \\cos{\\left(b \\right)}"
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AsCythonFunction( [[ "x", "y" ], [ "z" ]], ["f", "g"], ["x*y", "Sin(z)"] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">"""</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">It will produce output similar to the following lines:</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">$ cd /tmp/gaptempdirI6rq3l/</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">$ python</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">&gt;&gt;&gt; from cython_functions import f, g</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">&gt;&gt;&gt; w = [ 2, 3 ] # or any other vector in R^2</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">&gt;&gt;&gt; f(w)</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">6.0</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">""";;</span>
+</pre></div>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">sigmoid := Expression( [ "x" ], "Exp(x)/(1+Exp(x))" );</span>
+Exp( x ) / (1 + Exp( x ))
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">sigmoid := AsFunction( sigmoid );</span>
+function( vec ) ... end
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">sigmoid( [ 0 ] );</span>
+0.5
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">points := List( 0.1 * [ -20 .. 20 ], x -&gt; [ x, sigmoid( [ x ] ) ] );</span>
+[ [ -2., 0.119203 ], [ -1.9, 0.130108 ], [ -1.8, 0.141851 ], [ -1.7, 0.154465 ],
+  [ -1.6, 0.167982 ], [ -1.5, 0.182426 ], [ -1.4, 0.197816 ], [ -1.3, 0.214165 ],
+  [ -1.2, 0.231475 ], [ -1.1, 0.24974 ], [ -1., 0.268941 ], [ -0.9, 0.28905 ],
+  [ -0.8, 0.310026 ], [ -0.7, 0.331812 ],  [ -0.6, 0.354344 ], [ -0.5, 0.377541 ],
+  [ -0.4, 0.401312 ], [ -0.3, 0.425557 ], [ -0.2, 0.450166 ], [ -0.1, 0.475021 ],
+  [ 0., 0.5 ], [ 0.1, 0.524979 ], [ 0.2, 0.549834 ], [ 0.3, 0.574443 ],
+  [ 0.4, 0.598688 ], [ 0.5, 0.622459 ], [ 0.6, 0.645656 ], [ 0.7, 0.668188 ],
+  [ 0.8, 0.689974 ], [ 0.9, 0.71095 ], [ 1., 0.731059 ], [ 1.1, 0.75026 ],
+  [ 1.2, 0.768525 ], [ 1.3, 0.785835 ], [ 1.4, 0.802184 ],  [ 1.5, 0.817574 ],
+  [ 1.6, 0.832018 ], [ 1.7, 0.845535 ], [ 1.8, 0.858149 ], [ 1.9, 0.869892 ],
+  [ 2., 0.880797 ] ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">labels := List( points, point -&gt; 0 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ScatterPlotUsingPython( points, labels : size := "100", action := "save" );;</span>
+</pre></div>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap9.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapInd.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="https://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

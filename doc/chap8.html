@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (GradientBasedLearningForCAP) - Chapter 8: Fitting Parameters</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap8"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap7.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap9.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap8_mj.html">[MathJax on]</a></p>
+<p><a id="X86F953D778AE71AF" name="X86F953D778AE71AF"></a></p>
+<div class="ChapSects"><a href="chap8.html#X86F953D778AE71AF">8 <span class="Heading">Fitting Parameters</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8.html#X7DFB63A97E67C0A1">8.1 <span class="Heading">Introduction</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8.html#X828B127D85DF571C">8.2 <span class="Heading">Notes on Batching</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8.html#X7DE8E16C7C2D387B">8.3 <span class="Heading">Operations</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X82E9E9D28070BD14">8.3-1 OneEpochUpdateLens</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7FFD1A987CDFF652">8.3-2 OneEpochUpdateLens</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap8.html#X7A4C38E87ABCC8AC">8.3-3 Fit</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap8.html#X7A489A5D79DA9E5C">8.4 <span class="Heading">Examples</span></a>
+</span>
+</div>
+</div>
+
+<h3>8 <span class="Heading">Fitting Parameters</span></h3>
+
+<p><a id="X7DFB63A97E67C0A1" name="X7DFB63A97E67C0A1"></a></p>
+
+<h4>8.1 <span class="Heading">Introduction</span></h4>
+
+<p>Suppose we have a parametrised morphism <span class="Math">(\mathbb{R}^p, f):\mathbb{R}^n \to \mathbb{R}</span> where <span class="Math">\mathbb{R}^p</span> is the parameters of the morphism and <span class="Math">f:\mathbb{R}^{p+n} \to \mathbb{R}</span> is a morphism in a skeletal category of smooth maps (It represents a loss function over an input in <span class="Math">\mathbb{R}^n</span> and parameter vector in <span class="Math">\mathbb{R}^p</span>). Given a set of training examples <span class="Math">\{X_1, \ldots, X_m\}</span> where each <span class="Math">X_i \in \mathbb{R}^n</span>, we want to fit a parameter vector <span class="Math">\Theta \in \mathbb{R}^p</span> such that the output of <span class="Math">f</span> is minimized on the training examples.</p>
+
+<p>We can achieve this by creating an update-lens for each training example. This update-lens reads the current parameters <span class="Math">\Theta</span> and updates it according to the gradient of the loss function <span class="Math">f</span> at the example <span class="Math">X_i</span>. We start by substituting the training example <span class="Math">X_i</span> into <span class="Math">f</span> resulting in a morphism <span class="Math">f_i:\mathbb{R}^p \to \mathbb{R}</span> defined by <span class="Math">f_i(\Theta) = f(\Theta, X_i)</span>. By applying the reverse differential lens functor <code class="code">ReverseDifferentialLensFunctor</code></p>
+
+<p class="pcenter">\mathbf{R}: \mathrm{Smooth} \to \mathrm{Lenses}(\mathrm{Smooth}),</p>
+
+<p>on <span class="Math">f_i</span>, we obtain a lens <span class="Math">\mathbf{R}(f_i):(\mathbb{R}^p, \mathbb{R}^p) \to (\mathbb{R}^1, \mathbb{R}^1)</span>. The get-morphism of this lens reads the current parameters <span class="Math">\Theta</span> and computes the loss <span class="Math">f_i(\Theta)</span>, while the put-morphism <span class="Math">Rf_i:\mathbb{R}^p \times \mathbb{R}^1 \to \mathbb{R}^p</span> is given by <span class="Math">(\Theta, r) \mapsto rJ_{f_i}(\Theta)</span> where <span class="Math">J_{f_i}(\Theta) \in \mathbb{R}^{1 \times p}</span> is the Jacobian matrix of <span class="Math">f_i</span> evaluated at <span class="Math">\Theta</span>.</p>
+
+<p>The One-Epoch update lens for the example <span class="Math">X_i</span> is then obtained by precomposing an optimizer lens (e.g., gradient descent, Adam, etc.) to the following lens <span class="Math">\mathbf{R}(f_i) \cdot \varepsilon</span> where <span class="Math">\varepsilon:(\mathbb{R}^1, \mathbb{R}^0) \to (\mathbb{R}^1, \mathbb{R}^1)</span> is the lens defined by:</p>
+
+
+<ul>
+<li><p>Get morphism: the identity morphism on <span class="Math">\mathbb{R}^1</span>.</p>
+
+</li>
+<li><p>Put morphism: the morphism <span class="Math">\mathbb{R}^1 \to \mathbb{R}^0</span> defined by <span class="Math">r \mapsto -r</span>.</p>
+
+</li>
+</ul>
+<p>This lens merely negates the gradient signal.</p>
+
+<p>For example, if we chose the optimizer to be the gradient descent optimizer with learning rate <span class="Math">\eta=0.01</span>: The resulting One-Epoch update lens for the example <span class="Math">X_i</span> is given by: Now, we can start by a random parameter vector <span class="Math">\Theta_0 \in \mathbb{R}^p</span> and apply the update morphism of the One-Epoch update lens for <span class="Math">X_1</span> to obtain a new parameter vector <span class="Math">\Theta_1</span>, then use <span class="Math">\Theta_1</span> and the One-Epoch update lens for <span class="Math">X_2</span> to obtain <span class="Math">\Theta_2</span>, and so on. After going through all training examples, we have completed one epoch of training. To perform multiple epochs of training, we can simply repeat the process.</p>
+
+<p>For example, suppose we start with the parmetised morphism (<span class="Math">\mathbb{R}^2, f):\mathbb{R}^2 \to \mathbb{R}</span> where <span class="Math">f:\mathbb{R}^{2+2} \to \mathbb{R}</span> is defined by <span class="Math">f(\theta_1, \theta_2, x_1, x_2) = (x_1-\theta_1)^2 + (x_2-\theta_2)^2</span> where <span class="Math">\Theta := (\theta_1, \theta_2) \in \mathbb{R}^2</span> represents the parameters and <span class="Math">x = (x_1, x_2) \in \mathbb{R}^2</span> is the input. Given training examples <span class="Math">X_1 = (1,2)</span> and <span class="Math">X_2 = (3,4)</span>, the morphism <span class="Math">f_1:\mathbb{R}^2 \to \mathbb{R}</span> is defined by <span class="Math">f_1(\theta_1, \theta_2) = (1 - \theta_1)^2 + (2 - \theta_2)^2</span> with Jacobian matrix Thus, the One-Epoch update lens for <span class="Math">X_1</span> is given by: and the One-Epoch update lens for <span class="Math">X_2</span> is given by: Suppose we start with the parameter vector <span class="Math">\Theta = (0,0)</span>. Then:</p>
+
+
+<ul>
+<li><p>After applying the update lens for <span class="Math">X_1</span>: <span class="Math">\Theta_1 = (0.98 \cdot 0 + 0.02, 0.98 \cdot 0 + 0.04) = (0.02, 0.04)</span>.</p>
+
+</li>
+<li><p>After applying the update lens for <span class="Math">X_2</span>: <span class="Math">\Theta_2 = (0.98 \cdot 0.02 + 0.06, 0.98 \cdot 0.04 + 0.08) = (0.0796, 0.1192)</span>.</p>
+
+</li>
+</ul>
+<p>Thus, after one epoch of training, the updated parameters are <span class="Math">\Theta_2 = (0.0796, 0.1192)</span>. Repeating this process for multiple epochs will further refine the parameters to minimize the loss function over the training examples. Eventually, we expect the parameters to converge to <span class="Math">\Theta = [2, 3]</span> which minimizes the loss function. The point whose distance from <span class="Math">[1, 2]</span> and <span class="Math">[3, 4]</span> is minimized is <span class="Math">[2, 3]</span>. See the examples section for the implementation of this process in <strong class="pkg">GAP</strong>.</p>
+
+<p><a id="X828B127D85DF571C" name="X828B127D85DF571C"></a></p>
+
+<h4>8.2 <span class="Heading">Notes on Batching</span></h4>
+
+<p>Given a parametrised (loss) morphism <span class="Math">(\mathbb{R}^p, f):\mathbb{R}^n \to \mathbb{R}</span> and a set of training examples <span class="Math">\{X_1, \ldots, X_m\}</span> where each <span class="Math">X_i \in \mathbb{R}^n</span>. If the number of training examples <span class="Math">m</span> is large, it may be beneficial to use mini-batches during training. Given a positive integer <var class="Arg">batch_size</var>, the loss morphism is first batched using <code class="code">Batchify</code>. This means, we create a new parametrised morphism <span class="Math">(\mathbb{R}^p, f_{batch}):\mathbb{R}^{batch\_size \cdot n} \to \mathbb{R}</span> where <span class="Math">f_{batch}(\Theta, X_{i_1}, \ldots, X_{i_{batch\_size}}) = \frac{1}{batch\_size} \sum_{j=1}^{batch\_size} f(\Theta, X_{i_j})</span>. We divide the training examples into mini-batches of size <var class="Arg">batch_size</var> (padding the list by repeating randomly chosen examples if necessary to make its length divisible by <var class="Arg">batch_size</var>). And then we consider each mini-batch as a single training example. Now, we can repeat the training process described above using the batched loss morphism and the new training examples. For example, if the parametrised morphism is <span class="Math">(\mathbb{R}^p, f):\mathbb{R}^2 \to \mathbb{R}</span> where <span class="Math">f(\theta_1, \theta_2, x_1, x_2) = (x_1-\theta_1)^2 + (x_2-\theta_2)^2</span>, and we have training examples <span class="Math">[[1,2], [3,4], [5,6], [7,8], [9,10]]</span>, then for <var class="Arg">batch_size</var> = <span class="Math">2</span>, the batched loss morphism is <span class="Math">(\mathbb{R}^p, f_{batch}):\mathbb{R}^4 \to \mathbb{R}</span> where <span class="Math">f_{batch}(\theta_1, \theta_2, x_1, x_2, x_3, x_4) = \frac{1}{2} \left( (x_1-\theta_1)^2 + (x_2-\theta_2)^2 + (x_3-\theta_1)^2 + (x_4-\theta_2)^2 \right)</span> (See <code class="code">Batchify</code> operation). Since the number of training examples is not divisible by <var class="Arg">batch_size</var>, we pad the list by randomly choosing an example (say, <span class="Math">[1,2]</span>) and appending it to the list. Then the new training examples set would be <span class="Math">[[1,2,3,4], [5,6,7,8], [9,10,1,2]]</span>.</p>
+
+<p><a id="X7DE8E16C7C2D387B" name="X7DE8E16C7C2D387B"></a></p>
+
+<h4>8.3 <span class="Heading">Operations</span></h4>
+
+<p><a id="X82E9E9D28070BD14" name="X82E9E9D28070BD14"></a></p>
+
+<h5>8.3-1 OneEpochUpdateLens</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OneEpochUpdateLens</code>( <var class="Arg">parametrised_morphism</var>, <var class="Arg">optimizer</var>, <var class="Arg">training_examples</var>, <var class="Arg">batch_size</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a morphism in a category of lenses (the epoch update lens)</p>
+
+<p>Create an update lens for one epoch of training.</p>
+
+<p>The argument <var class="Arg">parametrised_morphism</var> must be a morphism in a category of parametrised morphisms whose target has rank <span class="Math">1</span> (a scalar loss).</p>
+
+<p>The argument <var class="Arg">optimizer</var> is a function which takes the number of parameters <code class="code">p</code> and returns an optimizer lens in the category of lenses over <var class="Arg">Smooth</var>. Typical examples are <code class="code">Lenses.GradientDescentOptimizer</code>, <code class="code">Lenses.AdamOptimizer</code>, etc.</p>
+
+<p>The list <var class="Arg">training_examples</var> must contain at least one example; each example is a dense list representing a vector in <span class="Math">\mathbb{R}^n</span>.</p>
+
+<p><a id="X7FFD1A987CDFF652" name="X7FFD1A987CDFF652"></a></p>
+
+<h5>8.3-2 OneEpochUpdateLens</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; OneEpochUpdateLens</code>( <var class="Arg">parametrised_morphism</var>, <var class="Arg">optimizer</var>, <var class="Arg">training_examples_path</var>, <var class="Arg">batch_size</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a morphism in a category of lenses (the epoch update lens)</p>
+
+<p>Same as <code class="code">OneEpochUpdateLens</code>, but reads the training examples from a file. The file is evaluated using <code class="code">EvalString</code> and is expected to contain a GAP expression evaluating to a dense list of examples.</p>
+
+<p><a id="X7A4C38E87ABCC8AC" name="X7A4C38E87ABCC8AC"></a></p>
+
+<h5>8.3-3 Fit</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Fit</code>( <var class="Arg">one_epoch_update_lens</var>, <var class="Arg">nr_epochs</var>, <var class="Arg">initial_weights</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a list of final weights</p>
+
+<p>Perform <var class="Arg">nr_epochs</var> epochs of training using the given <var class="Arg">one_epoch_update_lens</var> and initial weights <var class="Arg">initial_weights</var>.</p>
+
+<p>The lens <var class="Arg">one_epoch_update_lens</var> must have get-morphism <span class="Math">\mathbb{R}^p \to \mathbb{R}^1</span> and put-morphism <span class="Math">\mathbb{R}^p \to \mathbb{R}^p</span> for the same <span class="Math">p</span> as the length of <var class="Arg">initial_weights</var>. The option <var class="Arg">verbose</var> controls whether to print the loss at each epoch.</p>
+
+<p><a id="X7A489A5D79DA9E5C" name="X7A489A5D79DA9E5C"></a></p>
+
+<h4>8.4 <span class="Heading">Examples</span></h4>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Smooth := SkeletalCategoryOfSmoothMaps( );</span>
+SkeletalSmoothMaps
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Para := CategoryOfParametrisedMorphisms( Smooth );</span>
+CategoryOfParametrisedMorphisms( SkeletalSmoothMaps )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Lenses := CategoryOfLenses( Smooth );</span>
+CategoryOfLenses( SkeletalSmoothMaps )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">D := [ Smooth.1, Smooth.1, Smooth.1, Smooth.1 ];</span>
+[ ℝ^1, ℝ^1, ℝ^1, ℝ^1 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">p1 := ProjectionInFactorOfDirectProduct( Smooth, D, 1 );</span>
+ℝ^4 -&gt; ℝ^1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">p2 := ProjectionInFactorOfDirectProduct( Smooth, D, 2 );</span>
+ℝ^4 -&gt; ℝ^1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">p3 := ProjectionInFactorOfDirectProduct( Smooth, D, 3 );</span>
+ℝ^4 -&gt; ℝ^1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">p4 := ProjectionInFactorOfDirectProduct( Smooth, D, 4 );</span>
+ℝ^4 -&gt; ℝ^1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := PreCompose( (p3 - p1), Smooth.Power(2) )</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        + PreCompose( (p4 - p2), Smooth.Power(2) );</span>
+ℝ^4 -&gt; ℝ^1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">dummy_input := CreateContextualVariables( [ "theta_1", "theta_2", "x1", "x2" ] );</span>
+[ theta_1, theta_2, x1, x2 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( f : dummy_input := dummy_input );</span>
+ℝ^4 -&gt; ℝ^1
+
+‣ (x1 + (- theta_1)) ^ 2 + (x2 + (- theta_2)) ^ 2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := MorphismConstructor( Para, Para.2, [ Smooth.2, f ], Para.1 );</span>
+ℝ^2 -&gt; ℝ^1 defined by:
+
+Underlying Object:
+-----------------
+ℝ^2
+
+Underlying Morphism:
+-------------------
+ℝ^4 -&gt; ℝ^1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( f : dummy_input := dummy_input );</span>
+ℝ^2 -&gt; ℝ^1 defined by:
+
+Underlying Object:
+-----------------
+ℝ^2
+
+Underlying Morphism:
+-------------------
+ℝ^4 -&gt; ℝ^1
+
+‣ (x1 + (- theta_1)) ^ 2 + (x2 + (- theta_2)) ^ 2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">optimizer := Lenses.GradientDescentOptimizer( :learning_rate := 0.01 );</span>
+function( n ) ... end
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">dummy_input := CreateContextualVariables( [ "theta_1", "theta_2", "g1", "g2" ] );</span>
+[ theta_1, theta_2, g1, g2 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( optimizer( 2 ) : dummy_input := dummy_input );</span>
+(ℝ^2, ℝ^2) -&gt; (ℝ^2, ℝ^2) defined by:
+
+Get Morphism:
+------------
+ℝ^2 -&gt; ℝ^2
+
+‣ theta_1
+‣ theta_2
+
+Put Morphism:
+------------
+ℝ^4 -&gt; ℝ^2
+
+‣ theta_1 + 0.01 * g1
+‣ theta_2 + 0.01 * g2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">update_lens_1 := OneEpochUpdateLens( f, optimizer, [ [ 1, 2 ] ], 1 );</span>
+(ℝ^2, ℝ^2) -&gt; (ℝ^1, ℝ^0) defined by:
+
+Get Morphism:
+------------
+ℝ^2 -&gt; ℝ^1
+
+Put Morphism:
+------------
+ℝ^2 -&gt; ℝ^2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">dummy_input := CreateContextualVariables( [ "theta_1", "theta_2" ] );</span>
+[ theta_1, theta_2 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( update_lens_1 : dummy_input := dummy_input );</span>
+(ℝ^2, ℝ^2) -&gt; (ℝ^1, ℝ^0) defined by:
+
+Get Morphism:
+------------
+ℝ^2 -&gt; ℝ^1
+
+‣ ((1 + (- theta_1)) ^ 2 + (2 + (- theta_2)) ^ 2) / 1 / 1
+
+Put Morphism:
+------------
+ℝ^2 -&gt; ℝ^2
+
+‣ theta_1 + 0.01 * (-1 * (0 + 0 + (1 * ((2 * (1 + (- theta_1)) ^ 1 * -1 + 0) * 1 
+  + 0 + 0 + 0) * 1 + 0 + 0 + 0) * 1 + 0))
+‣ theta_2 + 0.01 * (-1 * (0 + 0 + 0 + (0 + 1 * (0 +
+  (0 + 2 * (2 + (- theta_2)) ^ 1 * -1) * 1 + 0 + 0) * 1 + 0 + 0) * 1))
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">update_lens_1 := SimplifyMorphism( update_lens_1, infinity );</span>
+(ℝ^2, ℝ^2) -&gt; (ℝ^1, ℝ^0) defined by:
+
+Get Morphism:
+------------
+ℝ^2 -&gt; ℝ^1
+
+Put Morphism:
+------------
+ℝ^2 -&gt; ℝ^2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( update_lens_1 : dummy_input := dummy_input );</span>
+(ℝ^2, ℝ^2) -&gt; (ℝ^1, ℝ^0) defined by:
+
+Get Morphism:
+------------
+ℝ^2 -&gt; ℝ^1
+
+‣ (theta_1 - 1) ^ 2 + (theta_2 - 2) ^ 2
+
+Put Morphism:
+------------
+ℝ^2 -&gt; ℝ^2
+
+‣ 0.98 * theta_1 + 0.02
+‣ 0.98 * theta_2 + 0.04
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">update_lens_2 := OneEpochUpdateLens( f, optimizer, [ [ 3, 4 ] ], 1 );</span>
+(ℝ^2, ℝ^2) -&gt; (ℝ^1, ℝ^0) defined by:
+
+Get Morphism:
+------------
+ℝ^2 -&gt; ℝ^1
+
+Put Morphism:
+------------
+ℝ^2 -&gt; ℝ^2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( update_lens_2 : dummy_input := dummy_input );</span>
+
+(ℝ^2, ℝ^2) -&gt; (ℝ^1, ℝ^0) defined by:
+
+Get Morphism:
+------------
+ℝ^2 -&gt; ℝ^1
+
+‣ ((3 + (- theta_1)) ^ 2 + (4 + (- theta_2)) ^ 2) / 1 / 1
+
+Put Morphism:
+------------
+ℝ^2 -&gt; ℝ^2
+
+‣ theta_1 + 0.01 * (-1 * (0 + 0 + (1 * ((2 * (3 + (- theta_1)) ^ 1 * -1 + 0) * 1 
++ 0 + 0 + 0) * 1 + 0 + 0 + 0) * 1 + 0))
+‣ theta_2 + 0.01 * (-1 * (0 + 0 + 0 + (0 + 1 * (0 +
+(0 + 2 * (4 + (- theta_2)) ^ 1 * -1) * 1 + 0 + 0) * 1 + 0 + 0) * 1))
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">update_lens_2 := SimplifyMorphism( update_lens_2, infinity );</span>
+(ℝ^2, ℝ^2) -&gt; (ℝ^1, ℝ^0) defined by:
+
+Get Morphism:
+------------
+ℝ^2 -&gt; ℝ^1
+
+Put Morphism:
+------------
+ℝ^2 -&gt; ℝ^2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( update_lens_2 : dummy_input := dummy_input );</span>
+(ℝ^2, ℝ^2) -&gt; (ℝ^1, ℝ^0) defined by:
+
+Get Morphism:
+------------
+ℝ^2 -&gt; ℝ^1
+
+‣ (theta_1 - 3) ^ 2 + (theta_2 - 4) ^ 2
+
+Put Morphism:
+------------
+ℝ^2 -&gt; ℝ^2
+
+‣ 0.98 * theta_1 + 0.06
+‣ 0.98 * theta_2 + 0.08
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">update_lens := OneEpochUpdateLens( f, optimizer, [ [ 1, 2 ], [ 3, 4 ] ], 1 );</span>
+(ℝ^2, ℝ^2) -&gt; (ℝ^1, ℝ^0) defined by:
+
+Get Morphism:
+------------
+ℝ^2 -&gt; ℝ^1
+
+Put Morphism:
+------------
+ℝ^2 -&gt; ℝ^2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( update_lens : dummy_input := dummy_input );</span>
+(ℝ^2, ℝ^2) -&gt; (ℝ^1, ℝ^0) defined by:
+
+Get Morphism:
+------------
+ℝ^2 -&gt; ℝ^1
+
+‣ (
+    ((1 + (- theta_1)) ^ 2 + (2 + (- theta_2)) ^ 2) / 1 +
+    ((3 + (- theta_1)) ^ 2 + (4 + (- theta_2)) ^ 2) / 1
+  ) / 2
+
+Put Morphism:
+------------
+ℝ^2 -&gt; ℝ^2
+
+‣ theta_1 + 0.01 * (-1 * (0 + 0 + (1 * ((2 * (1 + (- theta_1)) ^ 1 * -1 + 0) * 1
+  + 0 + 0 + 0) * 1 + 0 + 0 + 0) * 1 + 0)) + 0.01 * (-1 * (0 + 0 +
+  (1 * ((2 * (3 + (- (theta_1 + 0.01 * (-1 * (0 + 0 +
+  (1 * ((2 * (1 + (- theta_1)) ^ 1 * -1 + 0) * 1 + 0 + 0 + 0) * 1
+  + 0 + 0 + 0) * 1 + 0))))) ^ 1 * -1 + 0) * 1 + 0 + 0 + 0) * 1 + 0 + 0 + 0) * 1 
+  + 0))
+‣ theta_2 + 0.01 * (-1 * (0 + 0 + 0 + (0 + 1 * (0 + (0 + 2 * (2 + 
+  (- theta_2)) ^ 1 * -1) * 1 + 0 + 0) * 1 + 0 + 0) * 1)) + 0.01
+  * (-1 * (0 + 0 + 0 + (0 + 1 * (0 + (0 + 2 * (4 +
+  (- (theta_2 + 0.01 * (-1 * (0 + 0 + 0 + (0 + 1 * (0 + (0 + 2 * (2 +
+  (- theta_2)) ^ 1 * -1) * 1 + 0 + 0) * 1 + 0 + 0) * 1))))) ^ 1 * -1) * 1 
+  + 0 + 0) * 1 + 0 + 0) * 1))
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">update_lens := SimplifyMorphism( update_lens, infinity );</span>
+(ℝ^2, ℝ^2) -&gt; (ℝ^1, ℝ^0) defined by:
+
+Get Morphism:
+------------
+ℝ^2 -&gt; ℝ^1
+
+Put Morphism:
+------------
+ℝ^2 -&gt; ℝ^2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( update_lens : dummy_input := dummy_input );</span>
+(ℝ^2, ℝ^2) -&gt; (ℝ^1, ℝ^0) defined by:
+
+Get Morphism:
+------------
+ℝ^2 -&gt; ℝ^1
+
+‣ theta_1 ^ 2 - 4 * theta_1 + theta_2 ^ 2 - 6 * theta_2 + 15
+
+Put Morphism:
+------------
+ℝ^2 -&gt; ℝ^2
+
+‣ 0.9604 * theta_1 + 0.0796
+‣ 0.9604 * theta_2 + 0.1192
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">"If we used only update_lens_1, the parameters converge to (1,2)";;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">theta := [ 0, 0 ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for i in [ 1 .. 1000 ] do theta := PutMorphism( update_lens_1 )( theta ); od;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">theta;</span>
+[ 1., 2. ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">"If we used only update_lens_2, the parameters converge to (3,4)";;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">theta := [ 0, 0 ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for i in [ 1 .. 1000 ] do theta := PutMorphism( update_lens_2 )( theta ); od;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">theta;</span>
+[ 3., 4. ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">"If we use the combined update_lens, the parameters converge to (2,3)";;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">theta := [ 0, 0 ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">for i in [ 1 .. 1000 ] do theta := PutMorphism( update_lens )( theta ); od;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">theta;</span>
+[ 2.0101, 3.0101 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">"Inseated of manually applying the put-morphism, we can use the Fit operation:";;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">"For example, to fit theta = (0,0) using 10 epochs:";;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">theta := [ 0, 0 ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">theta := Fit( update_lens, 10, theta );</span>
+Epoch  0/10 - loss = 15
+Epoch  1/10 - loss = 13.9869448
+Epoch  2/10 - loss = 13.052687681213568
+Epoch  3/10 - loss = 12.19110535502379
+Epoch  4/10 - loss = 11.39655013449986
+Epoch  5/10 - loss = 10.663813003077919
+Epoch  6/10 - loss = 9.9880895506637923
+Epoch  7/10 - loss = 9.3649485545394704
+Epoch  8/10 - loss = 8.790302999738083
+Epoch  9/10 - loss = 8.2603833494932317
+Epoch 10/10 - loss = 7.7717128910720641
+[ 0.668142, 1.00053 ]
+</pre></div>
+
+<p>Let us in this example find a solution to the equation <span class="Math">\theta^3-\theta^2-4=0</span>. We can reframe this as a minimization problem by considering the parametrised morphism <span class="Math">(\mathbb{R}^1, f):\mathbb{R}^0 \to \mathbb{R}^1</span> where <span class="Math">f(\theta) = (\theta^3-\theta^2-4)^2</span>.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Smooth := SkeletalCategoryOfSmoothMaps( );</span>
+SkeletalSmoothMaps
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Para := CategoryOfParametrisedMorphisms( Smooth );</span>
+CategoryOfParametrisedMorphisms( SkeletalSmoothMaps )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Lenses := CategoryOfLenses( Smooth );</span>
+CategoryOfLenses( SkeletalSmoothMaps )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := Smooth.Power( 3 ) - Smooth.Power( 2 ) - Smooth.Constant([ 4 ]);</span>
+ℝ^1 -&gt; ℝ^1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( f );</span>
+ℝ^1 -&gt; ℝ^1
+‣ x1 ^ 3 + (- x1 ^ 2) + - 4
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := PreCompose( f, Smooth.Power( 2 ) );</span>
+ℝ^1 -&gt; ℝ^1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( f );</span>
+ℝ^1 -&gt; ℝ^1
+
+‣ (x1 ^ 3 + (- x1 ^ 2) + - 4) ^ 2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := MorphismConstructor( Para, Para.0, [ Smooth.1, f ], Para.1 );</span>
+ℝ^0 -&gt; ℝ^1 defined by:
+
+Underlying Object:
+-----------------
+ℝ^1
+
+Underlying Morphism:
+-------------------
+ℝ^1 -&gt; ℝ^1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">dummy_input := CreateContextualVariables( [ "theta" ] );</span>
+[ theta ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( f : dummy_input := dummy_input );</span>
+ℝ^0 -&gt; ℝ^1 defined by:
+
+Underlying Object:
+-----------------
+ℝ^1
+
+Underlying Morphism:
+-------------------
+ℝ^1 -&gt; ℝ^1
+
+‣ (theta ^ 3 + (- theta ^ 2) + -4) ^ 2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">optimizer := Lenses.AdamOptimizer( :learning_rate := 0.01,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                beta1 := 0.9, beta2 := 0.999, epsilon := 1.e-7 );</span>
+function( n ) ... end
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">dummy_input := CreateContextualVariables( [ "t", "m", "v", "theta", "g" ] );</span>
+[ t, m, v, theta, g ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( optimizer( 1 ) : dummy_input := dummy_input );</span>
+(ℝ^4, ℝ^4) -&gt; (ℝ^1, ℝ^1) defined by:
+
+Get Morphism:
+------------
+ℝ^4 -&gt; ℝ^1
+
+‣ theta
+
+Put Morphism:
+------------
+ℝ^5 -&gt; ℝ^4
+
+‣ t + 1
+‣ 0.9 * m + 0.1 * g
+‣ 0.999 * v + 0.001 * g ^ 2
+‣ theta + 0.01 / (1 - 0.999 ^ t) * ((0.9 * m + 0.1 * g) /
+(1.e-07 + Sqrt( (0.999 * v + 0.001 * g ^ 2) / (1 - 0.999 ^ t) )))
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">update_lens := OneEpochUpdateLens( f, optimizer, [ [ ] ], 1 );</span>
+(ℝ^4, ℝ^4) -&gt; (ℝ^1, ℝ^0) defined by:
+
+Get Morphism:
+------------
+ℝ^4 -&gt; ℝ^1
+
+Put Morphism:
+------------
+ℝ^4 -&gt; ℝ^4
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">dummy_input := CreateContextualVariables( [ "t", "m", "v", "theta" ] );</span>
+[ t, m, v, theta ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( update_lens : dummy_input := dummy_input );</span>
+(ℝ^4, ℝ^4) -&gt; (ℝ^1, ℝ^0) defined by:
+
+Get Morphism:
+------------
+ℝ^4 -&gt; ℝ^1
+
+‣ (theta ^ 3 + (- theta ^ 2) + -4) ^ 2 / 1 / 1
+
+Put Morphism:
+------------
+ℝ^4 -&gt; ℝ^4
+
+‣ t + 1
+‣ 0.9 * m + 0.1 * (-1 * (1 * (2 * (theta ^ 3 + (- theta ^ 2) + -4) ^ 1 *
+  (3 * theta ^ 2 + (- 2 * theta ^ 1)) * 1) * 1 * 1))
+‣ 0.999 * v + 0.001 * (-1 * (1 * (2 * (theta ^ 3 + (- theta ^ 2) + -4) ^ 1 *
+  (3 * theta ^ 2 + (- 2 * theta ^ 1)) * 1) * 1 * 1)) ^ 2
+‣ theta + 0.01 / (1 - 0.999 ^ t) * ((0.9 * m + 0.1 *
+  (-1 * (1 * (2 * (theta ^ 3 + (- theta ^ 2) + -4) ^ 1 * 
+  (3 * theta ^ 2 + (- 2 * theta ^ 1)) * 1) * 1 * 1))) /
+  (1.e-07 + Sqrt( (0.999 * v + 0.001 * (-1 * (1 * (2 *
+  (theta ^ 3 + (- theta ^ 2) + -4) ^ 1 * (3 * theta ^ 2 + (- 2 * theta ^ 1)) * 1)
+  * 1 * 1)) ^ 2) / (1 - 0.999 ^ t) )))
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Fit( update_lens, 10000, [ 1, 0, 0, 8 ] : verbose := false );</span>
+[ 10001, 4.11498e-13, 1463.45, 2. ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">UnderlyingMorphism( f )( [ 2. ] );</span>
+[ 0. ]
+</pre></div>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap7.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap9.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="https://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

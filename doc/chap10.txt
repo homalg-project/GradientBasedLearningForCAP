@@ -1,0 +1,211 @@
+  
+  [1X10 [33X[0;0YTools[133X[101X
+  
+  
+  [1X10.1 [33X[0;0YMathematical Operations[133X[101X
+  
+  [1X10.1-1 Relu[101X
+  
+  [33X[1;0Y[29X[2XRelu[102X( [3Xa[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya float[133X
+  
+  [33X[0;0YThe  ReLU (Rectified Linear Unit) activation function. Returns [10XMaximum(a, 0)[110X
+  for a float [3Xa[103X.[133X
+  
+  [1X10.1-2 KroneckerDelta[101X
+  
+  [33X[1;0Y[29X[2XKroneckerDelta[102X( [3Xa[103X, [3Xb[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Y0 or 1[133X
+  
+  [33X[0;0YThe Kronecker delta function. Returns 1 if [3Xa[103X equals [3Xb[103X, otherwise 0.[133X
+  
+  [1X10.1-3 MultiplyMatrices[101X
+  
+  [33X[1;0Y[29X[2XMultiplyMatrices[102X( [3Xm_1[103X, [3Xmat_1[103X, [3Xn_1[103X, [3Xm_2[103X, [3Xmat_2[103X, [3Xn_2[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ya matrix[133X
+  
+  [33X[0;0YMultiply  two  matrices  with  explicit  dimensions.  [3Xmat_1[103X  is an [3Xm_1[103X x [3Xn_1[103X
+  matrix, [3Xmat_2[103X is an [3Xm_2[103X x [3Xn_2[103X matrix. Requires [3Xn_1[103X = [3Xm_2[103X.[133X
+  
+  
+  [1X10.2 [33X[0;0YList Operations[133X[101X
+  
+  [1X10.2-1 Enumerate[101X
+  
+  [33X[1;0Y[29X[2XEnumerate[102X( [3Xl[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya list of pairs[133X
+  
+  [33X[0;0YCreate  enumerated  pairs from a list. Returns a list of pairs [10X[i, l[i]][110X for
+  each element in [3Xl[103X.[133X
+  
+  [1X10.2-2 SplitDenseList[101X
+  
+  [33X[1;0Y[29X[2XSplitDenseList[102X( [3Xl[103X, [3Xdims[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya list of lists[133X
+  
+  [33X[0;0YSplit  a  dense  list  [3Xl[103X  according  to  the  dimensions in [3Xdims[103X. The sum of
+  dimensions must equal the length of the list.[133X
+  
+  [1X10.2-3 SplitDenseList[101X
+  
+  [33X[1;0Y[29X[2XSplitDenseList[102X( [3Xl[103X, [3Xn[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya list of lists[133X
+  
+  [33X[0;0YSplit  a  dense  list [3Xl[103X into sublists of size [3Xn[103X. If the length of [3Xl[103X is not a
+  multiple  of  [3Xn[103X, the last sublist will contain the remaining elements (i.e.,
+  will contain less than [3Xn[103X elements).[133X
+  
+  
+  [1X10.3 [33X[0;0YHelper Functions[133X[101X
+  
+  [1X10.3-1 SelectBasedOnCondition[101X
+  
+  [33X[1;0Y[29X[2XSelectBasedOnCondition[102X( [3Xcond[103X, [3Xval_true[103X, [3Xval_false[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Yan element[133X
+  
+  [33X[0;0YSelect  an  element based on a condition. If [3Xcond[103X is true, returns [3Xval_true[103X,
+  otherwise returns [3Xval_false[103X.[133X
+  
+  [1X10.3-2 CallFuncListBasedOnCondition[101X
+  
+  [33X[1;0Y[29X[2XCallFuncListBasedOnCondition[102X( [3Xcond[103X, [3Xfunc_1[103X, [3Xfunc_2[103X, [3Xargs[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ythe result of the called function[133X
+  
+  [33X[0;0YCall  one  of  two  functions  based  on a condition. If [3Xcond[103X is true, calls
+  [3Xfunc_1[103X,  otherwise  calls  [3Xfunc_2[103X  on  the  arguments  in [3Xargs[103X. For example,
+  [10XCallFuncListBasedOnCondition(  true, x -> x^2, x -> x^3, [ 2 ] );[110X returns [23X4[123X,
+  while  [10XCallFuncListBasedOnCondition(  false,  x  ->  x^2, x -> x^3, [ 2 ] );[110X
+  returns [23X8[123X.[133X
+  
+  
+  [1X10.4 [33X[0;0YPython Integration[133X[101X
+  
+  [1X10.4-1 Diff[101X
+  
+  [33X[1;0Y[29X[2XDiff[102X( [3Xvars[103X, [3Xstr[103X, [3Xi[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya function[133X
+  
+  [33X[0;0YCompute  the  partial  derivative  of an expression with respect to the [3Xi[103X-th
+  variable.  [3Xvars[103X  is  a list of variable names, [3Xstr[103X is the expression string.
+  See the example in the Expressions chapter.[133X
+  
+  [1X10.4-2 LazyDiff[101X
+  
+  [33X[1;0Y[29X[2XLazyDiff[102X( [3Xvars[103X, [3Xstr[103X, [3Xi[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya function[133X
+  
+  [33X[0;0YCompute  the  lazy  partial  derivative of an expression with respect to the
+  [3Xi[103X-th  variable.  [3Xvars[103X  is  a  list  of variable names, [3Xstr[103X is the expression
+  string. See the example in the Expressions chapter.[133X
+  
+  [1X10.4-3 JacobianMatrixUsingPython[101X
+  
+  [33X[1;0Y[29X[2XJacobianMatrixUsingPython[102X( [3Xvars[103X, [3Xexps[103X, [3Xindices[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya matrix of derivative expressions[133X
+  
+  [33X[0;0YCompute  the Jacobian matrix using Python's SymPy library. [3Xvars[103X is a list of
+  variable  names,  [3Xexps[103X  is  a  list of expression strings, [3Xindices[103X specifies
+  which variables to differentiate with respect to.[133X
+  
+  [1X10.4-4 LazyJacobianMatrix[101X
+  
+  [33X[1;0Y[29X[2XLazyJacobianMatrix[102X( [3Xvars[103X, [3Xexps[103X, [3Xindices[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya function[133X
+  
+  [33X[0;0YCompute  a  lazy  Jacobian matrix (deferred computation). Returns a function
+  that computes the Jacobian when evaluated.[133X
+  
+  [1X10.4-5 ScatterPlotUsingPython[101X
+  
+  [33X[1;0Y[29X[2XScatterPlotUsingPython[102X( [3Xpoints[103X, [3Xlabels[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ythe directory containing the plot[133X
+  
+  [33X[0;0YCreate  a  scatter  plot  using  Python's matplotlib. [3Xpoints[103X is a list of 2D
+  points, [3Xlabels[103X is a list of class labels.[133X
+  
+  [1X10.4-6 SimplifyExpressionUsingPython[101X
+  
+  [33X[1;0Y[29X[2XSimplifyExpressionUsingPython[102X( [3Xvars[103X, [3Xexps[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya list of simplified expression strings[133X
+  
+  [33X[0;0YSimplify  expressions  using  Python's  SymPy  library.  [3Xvars[103X  is  a list of
+  variable names, [3Xexps[103X is a list of expression strings.[133X
+  
+  [1X10.4-7 LaTeXOutputUsingPython[101X
+  
+  [33X[1;0Y[29X[2XLaTeXOutputUsingPython[102X( [3Xvars[103X, [3Xexps[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya list of LaTeX strings[133X
+  
+  [33X[0;0YConvert  expressions to LaTeX format using Python's SymPy library. [3Xvars[103X is a
+  list of variable names, [3Xexps[103X is a list of expression strings.[133X
+  
+  [1X10.4-8 AsCythonFunction[101X
+  
+  [33X[1;0Y[29X[2XAsCythonFunction[102X( [3Xvars[103X, [3Xfunction_names[103X, [3Xfunctions[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya string with instructions to use the compiled functions[133X
+  
+  [33X[0;0YCompile  functions  to  Cython  for  improved performance. [3Xvars[103X is a list of
+  lists  of  variable  names  (one  per function), [3Xfunction_names[103X is a list of
+  function names, [3Xfunctions[103X is a list of function body strings.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xdummy_input := CreateContextualVariables( [ "a", "b", "c" ] );[127X[104X
+    [4X[28X[ a, b, c ][128X[104X
+    [4X[25Xgap>[125X [27XAssignExpressions( dummy_input );;[127X[104X
+    [4X[28X#I  MakeReadWriteGlobal: a already read-write[128X[104X
+    [4X[28X#I  MakeReadWriteGlobal: b already read-write[128X[104X
+    [4X[28X#I  MakeReadWriteGlobal: c already read-write[128X[104X
+    [4X[25Xgap>[125X [27Xe := Sin( a ) + Cos( b );[127X[104X
+    [4X[28XSin( a ) + Cos( b )[128X[104X
+    [4X[25Xgap>[125X [27XDiff( e, 1 )( dummy_input );[127X[104X
+    [4X[28XCos( a )[128X[104X
+    [4X[25Xgap>[125X [27XLazyDiff( e, 1 )( dummy_input );[127X[104X
+    [4X[28XDiff( [ "a", "b", "c" ], "(Sin(a))+(Cos(b))", 1 )( [ a, b, c ] )[128X[104X
+    [4X[25Xgap>[125X [27XJacobianMatrixUsingPython( [ a*Cos(b)+Exp(c), a*b*c ], [ 1, 2, 3 ] );[127X[104X
+    [4X[28X[ [ "Cos(b)", "-a*Sin(b)", "Exp(c)" ], [ "b*c", "a*c", "a*b" ] ][128X[104X
+    [4X[25Xgap>[125X [27XJacobianMatrix([127X[104X
+    [4X[25X>[125X [27X  [ "a", "b", "c" ],[127X[104X
+    [4X[25X>[125X [27X  [ "a*Cos(b)+Exp(c)", "a*b*c" ],[127X[104X
+    [4X[25X>[125X [27X  [ 1, 2, 3 ] )(dummy_input);[127X[104X
+    [4X[28X[ [ Cos(b), (-a)*Sin(b), Exp(c) ], [ b*c, a*c, a*b ] ][128X[104X
+    [4X[25Xgap>[125X [27XSimplifyExpressionUsingPython([127X[104X
+    [4X[25X>[125X [27X  [ "a", "b" ],[127X[104X
+    [4X[25X>[125X [27X  [ "Sin(a)^2 + Cos(a)^2", "Exp(Log(b))" ] );[127X[104X
+    [4X[28X[ "1", "b" ][128X[104X
+    [4X[25Xgap>[125X [27XLaTeXOutputUsingPython( e );[127X[104X
+    [4X[28X"\\sin{\\left(a \\right)} + \\cos{\\left(b \\right)}"[128X[104X
+    [4X[25Xgap>[125X [27XAsCythonFunction( [[ "x", "y" ], [ "z" ]], ["f", "g"], ["x*y", "Sin(z)"] );;[127X[104X
+    [4X[25Xgap>[125X [27X"""[127X[104X
+    [4X[25X>[125X [27XIt will produce output similar to the following lines:[127X[104X
+    [4X[25X>[125X [27X$ cd /tmp/gaptempdirI6rq3l/[127X[104X
+    [4X[25X>[125X [27X$ python[127X[104X
+    [4X[25X>[125X [27X>>> from cython_functions import f, g[127X[104X
+    [4X[25X>[125X [27X>>> w = [ 2, 3 ] # or any other vector in R^2[127X[104X
+    [4X[25X>[125X [27X>>> f(w)[127X[104X
+    [4X[25X>[125X [27X6.0[127X[104X
+    [4X[25X>[125X [27X""";;[127X[104X
+  [4X[32X[104X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27Xsigmoid := Expression( [ "x" ], "Exp(x)/(1+Exp(x))" );[127X[104X
+    [4X[28XExp( x ) / (1 + Exp( x ))[128X[104X
+    [4X[25Xgap>[125X [27Xsigmoid := AsFunction( sigmoid );[127X[104X
+    [4X[28Xfunction( vec ) ... end[128X[104X
+    [4X[25Xgap>[125X [27Xsigmoid( [ 0 ] );[127X[104X
+    [4X[28X0.5[128X[104X
+    [4X[25Xgap>[125X [27Xpoints := List( 0.1 * [ -20 .. 20 ], x -> [ x, sigmoid( [ x ] ) ] );[127X[104X
+    [4X[28X[ [ -2., 0.119203 ], [ -1.9, 0.130108 ], [ -1.8, 0.141851 ], [ -1.7, 0.154465 ],[128X[104X
+    [4X[28X  [ -1.6, 0.167982 ], [ -1.5, 0.182426 ], [ -1.4, 0.197816 ], [ -1.3, 0.214165 ],[128X[104X
+    [4X[28X  [ -1.2, 0.231475 ], [ -1.1, 0.24974 ], [ -1., 0.268941 ], [ -0.9, 0.28905 ],[128X[104X
+    [4X[28X  [ -0.8, 0.310026 ], [ -0.7, 0.331812 ],  [ -0.6, 0.354344 ], [ -0.5, 0.377541 ],[128X[104X
+    [4X[28X  [ -0.4, 0.401312 ], [ -0.3, 0.425557 ], [ -0.2, 0.450166 ], [ -0.1, 0.475021 ],[128X[104X
+    [4X[28X  [ 0., 0.5 ], [ 0.1, 0.524979 ], [ 0.2, 0.549834 ], [ 0.3, 0.574443 ],[128X[104X
+    [4X[28X  [ 0.4, 0.598688 ], [ 0.5, 0.622459 ], [ 0.6, 0.645656 ], [ 0.7, 0.668188 ],[128X[104X
+    [4X[28X  [ 0.8, 0.689974 ], [ 0.9, 0.71095 ], [ 1., 0.731059 ], [ 1.1, 0.75026 ],[128X[104X
+    [4X[28X  [ 1.2, 0.768525 ], [ 1.3, 0.785835 ], [ 1.4, 0.802184 ],  [ 1.5, 0.817574 ],[128X[104X
+    [4X[28X  [ 1.6, 0.832018 ], [ 1.7, 0.845535 ], [ 1.8, 0.858149 ], [ 1.9, 0.869892 ],[128X[104X
+    [4X[28X  [ 2., 0.880797 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xlabels := List( points, point -> 0 );;[127X[104X
+    [4X[25Xgap>[125X [27XScatterPlotUsingPython( points, labels : size := "100", action := "save" );;[127X[104X
+  [4X[32X[104X
+  

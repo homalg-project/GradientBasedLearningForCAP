@@ -2,14 +2,88 @@
   
   [1XIndex[101X
   
-  [2XAddMultiplicationForMorphisms[102X, for IsCapCategory, IsFunction 3.1-1 
-      for IsCapCategory, IsFunction, IsInt 3.1-1 
-  [2XAddReverseDifferential[102X, for IsCapCategory, IsFunction 3.1-2 
-      for IsCapCategory, IsFunction, IsInt 3.1-2 
-  [2XAddReverseDifferentialWithGivenObjects[102X, for IsCapCategory, IsFunction 3.1-3 
-      for IsCapCategory, IsFunction, IsInt 3.1-3 
-  [2XIsMorphismInCategoryOfLenses[102X, for IsCapCategoryMorphism 2.1-2 
-  [2XIsObjectInCategoryOfLenses[102X, for IsCapCategoryObject 2.1-1 
+  [2XAddMultiplicationForMorphisms[102X, for IsCapCategory, IsFunction 9.2-1 
+      for IsCapCategory, IsFunction, IsInt 9.2-1 
+  [2XAddReverseDifferential[102X, for IsCapCategory, IsFunction 9.2-2 
+      for IsCapCategory, IsFunction, IsInt 9.2-2 
+  [2XAddReverseDifferentialWithGivenObjects[102X, for IsCapCategory, IsFunction 9.2-3 
+      for IsCapCategory, IsFunction, IsInt 9.2-3 
+  [2XAsCythonFunction[102X, for IsDenseList, IsDenseList, IsDenseList 10.4-8 
+  [2XAsFunction[102X, for IsExpression 3.2-3 
+  [2XAssignExpressions[102X 3.4-3 
+  [2XAvailableSkeletalSmoothMaps[102X 4.4-1 
+  [2XBatchify[102X, for IsMorphismInCategoryOfParametrisedMorphisms, IsInt 5.4-3 
+  [2XCallFuncListBasedOnCondition[102X 10.3-2 
+  [2XCategoryOfLenses[102X, for IsCapCategory 7.2-1 
+  [2XCategoryOfParametrisedMorphisms[102X, for IsCapCategory 5.2-1 
+  [2XConstantExpression[102X, for IsString 3.1-2 
+  [2XConvertToConstantExpressions[102X 3.4-1 
+  [2XCreateContextualVariables[102X 3.4-2 
+  [2XDiff[102X, for IsDenseList, IsString, IsPosInt 10.4-1 
+  [2XDummyInput[102X, for IsString, IsInt 3.3-1 
+  [2XDummyInputForAffineTransformation[102X 4.4-2 
+  [2XEmbeddingIntoCategoryOfParametrisedMorphisms[102X, for IsCategoryOfParametrisedMorphisms, IsCategoryOfParametrisedMorphisms 5.4-5 
+  [2XEnumerate[102X, for IsDenseList 10.2-1 
+  [2XEval[102X, for IsMorphismInSkeletalCategoryOfSmoothMaps, IsDenseList 4.3-1 
+  [2XEvalJacobianMatrix[102X, for IsMorphismInSkeletalCategoryOfSmoothMaps, IsDenseList 4.3-2 
+  [2XExpression[102X, for IsDenseList, IsString 3.1-1 
+  [2XFit[102X, for IsMorphismInCategoryOfLenses, IsPosInt, IsDenseList 8.3-3 
+  [2XFlipParameterAndSource[102X, for IsMorphismInCategoryOfParametrisedMorphisms 5.4-2 
+  [2XGetMorphism[102X, for IsMorphismInCategoryOfLenses 7.3-3 
+  [2XIsCategoryOfLenses[102X, for IsCapCategory 7.8-1 
+  [2XIsCategoryOfParametrisedMorphisms[102X, for IsCapCategory 5.8-1 
+  [2XIsConstantExpression[102X, for IsExpression 3.6-2 
+  [2XIsExpression[102X, for IsNearAdditiveElementWithInverse and IsAdditiveElement and IsMultiplicativeElement 3.6-1 
+  [2XIsMorphismInCategoryOfLenses[102X, for IsCapCategoryMorphism 7.8-3 
+  [2XIsMorphismInCategoryOfParametrisedMorphisms[102X, for IsCapCategoryMorphism 5.8-3 
+  [2XIsMorphismInSkeletalCategoryOfSmoothMaps[102X, for IsCapCategoryMorphism 4.7-3 
+  [2XIsObjectInCategoryOfLenses[102X, for IsCapCategoryObject 7.8-2 
+  [2XIsObjectInCategoryOfParametrisedMorphisms[102X, for IsCapCategoryObject 5.8-2 
+  [2XIsObjectInSkeletalCategoryOfSmoothMaps[102X, for IsCapCategoryObject 4.7-2 
+  [2XIsSkeletalCategoryOfSmoothMaps[102X, for IsCapCategory 4.7-1 
+  [2XJacobianMatrix[102X, for IsMorphismInSkeletalCategoryOfSmoothMaps 4.2-3 
+  [2XJacobianMatrixUsingPython[102X, for IsDenseList, IsDenseList, IsDenseList 10.4-3 
+  [2XKroneckerDelta[102X 10.1-2 
+  [2XLaTeXOutputUsingPython[102X, for IsDenseList, IsDenseList 10.4-7 
+  [2XLazyDiff[102X, for IsDenseList, IsString, IsPosInt 10.4-2 
+  [2XLazyJacobianMatrix[102X, for IsDenseList, IsDenseList, IsDenseList 10.4-4 
+  [2XMap[102X, for IsMorphismInSkeletalCategoryOfSmoothMaps 4.2-2 
+  [2XMorphismConstructor[102X, for IsCategoryOfLenses, IsObjectInCategoryOfLenses, IsDenseList, IsObjectInCategoryOfLenses 7.2-3 
+      for IsCategoryOfParametrisedMorphisms,IsObjectInCategoryOfParametrisedMorphisms,IsDenseList,IsObjectInCategoryOfParametrisedMorphisms 5.2-3 
+      for IsSkeletalCategoryOfSmoothMaps,IsObjectInSkeletalCategoryOfSmoothMaps,IsDenseList,IsObjectInSkeletalCategoryOfSmoothMaps 4.1-3 
+  [2XMultiplicationForMorphisms[102X, for IsCapCategoryMorphism, IsCapCategoryMorphism 9.1-1 
+  [2XMultiplyMatrices[102X 10.1-3 
+  [2XNaturalEmbedding[102X, for IsCapCategory, IsCategoryOfParametrisedMorphisms 5.4-4 
+  [2XNeuralNetworkLogitsMorphism[102X, for IsCategoryOfParametrisedMorphisms, IsPosInt, IsDenseList, IsPosInt 6.2-1 
+  [2XNeuralNetworkLossMorphism[102X, for IsCategoryOfParametrisedMorphisms, IsPosInt, IsDenseList, IsPosInt, IsString 6.2-3 
+  [2XNeuralNetworkPredictionMorphism[102X, for IsCategoryOfParametrisedMorphisms, IsPosInt, IsDenseList, IsPosInt, IsString 6.2-2 
+  [2XObjectConstructor[102X, for IsCategoryOfLenses, IsDenseList 7.2-2 
+      for IsSkeletalCategoryOfSmoothMaps, IsInt 4.1-2 
+  [2XObjectConstrutor[102X, for IsCategoryOfParametrisedMorphisms, IsCapCategoryObject 5.2-2 
+  [2XOneEpochUpdateLens[102X, for IsMorphismInCategoryOfParametrisedMorphisms, IsFunction, IsDenseList, IsPosInt 8.3-1 
+      for IsMorphismInCategoryOfParametrisedMorphisms, IsFunction, IsString, IsPosInt 8.3-2 
+  [2XPutMorphism[102X, for IsMorphismInCategoryOfLenses 7.3-4 
+  [2XRankOfObject[102X, for IsObjectInSkeletalCategoryOfSmoothMaps 4.2-1 
+  [2XRelu[102X, for IsFloat 10.1-1 
+  [2XReparametriseMorphism[102X, for IsMorphismInCategoryOfParametrisedMorphisms, IsCapCategoryMorphism 5.4-1 
+  [2XReverseDifferential[102X, for IsCapCategoryMorphism 9.1-3 
+  [2XReverseDifferentialLensFunctor[102X, for IsSkeletalCategoryOfSmoothMaps, IsCategoryOfLenses 7.4-1 
+  [2XReverseDifferentialWithGivenObjects[102X, for IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryObject 9.1-2 
+  [2XScatterPlotUsingPython[102X, for IsDenseList, IsDenseList 10.4-5 
+  [2XSelectBasedOnCondition[102X 10.3-1 
+  [2XSimplifyExpressionUsingPython[102X, for IsDenseList, IsDenseList 10.4-6 
+  [2XSkeletalCategoryOfSmoothMaps[102X 4.1-1 
+  [2XSmoothMap[102X, for IsSkeletalCategoryOfSmoothMaps, IsObjectInSkeletalCategoryOfSmoothMaps, IsDenseList, IsObjectInSkeletalCategoryOfSmoothMaps 4.1-4 
+  [2XSplitDenseList[102X, for IsDenseList, IsDenseList 10.2-2 
+      for IsDenseList, IsPosInt 10.2-3 
+  [2XString[102X, for IsExpression 3.2-2 
+  [2XUnderlyingCategory[102X, for IsCategoryOfParametrisedMorphisms 5.3-1 
+  [2XUnderlyingMorphism[102X, for IsMorphismInCategoryOfParametrisedMorphisms 5.3-4 
+  [2XUnderlyingObject[102X, for IsMorphismInCategoryOfParametrisedMorphisms 5.3-3 
+      for IsObjectInCategoryOfParametrisedMorphisms 5.3-2 
+  [2XUnderlyingPairOfMorphisms[102X, for IsMorphismInCategoryOfLenses 7.3-2 
+  [2XUnderlyingPairOfObjects[102X, for IsObjectInCategoryOfLenses 7.3-1 
+  [2XVariables[102X, for IsExpression 3.2-1 
   
   
   -------------------------------------------------------

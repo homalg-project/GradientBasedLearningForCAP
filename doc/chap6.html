@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (GradientBasedLearningForCAP) - Chapter 6: Neural Networks</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap6"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap5.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap7.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap6_mj.html">[MathJax on]</a></p>
+<p><a id="X79D8D4A17AB2EF1D" name="X79D8D4A17AB2EF1D"></a></p>
+<div class="ChapSects"><a href="chap6.html#X79D8D4A17AB2EF1D">6 <span class="Heading">Neural Networks</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X79EAA6A57DFBFBAE">6.1 <span class="Heading">Definition</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X7DE8E16C7C2D387B">6.2 <span class="Heading">Operations</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X7F964D297859F28A">6.2-1 NeuralNetworkLogitsMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X8270B0A07D3F52A7">6.2-2 NeuralNetworkPredictionMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap6.html#X8642FE17879E32F2">6.2-3 NeuralNetworkLossMorphism</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap6.html#X7A489A5D79DA9E5C">6.3 <span class="Heading">Examples</span></a>
+</span>
+</div>
+</div>
+
+<h3>6 <span class="Heading">Neural Networks</span></h3>
+
+<p><a id="X79EAA6A57DFBFBAE" name="X79EAA6A57DFBFBAE"></a></p>
+
+<h4>6.1 <span class="Heading">Definition</span></h4>
+
+<p>A neural network can be viewed as a composition of parametrised affine transformations and non-linear activation functions (such as ReLU, Sigmoid, Softmax, etc.).</p>
+
+<p><a id="X7DE8E16C7C2D387B" name="X7DE8E16C7C2D387B"></a></p>
+
+<h4>6.2 <span class="Heading">Operations</span></h4>
+
+<p><a id="X7F964D297859F28A" name="X7F964D297859F28A"></a></p>
+
+<h5>6.2-1 NeuralNetworkLogitsMorphism</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NeuralNetworkLogitsMorphism</code>( <var class="Arg">Para</var>, <var class="Arg">s</var>, <var class="Arg">hidden_layers_dims</var>, <var class="Arg">t</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a parametrised morphism</p>
+
+<p>The arguments are <var class="Arg">Para</var>, a parametrised morphism category, <var class="Arg">s</var>, a positive integer giving the input dimension, <var class="Arg">hidden_layers_dims</var>, a list of positive integers giving the sizes of the hidden layers in order, and <var class="Arg">t</var>, a positive integer giving the output dimension. This operation constructs a parametrised morphism that computes the logits (pre-activation outputs) of a fully-connected feed-forward neural network. The signature of the parametrised morphism is <span class="Math">\mathbb{R}^s \to \mathbb{R}^t</span> and is parameterised by the network weights and biases. More specifically, the parametrised morphism represents the function that maps an input vector <span class="Math">x \in \mathbb{R}^s</span> and a parameter vector <span class="Math">p \in \mathbb{R}^d</span> to the output vector <span class="Math">y \in \mathbb{R}^t</span>, where <span class="Math">d</span> is the total number of weights and biases in the network defined by the given architecture.</p>
+
+
+<ul>
+<li><p>For a layer with input dimension <span class="Math">m_i</span> and output dimension <span class="Math">m_{i+1}</span>, the parameter object has dimension <span class="Math">(m_i + 1) \times m_{i+1}</span>, accounting for both the <span class="Math">m_i \times m_{i+1}</span> weights matrix and the <span class="Math">m_{i+1}</span> biases.</p>
+
+</li>
+<li><p>Hidden layers use ReLU nonlinearity between linear layers. The final layer is linear (no activation) so the returned morphism produces logits suitable for subsequent application of a loss or classification activation.</p>
+
+</li>
+</ul>
+<p><a id="X8270B0A07D3F52A7" name="X8270B0A07D3F52A7"></a></p>
+
+<h5>6.2-2 NeuralNetworkPredictionMorphism</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NeuralNetworkPredictionMorphism</code>( <var class="Arg">Para</var>, <var class="Arg">s</var>, <var class="Arg">hidden_layers_dims</var>, <var class="Arg">t</var>, <var class="Arg">activation</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a parametrised morphism</p>
+
+<p>It composes the logits morphisms with the specified activation function to create a parametrised morphism representing the predictions of a neural network. The network has the architecture specified by <var class="Arg">s</var>, <var class="Arg">hidden_layers_dims</var>, and <var class="Arg">t</var>, i.e., the source and target of the parametrised morphism are <span class="Math">\mathbb{R}^{s}</span> and <span class="Math">\mathbb{R}^{t}</span>, respectively. The <var class="Arg">activation</var> determines the final activation function:</p>
+
+
+<ul>
+<li><p><span class="Math">\mathbf{Softmax}</span>: applies the softmax activation to turn logits into probabilities for multi-class classification.</p>
+
+</li>
+<li><p><span class="Math">\mathbf{Sigmoid}</span>: applies the sigmoid activation to turn logits into probabilities for binary classification.</p>
+
+</li>
+<li><p><span class="Math">\mathbf{IdFunc}</span>: applies the identity function (no activation) for regression tasks.</p>
+
+</li>
+</ul>
+<p><a id="X8642FE17879E32F2" name="X8642FE17879E32F2"></a></p>
+
+<h5>6.2-3 NeuralNetworkLossMorphism</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NeuralNetworkLossMorphism</code>( <var class="Arg">Para</var>, <var class="Arg">s</var>, <var class="Arg">hidden_layers_dims</var>, <var class="Arg">t</var>, <var class="Arg">activation</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a parametrised morphism</p>
+
+<p>Construct a parametrised morphism representing the training loss of a fully-connected feed-forward neural network with architecture given by <var class="Arg">s</var>, <var class="Arg">hidden_layers_dims</var> and <var class="Arg">t</var>. The returned parametrised morphism is parameterised by the network weights and biases and maps a pair (input, target) to a scalar loss: its source is <span class="Math">\mathbb{R}^s \times \mathbb{R}^t</span> (an input vector <span class="Math">x</span> and a target vector <span class="Math">y</span>) and its target is <span class="Math">\mathbb{R}</span> (the scalar loss).</p>
+
+<p>The behaviour of the loss depends on the <var class="Arg">activation</var> argument:</p>
+
+
+<ul>
+<li><p><span class="Math">\mathbf{Softmax}</span>:</p>
+
+
+<ul>
+<li><p>Used for multi-class classification.</p>
+
+</li>
+<li><p>Softmax is applied to the logits to convert them into a probability distribution.</p>
+
+</li>
+<li><p>The loss is the (negative) cross-entropy between the predicted probabilities and the target distribution.</p>
+
+</li>
+<li><p>Targets y may be one-hot vectors or probability distributions over classes.</p>
+
+</li>
+</ul>
+</li>
+<li><p><span class="Math">\mathbf{Sigmoid}</span>:</p>
+
+
+<ul>
+<li><p>Used for binary classification. Requires <span class="Math">t = 1</span>.</p>
+
+</li>
+<li><p>Applies the logistic sigmoid to the single logit to obtain a probability <span class="Math">\hat{y}</span> in <span class="Math">[0,1]</span>.</p>
+
+</li>
+<li><p>The loss is binary cross-entropy: <span class="Math">\mathrm{loss} = - ( y\log(\hat{y}) + (1-y)\log(1-\hat{y}) )</span>.</p>
+
+</li>
+</ul>
+</li>
+<li><p><span class="Math">\mathbf{IdFunc}</span>:</p>
+
+
+<ul>
+<li><p>Used for regression.</p>
+
+</li>
+<li><p>No final activation is applied. The loss is the mean squared error (MSE).</p>
+
+</li>
+</ul>
+</li>
+</ul>
+<p><a id="X7A489A5D79DA9E5C" name="X7A489A5D79DA9E5C"></a></p>
+
+<h4>6.3 <span class="Heading">Examples</span></h4>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Smooth := SkeletalCategoryOfSmoothMaps( );</span>
+SkeletalSmoothMaps
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Para := CategoryOfParametrisedMorphisms( Smooth );</span>
+CategoryOfParametrisedMorphisms( SkeletalSmoothMaps )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N213_Logits := NeuralNetworkLogitsMorphism( Para, 2, [ 1 ], 3 );</span>
+ℝ^2 -&gt; ℝ^3 defined by:
+
+Underlying Object:
+-----------------
+ℝ^9
+
+Underlying Morphism:
+-------------------
+ℝ^11 -&gt; ℝ^3
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">dummy_input := DummyInputForNeuralNetwork( 2, [ 1 ], 3 );</span>
+[ w2_1_1, b2_1, w2_1_2, b2_2, w2_1_3, b2_3, w1_1_1, w1_2_1, b1_1, z1, z2 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( N213_Logits : dummy_input := dummy_input );</span>
+ℝ^2 -&gt; ℝ^3 defined by:
+
+Underlying Object:
+-----------------
+ℝ^9
+
+Underlying Morphism:
+-------------------
+ℝ^11 -&gt; ℝ^3
+
+‣ w2_1_1 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_1
+‣ w2_1_2 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_2
+‣ w2_1_3 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_3
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N213_Pred := NeuralNetworkPredictionMorphism( Para, 2, [ 1 ], 3, "IdFunc" );</span>
+ℝ^2 -&gt; ℝ^3 defined by:
+
+Underlying Object:
+-----------------
+ℝ^9
+
+Underlying Morphism:
+-------------------
+ℝ^11 -&gt; ℝ^3
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N213_Pred = N213_Logits;</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N213_Loss := NeuralNetworkLossMorphism( Para, 2, [ 1 ], 3, "IdFunc" );</span>
+ℝ^5 -&gt; ℝ^1 defined by:
+
+Underlying Object:
+-----------------
+ℝ^9
+
+Underlying Morphism:
+-------------------
+ℝ^14 -&gt; ℝ^1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">vars := Concatenation(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                DummyInputStringsForNeuralNetwork( 2, [ 1 ], 3 ),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                DummyInputStrings( "y", 3 ) );</span>
+[ "w2_1_1", "b2_1", "w2_1_2", "b2_2", "w2_1_3", "b2_3", "w1_1_1", "w1_2_1", 
+  "b1_1", "z1", "z2", "y1", "y2", "y3" ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">dummy_input := CreateContextualVariables( vars );</span>
+[ w2_1_1, b2_1, w2_1_2, b2_2, w2_1_3, b2_3, w1_1_1, w1_2_1, b1_1, z1, z2,
+  y1, y2, y3 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( N213_Loss : dummy_input := dummy_input );</span>
+ℝ^5 -&gt; ℝ^1 defined by:
+
+Underlying Object:
+-----------------
+ℝ^9
+
+Underlying Morphism:
+-------------------
+ℝ^14 -&gt; ℝ^1
+
+‣ ((w2_1_1 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_1 - y1) ^ 2
+   + (w2_1_2 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_2 - y2) ^ 2
+   + (w2_1_3 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_3 - y3) ^ 2) / 3
+</pre></div>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Smooth := SkeletalCategoryOfSmoothMaps( );</span>
+SkeletalSmoothMaps
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Para := CategoryOfParametrisedMorphisms( Smooth );</span>
+CategoryOfParametrisedMorphisms( SkeletalSmoothMaps )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N213_Logits := NeuralNetworkLogitsMorphism( Para, 1, [ ], 1 );</span>
+ℝ^1 -&gt; ℝ^1 defined by:
+
+Underlying Object:
+-----------------
+ℝ^2
+
+Underlying Morphism:
+-------------------
+ℝ^3 -&gt; ℝ^1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">dummy_input := DummyInputForNeuralNetwork( 1, [ ], 1 );</span>
+[ w1_1_1, b1_1, z1 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( N213_Logits : dummy_input := dummy_input );</span>
+ℝ^1 -&gt; ℝ^1 defined by:
+
+Underlying Object:
+-----------------
+ℝ^2
+
+Underlying Morphism:
+-------------------
+ℝ^3 -&gt; ℝ^1
+
+‣ w1_1_1 * z1 + b1_1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N213_Pred := PreCompose( N213_Logits, Para.Sigmoid( 1 ) );</span>
+ℝ^1 -&gt; ℝ^1 defined by:
+
+Underlying Object:
+-----------------
+ℝ^2
+
+Underlying Morphism:
+-------------------
+ℝ^3 -&gt; ℝ^1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N213_Pred = NeuralNetworkPredictionMorphism( Para, 1, [ ], 1, "Sigmoid" );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( N213_Pred : dummy_input := dummy_input );</span>
+ℝ^1 -&gt; ℝ^1 defined by:
+
+Underlying Object:
+-----------------
+ℝ^2
+
+Underlying Morphism:
+-------------------
+ℝ^3 -&gt; ℝ^1
+
+‣ 1 / (1 + Exp( - (w1_1_1 * z1 + b1_1) ))
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N213_Loss := NeuralNetworkLossMorphism( Para, 1, [ ], 1, "Sigmoid" );</span>
+ℝ^2 -&gt; ℝ^1 defined by:
+
+Underlying Object:
+-----------------
+ℝ^2
+
+Underlying Morphism:
+-------------------
+ℝ^4 -&gt; ℝ^1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">vars := Concatenation(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                DummyInputStringsForNeuralNetwork( 1, [ ], 1 ),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                [ "y1" ] );</span>
+[ "w1_1_1", "b1_1", "z1", "y1" ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">dummy_input := CreateContextualVariables( vars );</span>
+[ w1_1_1, b1_1, z1, y1 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( N213_Loss : dummy_input := dummy_input );</span>
+ℝ^2 -&gt; ℝ^1 defined by:
+
+Underlying Object:
+-----------------
+ℝ^2
+
+Underlying Morphism:
+-------------------
+ℝ^4 -&gt; ℝ^1
+
+‣ Log( 1 + Exp( - (w1_1_1 * z1 + b1_1) ) ) + (1 - y1) * (w1_1_1 * z1 + b1_1)
+</pre></div>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Smooth := SkeletalCategoryOfSmoothMaps( );</span>
+SkeletalSmoothMaps
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Para := CategoryOfParametrisedMorphisms( Smooth );</span>
+CategoryOfParametrisedMorphisms( SkeletalSmoothMaps )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N213_Logits := NeuralNetworkLogitsMorphism( Para, 2, [ 1 ], 3 );</span>
+ℝ^2 -&gt; ℝ^3 defined by:
+
+Underlying Object:
+-----------------
+ℝ^9
+
+Underlying Morphism:
+-------------------
+ℝ^11 -&gt; ℝ^3
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">dummy_input := DummyInputForNeuralNetwork( 2, [ 1 ], 3 );</span>
+[ w2_1_1, b2_1, w2_1_2, b2_2, w2_1_3, b2_3, w1_1_1, w1_2_1, b1_1, z1, z2 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( N213_Logits : dummy_input := dummy_input );</span>
+ℝ^2 -&gt; ℝ^3 defined by:
+
+Underlying Object:
+-----------------
+ℝ^9
+
+Underlying Morphism:
+-------------------
+ℝ^11 -&gt; ℝ^3
+
+‣ w2_1_1 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_1
+‣ w2_1_2 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_2
+‣ w2_1_3 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_3
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N213_Pred := PreCompose( N213_Logits, Para.Softmax( 3 ) );</span>
+ℝ^2 -&gt; ℝ^3 defined by:
+
+Underlying Object:
+-----------------
+ℝ^9
+
+Underlying Morphism:
+-------------------
+ℝ^11 -&gt; ℝ^3
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N213_Pred = NeuralNetworkPredictionMorphism( Para, 2, [ 1 ], 3, "Softmax" );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( N213_Pred : dummy_input := dummy_input );</span>
+ℝ^2 -&gt; ℝ^3 defined by:
+
+Underlying Object:
+-----------------
+ℝ^9
+
+Underlying Morphism:
+-------------------
+ℝ^11 -&gt; ℝ^3
+‣ Exp( w2_1_1 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_1 )
+  / (Exp( w2_1_1 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_1 )
+     + Exp( w2_1_2 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_2 )
+       + Exp( w2_1_3 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_3 ))
+‣ Exp( w2_1_2 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_2 )
+  / (Exp( w2_1_1 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_1 )
+     + Exp( w2_1_2 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_2 )
+       + Exp( w2_1_3 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_3 ))
+‣ Exp( w2_1_3 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_3 )
+  / (Exp( w2_1_1 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_1 )
+     + Exp( w2_1_2 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_2 )
+       + Exp( w2_1_3 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_3 ))
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">N213_Loss := NeuralNetworkLossMorphism( Para, 2, [ 1 ], 3, "Softmax" );</span>
+ℝ^5 -&gt; ℝ^1 defined by:
+
+Underlying Object:
+-----------------
+ℝ^9
+
+Underlying Morphism:
+-------------------
+ℝ^14 -&gt; ℝ^1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">vars := Concatenation(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                DummyInputStringsForNeuralNetwork( 2, [ 1 ], 3 ),</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                DummyInputStrings( "y", 3 ) );</span>
+[ "w2_1_1", "b2_1", "w2_1_2", "b2_2", "w2_1_3", "b2_3", "w1_1_1", "w1_2_1", 
+  "b1_1", "z1", "z2", "y1", "y2", "y3" ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">dummy_input := CreateContextualVariables( vars );</span>
+[ w2_1_1, b2_1, w2_1_2, b2_2, w2_1_3, b2_3, w1_1_1, w1_2_1, b1_1, z1, z2,
+  y1, y2, y3 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( N213_Loss : dummy_input := dummy_input );</span>
+ℝ^5 -&gt; ℝ^1 defined by:
+
+Underlying Object:
+-----------------
+ℝ^9
+
+Underlying Morphism:
+-------------------
+ℝ^14 -&gt; ℝ^1
+
+‣ (
+    (
+      Log(
+        Exp( w2_1_1 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_1 ) +
+        Exp( w2_1_2 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_2 ) +
+        Exp( w2_1_3 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_3 )
+      )
+      - (w2_1_1 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_1)
+    ) * y1 +
+    (
+      Log( Exp( w2_1_1 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_1 ) +
+           Exp( w2_1_2 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_2 ) +
+           Exp( w2_1_3 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_3 )
+      )
+      - (w2_1_2 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_2)
+    ) * y2
+    +
+    (
+      Log( Exp( w2_1_1 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_1 ) +
+           Exp( w2_1_2 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_2 ) +
+           Exp( w2_1_3 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_3 )
+      )
+      - (w2_1_3 * Relu( w1_1_1 * z1 + w1_2_1 * z2 + b1_1 ) + b2_3)
+    ) * y3
+  ) / 3
+</pre></div>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap5.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap7.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="https://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

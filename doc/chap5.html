@@ -1,0 +1,652 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+<title>GAP (GradientBasedLearningForCAP) - Chapter 5: Category of Parametrised Morphisms</title>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="generator" content="GAPDoc2HTML" />
+<link rel="stylesheet" type="text/css" href="manual.css" />
+<script src="manual.js" type="text/javascript"></script>
+<script type="text/javascript">overwriteStyle();</script>
+</head>
+<body class="chap5"  onload="jscontent()">
+
+
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap4.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap6.html">[Next Chapter]</a>&nbsp;  </div>
+
+<p id="mathjaxlink" class="pcenter"><a href="chap5_mj.html">[MathJax on]</a></p>
+<p><a id="X7F8623D983FA64BD" name="X7F8623D983FA64BD"></a></p>
+<div class="ChapSects"><a href="chap5.html#X7F8623D983FA64BD">5 <span class="Heading">Category of Parametrised Morphisms</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X79EAA6A57DFBFBAE">5.1 <span class="Heading">Definition</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X86EC0F0A78ECBC10">5.2 <span class="Heading">Constructors</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X873DEF0185E4ED22">5.2-1 CategoryOfParametrisedMorphisms</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X8553C85780A023D5">5.2-2 ObjectConstrutor</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X8083D00787BA7AFF">5.2-3 MorphismConstructor</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X7C701DBF7BAE649A">5.3 <span class="Heading">Attributes</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X8483546E7B4E63D3">5.3-1 UnderlyingCategory</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X83AA9FD18441A1D4">5.3-2 UnderlyingObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X8509D4227AAC06C0">5.3-3 UnderlyingObject</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X79CBEF6F7DE7305D">5.3-4 UnderlyingMorphism</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X7DE8E16C7C2D387B">5.4 <span class="Heading">Operations</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X850F0A677FCD3D90">5.4-1 ReparametriseMorphism</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X862EBE0A78223CCA">5.4-2 FlipParameterAndSource</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X852E8DC280616587">5.4-3 Batchify</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7E3315E37D9C9397">5.4-4 NaturalEmbedding</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X78015EC483AFA1A1">5.4-5 EmbeddingIntoCategoryOfParametrisedMorphisms</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X7C66977D85883E30">5.5 <span class="Heading">Available Parametrised Morphisms</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X7DA5FC5379955E0E">5.6 <span class="Heading">Supported CAP Operations</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X8158A82178091A61">5.6-1 <span class="Heading">Category of Parametrised Smooth Maps</span></a>
+</span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7915096B840F8531">5.6-2 <span class="Heading">Generate Documentation</span></a>
+</span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X7A489A5D79DA9E5C">5.7 <span class="Heading">Examples</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap5.html#X7D03633A7D98026B">5.8 <span class="Heading">GAP Categories</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X81E234558619075D">5.8-1 IsCategoryOfParametrisedMorphisms</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X7C1A84448408093E">5.8-2 IsObjectInCategoryOfParametrisedMorphisms</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap5.html#X8715A575791E36D1">5.8-3 IsMorphismInCategoryOfParametrisedMorphisms</a></span>
+</div></div>
+</div>
+
+<h3>5 <span class="Heading">Category of Parametrised Morphisms</span></h3>
+
+<p><a id="X79EAA6A57DFBFBAE" name="X79EAA6A57DFBFBAE"></a></p>
+
+<h4>5.1 <span class="Heading">Definition</span></h4>
+
+<p>Let <span class="Math">(C, \otimes, I)</span> be a strict symmetric monoidal category. The category <span class="Math">P(C)</span> of parametrized morphisms is given by the following data:</p>
+
+
+<ul>
+<li><p><em>Objects</em>: <span class="Math">\mathrm{Obj}(P(C)) := \mathrm{Obj}(C)</span></p>
+
+</li>
+</ul>
+
+<ul>
+<li><p><em>Morphisms</em>: For two objects <span class="Math">A</span> and <span class="Math">B</span> in <span class="Math">P(C)</span>, a morphism <span class="Math">f \colon A \to B</span> in <span class="Math">P(C)</span> consists of:</p>
+
+
+<ul>
+<li><p>A parameter object <span class="Math">P \in \mathrm{Obj}(C)</span></p>
+
+</li>
+<li><p>A morphism <span class="Math">f_P \colon P \otimes A \to B</span> in <span class="Math">C</span></p>
+
+</li>
+</ul>
+</li>
+<li><p><em>Composition</em>: Given two morphisms <span class="Math">f=(P,f_P) \colon A \to B</span> and <span class="Math">g =(Q,g_Q) \colon B \to C</span> in <span class="Math">P(C)</span>,</p>
+
+</li>
+</ul>
+<p>their composition <span class="Math">f \cdot g \colon A \to C</span> is given by the pair</p>
+
+
+<ul>
+<li><p><em>Identity morphisms</em>: For each object <span class="Math">A</span> in <span class="Math">P(C)</span>, the identity morphism is given by</p>
+
+</li>
+</ul>
+<p>the pair <span class="Math">\mathrm{id}_A = \left( I, (\mathrm{id}_A)_I := \mathrm{id}_A \in \mathbf{Hom}_C(A, A)) \right)</span>.</p>
+
+<p><a id="X86EC0F0A78ECBC10" name="X86EC0F0A78ECBC10"></a></p>
+
+<h4>5.2 <span class="Heading">Constructors</span></h4>
+
+<p><a id="X873DEF0185E4ED22" name="X873DEF0185E4ED22"></a></p>
+
+<h5>5.2-1 CategoryOfParametrisedMorphisms</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CategoryOfParametrisedMorphisms</code>( <var class="Arg">C</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a category</p>
+
+<p>Construct the category of parametrised morphisms over the category <var class="Arg">C</var>.</p>
+
+<p><a id="X8553C85780A023D5" name="X8553C85780A023D5"></a></p>
+
+<h5>5.2-2 ObjectConstrutor</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ObjectConstrutor</code>( <var class="Arg">Para</var>, <var class="Arg">A</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: an object in the category of parametrised morphisms</p>
+
+<p>Construct an object in the category of parametrised morphisms.</p>
+
+<p><a id="X8083D00787BA7AFF" name="X8083D00787BA7AFF"></a></p>
+
+<h5>5.2-3 MorphismConstructor</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; MorphismConstructor</code>( <var class="Arg">Para</var>, <var class="Arg">A</var>, <var class="Arg">datum</var>, <var class="Arg">B</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a morphism in the category of parametrised morphisms</p>
+
+<p>Construct a morphism in the category of parametrised morphisms. The datum is a pair consisting of the parameter object <span class="Math">P</span> and the underlying morphism <span class="Math">f_P \colon P \otimes A \to B</span>.</p>
+
+<p><a id="X7C701DBF7BAE649A" name="X7C701DBF7BAE649A"></a></p>
+
+<h4>5.3 <span class="Heading">Attributes</span></h4>
+
+<p><a id="X8483546E7B4E63D3" name="X8483546E7B4E63D3"></a></p>
+
+<h5>5.3-1 UnderlyingCategory</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingCategory</code>( <var class="Arg">Para</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a category</p>
+
+<p>Returns the underlying category of a category of parametrised morphisms.</p>
+
+<p><a id="X83AA9FD18441A1D4" name="X83AA9FD18441A1D4"></a></p>
+
+<h5>5.3-2 UnderlyingObject</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingObject</code>( <var class="Arg">A</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: an object in the underlying category</p>
+
+<p>Returns the underlying object for an object in the category of parametrised morphisms.</p>
+
+<p><a id="X8509D4227AAC06C0" name="X8509D4227AAC06C0"></a></p>
+
+<h5>5.3-3 UnderlyingObject</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingObject</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: an object in the underlying category</p>
+
+<p>Returns the parameter object (underlying object) of a parametrised morphism.</p>
+
+<p><a id="X79CBEF6F7DE7305D" name="X79CBEF6F7DE7305D"></a></p>
+
+<h5>5.3-4 UnderlyingMorphism</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; UnderlyingMorphism</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a morphism in the underlying category</p>
+
+<p>Returns the underlying morphism <span class="Math">f_p:P \otimes A \to B \in C</span> in <span class="Math">C</span> of a parametrised morphism <span class="Math">f = (P, f_p:P \otimes A \to B):A \to B</span> in <span class="Math">P(C)</span>.</p>
+
+<p><a id="X7DE8E16C7C2D387B" name="X7DE8E16C7C2D387B"></a></p>
+
+<h4>5.4 <span class="Heading">Operations</span></h4>
+
+<p><a id="X850F0A677FCD3D90" name="X850F0A677FCD3D90"></a></p>
+
+<h5>5.4-1 ReparametriseMorphism</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ReparametriseMorphism</code>( <var class="Arg">f</var>, <var class="Arg">r</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a parametrised morphism</p>
+
+<p>The input is a parametrised morphism <span class="Math">f=(P,f_P: P\otimes A \to B): A \to B</span> and a morphism <span class="Math">r: Q \to P</span> in <span class="Math">C</span>. The output is the reparametrised morphism <span class="Math">\hat{f}=(Q,\hat{f}_Q: Q \otimes A \to B): A \to B</span> where <span class="Math">\hat{f}_Q := (r \otimes \mathrm{id}_A) \cdot f_P \colon Q \otimes A \to B</span>.</p>
+
+<p><a id="X862EBE0A78223CCA" name="X862EBE0A78223CCA"></a></p>
+
+<h5>5.4-2 FlipParameterAndSource</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; FlipParameterAndSource</code>( <var class="Arg">f</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a parametrised morphism</p>
+
+<p>The input is a parametrised morphism <span class="Math">f=(P,f_P: P\otimes A \to B): A \to B</span>. The output is the parametrised morphism <span class="Math">\hat{f}=(A,\hat{f}_A: A \otimes P \to B): P \to A</span> where <span class="Math">\hat{f}_A := \sigma_{A,P} \cdot f_P \colon A \otimes P \to B</span>, with <span class="Math">\sigma_{A,P}: A \otimes P \to P \otimes A</span> being the symmetry isomorphism (braiding) in the underlying symmetric monoidal category <span class="Math">C</span>.</p>
+
+<p><a id="X852E8DC280616587" name="X852E8DC280616587"></a></p>
+
+<h5>5.4-3 Batchify</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Batchify</code>( <var class="Arg">f</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a parametrised morphism</p>
+
+<p>Adjusts a parametrised morphism to process a batch of <var class="Arg">n</var> inputs simultaneously. Given a parametrised morphism <span class="Math">f = (P, f_P \colon P \otimes A \to B): A \to B</span> where the target <span class="Math">B</span> has rank 1, this operation produces a new parametrised morphism that can handle <span class="Math">n</span> copies of <span class="Math">A</span> at once (a batch of size <span class="Math">n</span>).</p>
+
+<p>The construction works as follows:</p>
+
+
+<ul>
+<li><p>The source becomes the direct product of <span class="Math">n</span> copies of <span class="Math">A</span>: <span class="Math">A^n = A \times \cdots \times A</span></p>
+
+</li>
+<li><p>The parameter object remains <span class="Math">P</span></p>
+
+</li>
+<li><p>The underlying morphism is constructed by: <span class="Math">\alpha \cdot f_P^{(n)} \cdot \mu_n \colon P \otimes A^n \to B</span> where:</p>
+
+
+<ul>
+<li><p><span class="Math">\alpha:P \otimes A^n \to (P \otimes A)^n</span> is the morphism that reuses the parameter <span class="Math">P</span> across the <span class="Math">n</span> components. For example, when <span class="Math">n=2</span>, <span class="Math">\alpha</span> sends <span class="Math">(p, a_1, a_2) \in P \otimes A^2</span> to <span class="Math">(p, a_1, p, a_2) \in (P \otimes A)^2</span>, i.e., the same parameter <span class="Math">p</span> is paired with each input (training example) <span class="Math">a_i</span>.</p>
+
+</li>
+<li><p><span class="Math">f_P^{(n)}: (P \otimes A)^n \to B^n</span> is the direct product of <span class="Math">n</span> copies of <span class="Math">f_P</span>,</p>
+
+</li>
+<li><p><span class="Math">\mu_n: B^n \to B</span> is the mean aggregator that averages the <span class="Math">n</span> outputs into a single output in <span class="Math">B</span> (since <span class="Math">B</span> has rank 1).</p>
+
+</li>
+</ul>
+</li>
+</ul>
+<p><a id="X7E3315E37D9C9397" name="X7E3315E37D9C9397"></a></p>
+
+<h5>5.4-4 NaturalEmbedding</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; NaturalEmbedding</code>( <var class="Arg">C</var>, <var class="Arg">P</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a functor</p>
+
+<p>Natural embedding functor from category <var class="Arg">C</var> into category of parametrised morphisms <var class="Arg">P</var> (of <var class="Arg">C</var>). Objects are mapped to themselves, and a morphism <span class="Math">f: A \to B</span> in <var class="Arg">C</var> is mapped to the parametrised morphism <span class="Math">(I, f_I: I \otimes A \xrightarrow{f} B): A \to B</span> in <var class="Arg">P</var>. Note that <span class="Math">I \otimes A = A</span> by the strict monoidal unit property. This functor reflects the fact that ordinary morphisms can be viewed as parametrised morphisms with a trivial (unit) parameter.</p>
+
+<p><a id="X78015EC483AFA1A1" name="X78015EC483AFA1A1"></a></p>
+
+<h5>5.4-5 EmbeddingIntoCategoryOfParametrisedMorphisms</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; EmbeddingIntoCategoryOfParametrisedMorphisms</code>( <var class="Arg">Para</var>, <var class="Arg">Para_Lenses</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a functor</p>
+
+<p>Embedding functor from category of parametrised morphisms <var class="Arg">Para</var> into another category of parametrised morphisms <var class="Arg">Para_Lenses</var>.</p>
+
+<p><a id="X7C66977D85883E30" name="X7C66977D85883E30"></a></p>
+
+<h4>5.5 <span class="Heading">Available Parametrised Morphisms</span></h4>
+
+<p>All available smooth maps can be lifted to parametrised morphisms in the category of parametrised morphisms by using one of the following two methods:</p>
+
+
+<ul>
+<li><p>Using the natural embedding functor from the category of smooth maps into the category of parametrised morphisms, which associates to each smooth map <span class="Math">f: A \to B</span> the parametrised morphism <span class="Math">(I, f_I: I \otimes A \xrightarrow{f} B): A \to B</span> where <span class="Math">I</span> is the monoidal unit. For example, <span class="Math">\mathrm{Cos}</span>, <span class="Math">\mathrm{Exp}</span>, <span class="Math">\mathrm{Log}</span> etc.</p>
+
+</li>
+<li><p>Constructing parametrised morphisms directly by specifying the parameter object and the underlying morphism. For instance, the construction of an affine transformation as a parametrised morphism:</p>
+
+</li>
+</ul>
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Smooth := SkeletalCategoryOfSmoothMaps( );</span>
+SkeletalSmoothMaps
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Para := CategoryOfParametrisedMorphisms( Smooth );</span>
+CategoryOfParametrisedMorphisms( SkeletalSmoothMaps )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Para.Relu( 2 ) );</span>
+ℝ^2 -&gt; ℝ^2 defined by:
+
+Underlying Object:
+-----------------
+ℝ^0
+
+Underlying Morphism:
+-------------------
+ℝ^2 -&gt; ℝ^2
+
+‣ Relu( x1 )
+‣ Relu( x2 )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">dummy_input := DummyInputForAffineTransformation( 3, 2, "w", "b", "z" );</span>
+[ w1_1, w2_1, w3_1, b_1, w1_2, w2_2, w3_2, b_2, z1, z2, z3 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">affine_transformation := Para.AffineTransformation( 3, 2 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( affine_transformation : dummy_input := dummy_input );</span>
+ℝ^3 -&gt; ℝ^2 defined by:
+
+Underlying Object:
+-----------------
+ℝ^8
+
+Underlying Morphism:
+-------------------
+ℝ^11 -&gt; ℝ^2
+
+‣ w1_1 * z1 + w2_1 * z2 + w3_1 * z3 + b_1
+‣ w1_2 * z1 + w2_2 * z2 + w3_2 * z3 + b_2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">"Let us convert these 2 togits to probabilities via softmax layer.";;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">softmax_layer := Para.Softmax( 2 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( softmax_layer );</span>
+ℝ^2 -&gt; ℝ^2 defined by:
+
+Underlying Object:
+-----------------
+ℝ^0
+
+Underlying Morphism:
+-------------------
+ℝ^2 -&gt; ℝ^2
+
+‣ Exp( x1 ) / (Exp( x1 ) + Exp( x2 ))
+‣ Exp( x2 ) / (Exp( x1 ) + Exp( x2 ))
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">probs := PreCompose( affine_transformation, softmax_layer );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( probs : dummy_input := dummy_input );</span>
+ℝ^3 -&gt; ℝ^2 defined by:
+
+Underlying Object:
+-----------------
+ℝ^8
+
+Underlying Morphism:
+-------------------
+ℝ^11 -&gt; ℝ^2
+
+‣ Exp( w1_1 * z1 + w2_1 * z2 + w3_1 * z3 + b_1 )
+   / (Exp( w1_1 * z1 + w2_1 * z2 + w3_1 * z3 + b_1 )
+    + Exp( w1_2 * z1 + w2_2 * z2 + w3_2 * z3 + b_2 ))
+‣ Exp( w1_2 * z1 + w2_2 * z2 + w3_2 * z3 + b_2 )
+   / (Exp( w1_1 * z1 + w2_1 * z2 + w3_1 * z3 + b_1 )
+    + Exp( w1_2 * z1 + w2_2 * z2 + w3_2 * z3 + b_2 ))
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">parameters := [ 0.91, 0.24, 0.88, 0.59, 0.67, 0.05, 0.85, 0.31 ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">logits := [ 1.0, 2.0, 3.0 ];;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Eval( probs, [ parameters, logits ] );</span>
+[ 0.729088, 0.270912 ]
+</pre></div>
+
+<p><a id="X7DA5FC5379955E0E" name="X7DA5FC5379955E0E"></a></p>
+
+<h4>5.6 <span class="Heading">Supported CAP Operations</span></h4>
+
+<p><a id="X8158A82178091A61" name="X8158A82178091A61"></a></p>
+
+<h5>5.6-1 <span class="Heading">Category of Parametrised Smooth Maps</span></h5>
+
+<p>The following CAP operations are supported:</p>
+
+
+<ul>
+<li><p><code class="func">IdentityMorphism</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap3.html#X7C9F3D8086238443"><span class="RefLink">CAP: IdentityMorphism for IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">IsCongruentForMorphisms</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap3.html#X7FABCFBF865F4179"><span class="RefLink">CAP: IsCongruentForMorphisms for IsCapCategoryMorphism, IsCapCategoryMorphism</span></a>)</p>
+
+</li>
+<li><p><code class="func">IsEndomorphism</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap3.html#X81057B3E812B06CC"><span class="RefLink">CAP: IsEndomorphism for IsCapCategoryMorphism</span></a>)</p>
+
+</li>
+<li><p><code class="func">IsEqualForMorphisms</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap3.html#X8004F1DA7D9BFA8B"><span class="RefLink">CAP: IsEqualForMorphisms for IsCapCategoryMorphism, IsCapCategoryMorphism</span></a>)</p>
+
+</li>
+<li><p><code class="func">IsEqualForMorphismsOnMor</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap3.html#X8589E5A4814C3DA5"><span class="RefLink">CAP: IsEqualForMorphismsOnMor for IsCapCategoryMorphism, IsCapCategoryMorphism</span></a>)</p>
+
+</li>
+<li><p><code class="func">IsEqualForObjects</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap2.html#X8337569D81C0BBEC"><span class="RefLink">CAP: IsEqualForObjects for IsCapCategoryObject, IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">IsEqualToIdentityMorphism</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap3.html#X8211959783AFF307"><span class="RefLink">CAP: IsEqualToIdentityMorphism for IsCapCategoryMorphism</span></a>)</p>
+
+</li>
+<li><p><code class="func">IsIdempotent</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap3.html#X7BA4290882AFFCA3"><span class="RefLink">CAP: IsIdempotent for IsCapCategoryMorphism</span></a>)</p>
+
+</li>
+<li><p><code class="func">IsOne</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap3.html#X7FA10AFB7F441434"><span class="RefLink">CAP: IsOne for IsCapCategoryMorphism</span></a>)</p>
+
+</li>
+<li><p><code class="func">IsWellDefinedForMorphisms</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap3.html#X7968A871832877B8"><span class="RefLink">CAP: IsWellDefinedForMorphisms for IsCapCategoryMorphism</span></a>)</p>
+
+</li>
+<li><p><code class="func">IsWellDefinedForMorphismsWithGivenSourceAndRange</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap3.html#X820A29637F48E932"><span class="RefLink">CAP: IsWellDefinedForMorphismsWithGivenSourceAndRange for IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">IsWellDefinedForObjects</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap2.html#X7F9A38A187D9ABFA"><span class="RefLink">CAP: IsWellDefinedForObjects for IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">MorphismConstructor</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap3.html#X7F1FB34F789ECB10"><span class="RefLink">CAP: MorphismConstructor for IsCapCategoryObject, IsObject, IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">MorphismDatum</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap3.html#X7BBFB178866108FA"><span class="RefLink">CAP: MorphismDatum for IsCapCategoryMorphism</span></a>)</p>
+
+</li>
+<li><p><code class="func">ObjectConstructor</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap2.html#X825D050A8674D377"><span class="RefLink">CAP: ObjectConstructor for IsCapCategory, IsObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">ObjectDatum</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap2.html#X8521A36F7BBFF6BD"><span class="RefLink">CAP: ObjectDatum for IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">PostCompose</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap3.html#X84293B8381256A08"><span class="RefLink">CAP: PostCompose for IsCapCategoryMorphism, IsCapCategoryMorphism</span></a>)</p>
+
+</li>
+<li><p><code class="func">PostComposeList</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap3.html#X7BD83BF3835870E9"><span class="RefLink">CAP: PostComposeList for IsCapCategoryObject, IsList, IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">PreCompose</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap3.html#X8244F7A0868BE27D"><span class="RefLink">CAP: PreCompose for IsCapCategoryMorphism, IsCapCategoryMorphism</span></a>)</p>
+
+</li>
+<li><p><code class="func">PreComposeList</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap3.html#X87A5FFE97BB5190A"><span class="RefLink">CAP: PreComposeList for IsCapCategoryObject, IsList, IsCapCategoryObject</span></a>)</p>
+
+</li>
+<li><p><code class="func">SimplifyMorphism</code> (<a href="/home/kamal/.gap/pkg/CAP_project/CAP/doc/chap3.html#X7FCE611883F6A56B"><span class="RefLink">CAP: SimplifyMorphism for IsCapCategoryMorphism, IsObject</span></a>)</p>
+
+</li>
+</ul>
+<p><a id="X7915096B840F8531" name="X7915096B840F8531"></a></p>
+
+<h5>5.6-2 <span class="Heading">Generate Documentation</span></h5>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">LoadPackage( "GradientBasedLearningForCAP", false );</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Para := CategoryOfParametrisedMorphisms( SkeletalSmoothMaps );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CAP_INTERNAL_GENERATE_DOCUMENTATION_FOR_CATEGORY_INSTANCES(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    [</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        [ Para, "Category of Parametrised Smooth Maps", 0 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    "GradientBasedLearningForCAP",</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    "CategoryOfParametrisedMorphisms.autogen.gd",</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    "Category of Parametrised Morphisms",</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    "Supported CAP Operations"</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">);</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Lenses := CategoryOfLenses( SkeletalSmoothMaps );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CAP_INTERNAL_GENERATE_DOCUMENTATION_FOR_CATEGORY_INSTANCES(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    [</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        [ Lenses, "Category of Lenses of Smooth Maps", 0 ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    ],</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    "GradientBasedLearningForCAP",</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    "CategoryOfLenses.autogen.gd",</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    "Category of Lenses",</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">    "Supported CAP Operations"</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">);</span>
+</pre></div>
+
+<p><a id="X7A489A5D79DA9E5C" name="X7A489A5D79DA9E5C"></a></p>
+
+<h4>5.7 <span class="Heading">Examples</span></h4>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Smooth := SkeletalCategoryOfSmoothMaps( );</span>
+SkeletalSmoothMaps
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Para := CategoryOfParametrisedMorphisms( Smooth );</span>
+CategoryOfParametrisedMorphisms( SkeletalSmoothMaps )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Para );</span>
+A CAP category with name CategoryOfParametrisedMorphisms( SkeletalSmoothMaps ):
+
+12 primitive operations were used to derive 21 operations for this category
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R1 := Smooth.( 1 );</span>
+ℝ^1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R2 := Smooth.( 2 );</span>
+ℝ^2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R3 := Smooth.( 3 );</span>
+ℝ^3
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">R1 / Para;</span>
+ℝ^1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Para.( 1 );</span>
+ℝ^1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Para.( 1 ) = R1 / Para;</span>
+true
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := Para.Sin;;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( f );</span>
+ℝ^1 -&gt; ℝ^1 defined by:
+
+Underlying Object:
+-----------------
+ℝ^0
+
+Underlying Morphism:
+-------------------
+ℝ^1 -&gt; ℝ^1
+
+‣ Sin( x1 )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">p1 := ProjectionInFactorOfDirectProduct( Smooth, [ R3, R3 ], 1 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( p1 );</span>
+ℝ^6 -&gt; ℝ^3
+
+‣ x1
+‣ x2
+‣ x3
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">p2 := ProjectionInFactorOfDirectProduct( Smooth, [ R3, R3 ], 2 );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( p2 );</span>
+ℝ^6 -&gt; ℝ^3
+
+‣ x4
+‣ x5
+‣ x6
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">m := MultiplicationForMorphisms( p1, p2 );</span>
+ℝ^6 -&gt; ℝ^3
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( m );</span>
+ℝ^6 -&gt; ℝ^3
+
+‣ x1 * x4
+‣ x2 * x5
+‣ x3 * x6
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">h := MorphismConstructor( Para, Para.(3), [ R3, m ], Para.(3) );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( h );</span>
+ℝ^3 -&gt; ℝ^3 defined by:
+
+Underlying Object:
+-----------------
+ℝ^3
+
+Underlying Morphism:
+-------------------
+ℝ^6 -&gt; ℝ^3
+
+‣ x1 * x4
+‣ x2 * x5
+‣ x3 * x6
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">dummy_input := CreateContextualVariables(</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">                  [ "w1", "w2", "w3", "z1", "z2", "z3" ] );</span>
+[ w1, w2, w3, z1, z2, z3 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( h : dummy_input := dummy_input );</span>
+ℝ^3 -&gt; ℝ^3 defined by:
+
+Underlying Object:
+-----------------
+ℝ^3
+
+Underlying Morphism:
+-------------------
+ℝ^6 -&gt; ℝ^3
+
+‣ w1 * z1
+‣ w2 * z2
+‣ w3 * z3
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">r := DirectProductFunctorial( Smooth,</span>
+<span class="GAPprompt">&gt;</span> <span class="GAPinput">        [ Smooth.Sqrt, Smooth.Log, Smooth.Exp ] );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( r );</span>
+ℝ^3 -&gt; ℝ^3
+
+‣ Sqrt( x1 )
+‣ Log( x2 )
+‣ Exp( x3 )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">g := ReparametriseMorphism( h, r );;</span>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( g : dummy_input := dummy_input );</span>
+ℝ^3 -&gt; ℝ^3 defined by:
+
+Underlying Object:
+-----------------
+ℝ^3
+
+Underlying Morphism:
+-------------------
+ℝ^6 -&gt; ℝ^3
+
+‣ Sqrt( w1 ) * z1
+‣ Log( w2 ) * z2
+‣ Exp( w3 ) * z3
+</pre></div>
+
+<p>Let us illustrate the natural embedding functor from the category of smooth maps into the category of parametrised morphisms.</p>
+
+
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Smooth := SkeletalCategoryOfSmoothMaps( );</span>
+SkeletalSmoothMaps
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Para := CategoryOfParametrisedMorphisms( Smooth );</span>
+CategoryOfParametrisedMorphisms( SkeletalSmoothMaps )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">iota := NaturalEmbedding( Smooth, Para );</span>
+Natural embedding into category of parametrised morphisms
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ApplyFunctor( iota, Smooth.( 1 ) );</span>
+ℝ^1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">psi := ApplyFunctor( iota, Smooth.Sum( 2 ) );</span>
+ℝ^2 -&gt; ℝ^1 defined by:
+
+Underlying Object:
+-----------------
+ℝ^0
+
+Underlying Morphism:
+-------------------
+ℝ^2 -&gt; ℝ^1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( psi );</span>
+ℝ^2 -&gt; ℝ^1 defined by:
+
+Underlying Object:
+-----------------
+ℝ^0
+
+Underlying Morphism:
+-------------------
+ℝ^2 -&gt; ℝ^1
+
+‣ x1 + x2
+</pre></div>
+
+<p><a id="X7D03633A7D98026B" name="X7D03633A7D98026B"></a></p>
+
+<h4>5.8 <span class="Heading">GAP Categories</span></h4>
+
+<p><a id="X81E234558619075D" name="X81E234558619075D"></a></p>
+
+<h5>5.8-1 IsCategoryOfParametrisedMorphisms</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsCategoryOfParametrisedMorphisms</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
+
+<p>The <strong class="pkg">GAP</strong> category of a category of parametrised morphisms.</p>
+
+<p><a id="X7C1A84448408093E" name="X7C1A84448408093E"></a></p>
+
+<h5>5.8-2 IsObjectInCategoryOfParametrisedMorphisms</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsObjectInCategoryOfParametrisedMorphisms</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
+
+<p>The <strong class="pkg">GAP</strong> category of objects in a category of parametrised morphisms.</p>
+
+<p><a id="X8715A575791E36D1" name="X8715A575791E36D1"></a></p>
+
+<h5>5.8-3 IsMorphismInCategoryOfParametrisedMorphisms</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMorphismInCategoryOfParametrisedMorphisms</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
+
+<p>The <strong class="pkg">GAP</strong> category of morphisms in a category of parametrised morphisms.</p>
+
+
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap4.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap6.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chapInd.html">Ind</a>  </div>
+
+<hr />
+<p class="foot">generated by <a href="https://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
+</body>
+</html>

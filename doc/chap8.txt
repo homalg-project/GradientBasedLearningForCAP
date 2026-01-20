@@ -1,0 +1,540 @@
+  
+  [1X8 [33X[0;0YFitting Parameters[133X[101X
+  
+  
+  [1X8.1 [33X[0;0YIntroduction[133X[101X
+  
+  [33X[0;0YSuppose  we  have a parametrised morphism [23X(\mathbb{R}^p, f):\mathbb{R}^n \to
+  \mathbb{R}[123X  where  [23X\mathbb{R}^p[123X  is  the  parameters  of  the  morphism  and
+  [23Xf:\mathbb{R}^{p+n}  \to  \mathbb{R}[123X  is a morphism in a skeletal category of
+  smooth maps (It represents a loss function over an input in [23X\mathbb{R}^n[123X and
+  parameter  vector  in [23X\mathbb{R}^p[123X). Given a set of training examples [23X\{X_1,
+  \ldots,  X_m\}[123X  where  each [23XX_i \in \mathbb{R}^n[123X, we want to fit a parameter
+  vector [23X\Theta \in \mathbb{R}^p[123X such that the output of [23Xf[123X is minimized on the
+  training examples.[133X
+  
+  [33X[0;0YWe  can  achieve  this by creating an update-lens for each training example.
+  This  update-lens  reads  the  current  parameters  [23X\Theta[123X  and  updates  it
+  according  to  the  gradient  of  the loss function [23Xf[123X at the example [23XX_i[123X. We
+  start  by  substituting  the  training  example  [23XX_i[123X  into  [23Xf[123X resulting in a
+  morphism  [23Xf_i:\mathbb{R}^p \to \mathbb{R}[123X defined by [23Xf_i(\Theta) = f(\Theta,
+  X_i)[123X.    By    applying    the    reverse    differential    lens    functor
+  [10XReverseDifferentialLensFunctor[110X[133X
+  
+  
+  [24X[33X[0;6Y\mathbf{R}: \mathrm{Smooth} \to \mathrm{Lenses}(\mathrm{Smooth}),[133X
+  
+  [124X
+  
+  [33X[0;0Yon  [23Xf_i[123X,  we  obtain a lens [23X\mathbf{R}(f_i):(\mathbb{R}^p, \mathbb{R}^p) \to
+  (\mathbb{R}^1,  \mathbb{R}^1)[123X.  The  get-morphism  of  this  lens  reads the
+  current  parameters  [23X\Theta[123X  and  computes  the  loss [23Xf_i(\Theta)[123X, while the
+  put-morphism [23XRf_i:\mathbb{R}^p \times \mathbb{R}^1 \to \mathbb{R}^p[123X is given
+  by   [23X(\Theta,   r)   \mapsto   rJ_{f_i}(\Theta)[123X  where  [23XJ_{f_i}(\Theta)  \in
+  \mathbb{R}^{1 \times p}[123X is the Jacobian matrix of [23Xf_i[123X evaluated at [23X\Theta[123X.[133X
+  
+  [33X[0;0YThe  One-Epoch  update  lens  for  the  example  [23XX_i[123X  is  then  obtained  by
+  precomposing  an  optimizer lens (e.g., gradient descent, Adam, etc.) to the
+  following      lens      [23X\mathbf{R}(f_i)     \cdot     \varepsilon[123X     where
+  [23X\varepsilon:(\mathbb{R}^1, \mathbb{R}^0) \to (\mathbb{R}^1, \mathbb{R}^1)[123X is
+  the lens defined by:[133X
+  
+  [30X    [33X[0;6YGet morphism: the identity morphism on [23X\mathbb{R}^1[123X.[133X
+  
+  [30X    [33X[0;6YPut  morphism: the morphism [23X\mathbb{R}^1 \to \mathbb{R}^0[123X defined by [23Xr
+        \mapsto -r[123X.[133X
+  
+  [33X[0;0YThis lens merely negates the gradient signal.[133X
+  
+  [33X[0;0YFor  example, if we chose the optimizer to be the gradient descent optimizer
+  with  learning  rate  [23X\eta=0.01[123X: The resulting One-Epoch update lens for the
+  example  [23XX_i[123X  is  given  by:  Now, we can start by a random parameter vector
+  [23X\Theta_0  \in  \mathbb{R}^p[123X  and  apply the update morphism of the One-Epoch
+  update  lens  for  [23XX_1[123X  to  obtain a new parameter vector [23X\Theta_1[123X, then use
+  [23X\Theta_1[123X  and  the  One-Epoch update lens for [23XX_2[123X to obtain [23X\Theta_2[123X, and so
+  on.  After  going through all training examples, we have completed one epoch
+  of  training.  To  perform multiple epochs of training, we can simply repeat
+  the process.[133X
+  
+  [33X[0;0YFor  example,  suppose  we start with the parmetised morphism ([23X\mathbb{R}^2,
+  f):\mathbb{R}^2  \to  \mathbb{R}[123X  where [23Xf:\mathbb{R}^{2+2} \to \mathbb{R}[123X is
+  defined   by   [23Xf(\theta_1,   \theta_2,   x_1,   x_2)  =  (x_1-\theta_1)^2  +
+  (x_2-\theta_2)^2[123X  where  [23X\Theta  :=  (\theta_1,  \theta_2)  \in \mathbb{R}^2[123X
+  represents  the parameters and [23Xx = (x_1, x_2) \in \mathbb{R}^2[123X is the input.
+  Given  training  examples  [23XX_1  =  (1,2)[123X  and  [23XX_2  =  (3,4)[123X,  the  morphism
+  [23Xf_1:\mathbb{R}^2 \to \mathbb{R}[123X is defined by [23Xf_1(\theta_1, \theta_2) = (1 -
+  \theta_1)^2  +  (2  -  \theta_2)^2[123X  with Jacobian matrix Thus, the One-Epoch
+  update  lens  for  [23XX_1[123X is given by: and the One-Epoch update lens for [23XX_2[123X is
+  given by: Suppose we start with the parameter vector [23X\Theta = (0,0)[123X. Then:[133X
+  
+  [30X    [33X[0;6YAfter  applying  the  update  lens for [23XX_1[123X: [23X\Theta_1 = (0.98 \cdot 0 +
+        0.02, 0.98 \cdot 0 + 0.04) = (0.02, 0.04)[123X.[133X
+  
+  [30X    [33X[0;6YAfter  applying the update lens for [23XX_2[123X: [23X\Theta_2 = (0.98 \cdot 0.02 +
+        0.06, 0.98 \cdot 0.04 + 0.08) = (0.0796, 0.1192)[123X.[133X
+  
+  [33X[0;0YThus,  after  one  epoch  of training, the updated parameters are [23X\Theta_2 =
+  (0.0796,  0.1192)[123X.  Repeating  this process for multiple epochs will further
+  refine  the  parameters  to  minimize  the  loss  function over the training
+  examples.  Eventually,  we expect the parameters to converge to [23X\Theta = [2,
+  3][123X  which  minimizes the loss function. The point whose distance from [23X[1, 2][123X
+  and  [23X[3,  4][123X  is  minimized  is  [23X[2,  3][123X.  See  the examples section for the
+  implementation of this process in [5XGAP[105X.[133X
+  
+  
+  [1X8.2 [33X[0;0YNotes on Batching[133X[101X
+  
+  [33X[0;0YGiven  a  parametrised  (loss)  morphism  [23X(\mathbb{R}^p, f):\mathbb{R}^n \to
+  \mathbb{R}[123X  and  a  set of training examples [23X\{X_1, \ldots, X_m\}[123X where each
+  [23XX_i  \in \mathbb{R}^n[123X. If the number of training examples [23Xm[123X is large, it may
+  be  beneficial to use mini-batches during training. Given a positive integer
+  [3Xbatch_size[103X,  the  loss morphism is first batched using [10XBatchify[110X. This means,
+  we     create     a     new     parametrised     morphism     [23X(\mathbb{R}^p,
+  f_{batch}):\mathbb{R}^{batch\_size    \cdot    n}   \to   \mathbb{R}[123X   where
+  [23Xf_{batch}(\Theta,      X_{i_1},      \ldots,      X_{i_{batch\_size}})     =
+  \frac{1}{batch\_size} \sum_{j=1}^{batch\_size} f(\Theta, X_{i_j})[123X. We divide
+  the training examples into mini-batches of size [3Xbatch_size[103X (padding the list
+  by  repeating  randomly  chosen  examples  if  necessary  to make its length
+  divisible  by  [3Xbatch_size[103X). And then we consider each mini-batch as a single
+  training  example.  Now,  we can repeat the training process described above
+  using  the batched loss morphism and the new training examples. For example,
+  if   the   parametrised   morphism  is  [23X(\mathbb{R}^p,  f):\mathbb{R}^2  \to
+  \mathbb{R}[123X  where  [23Xf(\theta_1,  \theta_2,  x_1,  x_2)  =  (x_1-\theta_1)^2 +
+  (x_2-\theta_2)^2[123X, and we have training examples [23X[[1,2], [3,4], [5,6], [7,8],
+  [9,10]][123X,   then   for   [3Xbatch_size[103X   =  [23X2[123X,  the  batched  loss  morphism  is
+  [23X(\mathbb{R}^p,      f_{batch}):\mathbb{R}^4     \to     \mathbb{R}[123X     where
+  [23Xf_{batch}(\theta_1,  \theta_2,  x_1,  x_2,  x_3,  x_4)  = \frac{1}{2} \left(
+  (x_1-\theta_1)^2  +  (x_2-\theta_2)^2  + (x_3-\theta_1)^2 + (x_4-\theta_2)^2
+  \right)[123X  (See  [10XBatchify[110X operation). Since the number of training examples is
+  not divisible by [3Xbatch_size[103X, we pad the list by randomly choosing an example
+  (say,  [23X[1,2][123X)  and  appending it to the list. Then the new training examples
+  set would be [23X[[1,2,3,4], [5,6,7,8], [9,10,1,2]][123X.[133X
+  
+  
+  [1X8.3 [33X[0;0YOperations[133X[101X
+  
+  [1X8.3-1 OneEpochUpdateLens[101X
+  
+  [33X[1;0Y[29X[2XOneEpochUpdateLens[102X( [3Xparametrised_morphism[103X, [3Xoptimizer[103X, [3Xtraining_examples[103X, [3Xbatch_size[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya morphism in a category of lenses (the epoch update lens)[133X
+  
+  [33X[0;0YCreate an update lens for one epoch of training.[133X
+  
+  [33X[0;0YThe  argument  [3Xparametrised_morphism[103X  must  be  a  morphism in a category of
+  parametrised morphisms whose target has rank [23X1[123X (a scalar loss).[133X
+  
+  [33X[0;0YThe  argument [3Xoptimizer[103X is a function which takes the number of parameters [10Xp[110X
+  and returns an optimizer lens in the category of lenses over [3XSmooth[103X. Typical
+  examples are [10XLenses.GradientDescentOptimizer[110X, [10XLenses.AdamOptimizer[110X, etc.[133X
+  
+  [33X[0;0YThe  list  [3Xtraining_examples[103X must contain at least one example; each example
+  is a dense list representing a vector in [23X\mathbb{R}^n[123X.[133X
+  
+  [1X8.3-2 OneEpochUpdateLens[101X
+  
+  [33X[1;0Y[29X[2XOneEpochUpdateLens[102X( [3Xparametrised_morphism[103X, [3Xoptimizer[103X, [3Xtraining_examples_path[103X, [3Xbatch_size[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya morphism in a category of lenses (the epoch update lens)[133X
+  
+  [33X[0;0YSame as [10XOneEpochUpdateLens[110X, but reads the training examples from a file. The
+  file  is  evaluated  using  [10XEvalString[110X  and  is  expected  to  contain a GAP
+  expression evaluating to a dense list of examples.[133X
+  
+  [1X8.3-3 Fit[101X
+  
+  [33X[1;0Y[29X[2XFit[102X( [3Xone_epoch_update_lens[103X, [3Xnr_epochs[103X, [3Xinitial_weights[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya list of final weights[133X
+  
+  [33X[0;0YPerform  [3Xnr_epochs[103X  epochs of training using the given [3Xone_epoch_update_lens[103X
+  and initial weights [3Xinitial_weights[103X.[133X
+  
+  [33X[0;0YThe  lens  [3Xone_epoch_update_lens[103X  must  have  get-morphism  [23X\mathbb{R}^p \to
+  \mathbb{R}^1[123X  and  put-morphism [23X\mathbb{R}^p \to \mathbb{R}^p[123X for the same [23Xp[123X
+  as  the  length  of  [3Xinitial_weights[103X. The option [3Xverbose[103X controls whether to
+  print the loss at each epoch.[133X
+  
+  
+  [1X8.4 [33X[0;0YExamples[133X[101X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XSmooth := SkeletalCategoryOfSmoothMaps( );[127X[104X
+    [4X[28XSkeletalSmoothMaps[128X[104X
+    [4X[25Xgap>[125X [27XPara := CategoryOfParametrisedMorphisms( Smooth );[127X[104X
+    [4X[28XCategoryOfParametrisedMorphisms( SkeletalSmoothMaps )[128X[104X
+    [4X[25Xgap>[125X [27XLenses := CategoryOfLenses( Smooth );[127X[104X
+    [4X[28XCategoryOfLenses( SkeletalSmoothMaps )[128X[104X
+    [4X[25Xgap>[125X [27XD := [ Smooth.1, Smooth.1, Smooth.1, Smooth.1 ];[127X[104X
+    [4X[28X[ ℝ^1, ℝ^1, ℝ^1, ℝ^1 ][128X[104X
+    [4X[25Xgap>[125X [27Xp1 := ProjectionInFactorOfDirectProduct( Smooth, D, 1 );[127X[104X
+    [4X[28Xℝ^4 -> ℝ^1[128X[104X
+    [4X[25Xgap>[125X [27Xp2 := ProjectionInFactorOfDirectProduct( Smooth, D, 2 );[127X[104X
+    [4X[28Xℝ^4 -> ℝ^1[128X[104X
+    [4X[25Xgap>[125X [27Xp3 := ProjectionInFactorOfDirectProduct( Smooth, D, 3 );[127X[104X
+    [4X[28Xℝ^4 -> ℝ^1[128X[104X
+    [4X[25Xgap>[125X [27Xp4 := ProjectionInFactorOfDirectProduct( Smooth, D, 4 );[127X[104X
+    [4X[28Xℝ^4 -> ℝ^1[128X[104X
+    [4X[25Xgap>[125X [27Xf := PreCompose( (p3 - p1), Smooth.Power(2) )[127X[104X
+    [4X[25X>[125X [27X        + PreCompose( (p4 - p2), Smooth.Power(2) );[127X[104X
+    [4X[28Xℝ^4 -> ℝ^1[128X[104X
+    [4X[25Xgap>[125X [27Xdummy_input := CreateContextualVariables( [ "theta_1", "theta_2", "x1", "x2" ] );[127X[104X
+    [4X[28X[ theta_1, theta_2, x1, x2 ][128X[104X
+    [4X[25Xgap>[125X [27XDisplay( f : dummy_input := dummy_input );[127X[104X
+    [4X[28Xℝ^4 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ (x1 + (- theta_1)) ^ 2 + (x2 + (- theta_2)) ^ 2[128X[104X
+    [4X[25Xgap>[125X [27Xf := MorphismConstructor( Para, Para.2, [ Smooth.2, f ], Para.1 );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^1 defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Object:[128X[104X
+    [4X[28X-----------------[128X[104X
+    [4X[28Xℝ^2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Morphism:[128X[104X
+    [4X[28X-------------------[128X[104X
+    [4X[28Xℝ^4 -> ℝ^1[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( f : dummy_input := dummy_input );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^1 defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Object:[128X[104X
+    [4X[28X-----------------[128X[104X
+    [4X[28Xℝ^2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Morphism:[128X[104X
+    [4X[28X-------------------[128X[104X
+    [4X[28Xℝ^4 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ (x1 + (- theta_1)) ^ 2 + (x2 + (- theta_2)) ^ 2[128X[104X
+    [4X[25Xgap>[125X [27Xoptimizer := Lenses.GradientDescentOptimizer( :learning_rate := 0.01 );[127X[104X
+    [4X[28Xfunction( n ) ... end[128X[104X
+    [4X[25Xgap>[125X [27Xdummy_input := CreateContextualVariables( [ "theta_1", "theta_2", "g1", "g2" ] );[127X[104X
+    [4X[28X[ theta_1, theta_2, g1, g2 ][128X[104X
+    [4X[25Xgap>[125X [27XDisplay( optimizer( 2 ) : dummy_input := dummy_input );[127X[104X
+    [4X[28X(ℝ^2, ℝ^2) -> (ℝ^2, ℝ^2) defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XGet Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^2 -> ℝ^2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ theta_1[128X[104X
+    [4X[28X‣ theta_2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XPut Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^4 -> ℝ^2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ theta_1 + 0.01 * g1[128X[104X
+    [4X[28X‣ theta_2 + 0.01 * g2[128X[104X
+    [4X[25Xgap>[125X [27Xupdate_lens_1 := OneEpochUpdateLens( f, optimizer, [ [ 1, 2 ] ], 1 );[127X[104X
+    [4X[28X(ℝ^2, ℝ^2) -> (ℝ^1, ℝ^0) defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XGet Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^2 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XPut Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^2 -> ℝ^2[128X[104X
+    [4X[25Xgap>[125X [27Xdummy_input := CreateContextualVariables( [ "theta_1", "theta_2" ] );[127X[104X
+    [4X[28X[ theta_1, theta_2 ][128X[104X
+    [4X[25Xgap>[125X [27XDisplay( update_lens_1 : dummy_input := dummy_input );[127X[104X
+    [4X[28X(ℝ^2, ℝ^2) -> (ℝ^1, ℝ^0) defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XGet Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^2 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ ((1 + (- theta_1)) ^ 2 + (2 + (- theta_2)) ^ 2) / 1 / 1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XPut Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^2 -> ℝ^2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ theta_1 + 0.01 * (-1 * (0 + 0 + (1 * ((2 * (1 + (- theta_1)) ^ 1 * -1 + 0) * 1 [128X[104X
+    [4X[28X  + 0 + 0 + 0) * 1 + 0 + 0 + 0) * 1 + 0))[128X[104X
+    [4X[28X‣ theta_2 + 0.01 * (-1 * (0 + 0 + 0 + (0 + 1 * (0 +[128X[104X
+    [4X[28X  (0 + 2 * (2 + (- theta_2)) ^ 1 * -1) * 1 + 0 + 0) * 1 + 0 + 0) * 1))[128X[104X
+    [4X[25Xgap>[125X [27Xupdate_lens_1 := SimplifyMorphism( update_lens_1, infinity );[127X[104X
+    [4X[28X(ℝ^2, ℝ^2) -> (ℝ^1, ℝ^0) defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XGet Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^2 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XPut Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^2 -> ℝ^2[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( update_lens_1 : dummy_input := dummy_input );[127X[104X
+    [4X[28X(ℝ^2, ℝ^2) -> (ℝ^1, ℝ^0) defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XGet Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^2 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ (theta_1 - 1) ^ 2 + (theta_2 - 2) ^ 2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XPut Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^2 -> ℝ^2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ 0.98 * theta_1 + 0.02[128X[104X
+    [4X[28X‣ 0.98 * theta_2 + 0.04[128X[104X
+    [4X[25Xgap>[125X [27Xupdate_lens_2 := OneEpochUpdateLens( f, optimizer, [ [ 3, 4 ] ], 1 );[127X[104X
+    [4X[28X(ℝ^2, ℝ^2) -> (ℝ^1, ℝ^0) defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XGet Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^2 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XPut Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^2 -> ℝ^2[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( update_lens_2 : dummy_input := dummy_input );[127X[104X
+    [4X[28X[128X[104X
+    [4X[28X(ℝ^2, ℝ^2) -> (ℝ^1, ℝ^0) defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XGet Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^2 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ ((3 + (- theta_1)) ^ 2 + (4 + (- theta_2)) ^ 2) / 1 / 1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XPut Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^2 -> ℝ^2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ theta_1 + 0.01 * (-1 * (0 + 0 + (1 * ((2 * (3 + (- theta_1)) ^ 1 * -1 + 0) * 1 [128X[104X
+    [4X[28X+ 0 + 0 + 0) * 1 + 0 + 0 + 0) * 1 + 0))[128X[104X
+    [4X[28X‣ theta_2 + 0.01 * (-1 * (0 + 0 + 0 + (0 + 1 * (0 +[128X[104X
+    [4X[28X(0 + 2 * (4 + (- theta_2)) ^ 1 * -1) * 1 + 0 + 0) * 1 + 0 + 0) * 1))[128X[104X
+    [4X[25Xgap>[125X [27Xupdate_lens_2 := SimplifyMorphism( update_lens_2, infinity );[127X[104X
+    [4X[28X(ℝ^2, ℝ^2) -> (ℝ^1, ℝ^0) defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XGet Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^2 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XPut Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^2 -> ℝ^2[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( update_lens_2 : dummy_input := dummy_input );[127X[104X
+    [4X[28X(ℝ^2, ℝ^2) -> (ℝ^1, ℝ^0) defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XGet Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^2 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ (theta_1 - 3) ^ 2 + (theta_2 - 4) ^ 2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XPut Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^2 -> ℝ^2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ 0.98 * theta_1 + 0.06[128X[104X
+    [4X[28X‣ 0.98 * theta_2 + 0.08[128X[104X
+    [4X[25Xgap>[125X [27Xupdate_lens := OneEpochUpdateLens( f, optimizer, [ [ 1, 2 ], [ 3, 4 ] ], 1 );[127X[104X
+    [4X[28X(ℝ^2, ℝ^2) -> (ℝ^1, ℝ^0) defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XGet Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^2 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XPut Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^2 -> ℝ^2[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( update_lens : dummy_input := dummy_input );[127X[104X
+    [4X[28X(ℝ^2, ℝ^2) -> (ℝ^1, ℝ^0) defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XGet Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^2 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ ([128X[104X
+    [4X[28X    ((1 + (- theta_1)) ^ 2 + (2 + (- theta_2)) ^ 2) / 1 +[128X[104X
+    [4X[28X    ((3 + (- theta_1)) ^ 2 + (4 + (- theta_2)) ^ 2) / 1[128X[104X
+    [4X[28X  ) / 2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XPut Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^2 -> ℝ^2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ theta_1 + 0.01 * (-1 * (0 + 0 + (1 * ((2 * (1 + (- theta_1)) ^ 1 * -1 + 0) * 1[128X[104X
+    [4X[28X  + 0 + 0 + 0) * 1 + 0 + 0 + 0) * 1 + 0)) + 0.01 * (-1 * (0 + 0 +[128X[104X
+    [4X[28X  (1 * ((2 * (3 + (- (theta_1 + 0.01 * (-1 * (0 + 0 +[128X[104X
+    [4X[28X  (1 * ((2 * (1 + (- theta_1)) ^ 1 * -1 + 0) * 1 + 0 + 0 + 0) * 1[128X[104X
+    [4X[28X  + 0 + 0 + 0) * 1 + 0))))) ^ 1 * -1 + 0) * 1 + 0 + 0 + 0) * 1 + 0 + 0 + 0) * 1 [128X[104X
+    [4X[28X  + 0))[128X[104X
+    [4X[28X‣ theta_2 + 0.01 * (-1 * (0 + 0 + 0 + (0 + 1 * (0 + (0 + 2 * (2 + [128X[104X
+    [4X[28X  (- theta_2)) ^ 1 * -1) * 1 + 0 + 0) * 1 + 0 + 0) * 1)) + 0.01[128X[104X
+    [4X[28X  * (-1 * (0 + 0 + 0 + (0 + 1 * (0 + (0 + 2 * (4 +[128X[104X
+    [4X[28X  (- (theta_2 + 0.01 * (-1 * (0 + 0 + 0 + (0 + 1 * (0 + (0 + 2 * (2 +[128X[104X
+    [4X[28X  (- theta_2)) ^ 1 * -1) * 1 + 0 + 0) * 1 + 0 + 0) * 1))))) ^ 1 * -1) * 1 [128X[104X
+    [4X[28X  + 0 + 0) * 1 + 0 + 0) * 1))[128X[104X
+    [4X[25Xgap>[125X [27Xupdate_lens := SimplifyMorphism( update_lens, infinity );[127X[104X
+    [4X[28X(ℝ^2, ℝ^2) -> (ℝ^1, ℝ^0) defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XGet Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^2 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XPut Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^2 -> ℝ^2[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( update_lens : dummy_input := dummy_input );[127X[104X
+    [4X[28X(ℝ^2, ℝ^2) -> (ℝ^1, ℝ^0) defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XGet Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^2 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ theta_1 ^ 2 - 4 * theta_1 + theta_2 ^ 2 - 6 * theta_2 + 15[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XPut Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^2 -> ℝ^2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ 0.9604 * theta_1 + 0.0796[128X[104X
+    [4X[28X‣ 0.9604 * theta_2 + 0.1192[128X[104X
+    [4X[25Xgap>[125X [27X"If we used only update_lens_1, the parameters converge to (1,2)";;[127X[104X
+    [4X[25Xgap>[125X [27Xtheta := [ 0, 0 ];;[127X[104X
+    [4X[25Xgap>[125X [27Xfor i in [ 1 .. 1000 ] do theta := PutMorphism( update_lens_1 )( theta ); od;[127X[104X
+    [4X[25Xgap>[125X [27Xtheta;[127X[104X
+    [4X[28X[ 1., 2. ][128X[104X
+    [4X[25Xgap>[125X [27X"If we used only update_lens_2, the parameters converge to (3,4)";;[127X[104X
+    [4X[25Xgap>[125X [27Xtheta := [ 0, 0 ];;[127X[104X
+    [4X[25Xgap>[125X [27Xfor i in [ 1 .. 1000 ] do theta := PutMorphism( update_lens_2 )( theta ); od;[127X[104X
+    [4X[25Xgap>[125X [27Xtheta;[127X[104X
+    [4X[28X[ 3., 4. ][128X[104X
+    [4X[25Xgap>[125X [27X"If we use the combined update_lens, the parameters converge to (2,3)";;[127X[104X
+    [4X[25Xgap>[125X [27Xtheta := [ 0, 0 ];;[127X[104X
+    [4X[25Xgap>[125X [27Xfor i in [ 1 .. 1000 ] do theta := PutMorphism( update_lens )( theta ); od;[127X[104X
+    [4X[25Xgap>[125X [27Xtheta;[127X[104X
+    [4X[28X[ 2.0101, 3.0101 ][128X[104X
+    [4X[25Xgap>[125X [27X"Inseated of manually applying the put-morphism, we can use the Fit operation:";;[127X[104X
+    [4X[25Xgap>[125X [27X"For example, to fit theta = (0,0) using 10 epochs:";;[127X[104X
+    [4X[25Xgap>[125X [27Xtheta := [ 0, 0 ];;[127X[104X
+    [4X[25Xgap>[125X [27Xtheta := Fit( update_lens, 10, theta );[127X[104X
+    [4X[28XEpoch  0/10 - loss = 15[128X[104X
+    [4X[28XEpoch  1/10 - loss = 13.9869448[128X[104X
+    [4X[28XEpoch  2/10 - loss = 13.052687681213568[128X[104X
+    [4X[28XEpoch  3/10 - loss = 12.19110535502379[128X[104X
+    [4X[28XEpoch  4/10 - loss = 11.39655013449986[128X[104X
+    [4X[28XEpoch  5/10 - loss = 10.663813003077919[128X[104X
+    [4X[28XEpoch  6/10 - loss = 9.9880895506637923[128X[104X
+    [4X[28XEpoch  7/10 - loss = 9.3649485545394704[128X[104X
+    [4X[28XEpoch  8/10 - loss = 8.790302999738083[128X[104X
+    [4X[28XEpoch  9/10 - loss = 8.2603833494932317[128X[104X
+    [4X[28XEpoch 10/10 - loss = 7.7717128910720641[128X[104X
+    [4X[28X[ 0.668142, 1.00053 ][128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YLet    us    in   this   example   find   a   solution   to   the   equation
+  [23X\theta^3-\theta^2-4=0[123X.  We  can  reframe  this  as a minimization problem by
+  considering  the  parametrised  morphism  [23X(\mathbb{R}^1, f):\mathbb{R}^0 \to
+  \mathbb{R}^1[123X where [23Xf(\theta) = (\theta^3-\theta^2-4)^2[123X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XSmooth := SkeletalCategoryOfSmoothMaps( );[127X[104X
+    [4X[28XSkeletalSmoothMaps[128X[104X
+    [4X[25Xgap>[125X [27XPara := CategoryOfParametrisedMorphisms( Smooth );[127X[104X
+    [4X[28XCategoryOfParametrisedMorphisms( SkeletalSmoothMaps )[128X[104X
+    [4X[25Xgap>[125X [27XLenses := CategoryOfLenses( Smooth );[127X[104X
+    [4X[28XCategoryOfLenses( SkeletalSmoothMaps )[128X[104X
+    [4X[25Xgap>[125X [27Xf := Smooth.Power( 3 ) - Smooth.Power( 2 ) - Smooth.Constant([ 4 ]);[127X[104X
+    [4X[28Xℝ^1 -> ℝ^1[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( f );[127X[104X
+    [4X[28Xℝ^1 -> ℝ^1[128X[104X
+    [4X[28X‣ x1 ^ 3 + (- x1 ^ 2) + - 4[128X[104X
+    [4X[25Xgap>[125X [27Xf := PreCompose( f, Smooth.Power( 2 ) );[127X[104X
+    [4X[28Xℝ^1 -> ℝ^1[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( f );[127X[104X
+    [4X[28Xℝ^1 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ (x1 ^ 3 + (- x1 ^ 2) + - 4) ^ 2[128X[104X
+    [4X[25Xgap>[125X [27Xf := MorphismConstructor( Para, Para.0, [ Smooth.1, f ], Para.1 );[127X[104X
+    [4X[28Xℝ^0 -> ℝ^1 defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Object:[128X[104X
+    [4X[28X-----------------[128X[104X
+    [4X[28Xℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Morphism:[128X[104X
+    [4X[28X-------------------[128X[104X
+    [4X[28Xℝ^1 -> ℝ^1[128X[104X
+    [4X[25Xgap>[125X [27Xdummy_input := CreateContextualVariables( [ "theta" ] );[127X[104X
+    [4X[28X[ theta ][128X[104X
+    [4X[25Xgap>[125X [27XDisplay( f : dummy_input := dummy_input );[127X[104X
+    [4X[28Xℝ^0 -> ℝ^1 defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Object:[128X[104X
+    [4X[28X-----------------[128X[104X
+    [4X[28Xℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Morphism:[128X[104X
+    [4X[28X-------------------[128X[104X
+    [4X[28Xℝ^1 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ (theta ^ 3 + (- theta ^ 2) + -4) ^ 2[128X[104X
+    [4X[25Xgap>[125X [27Xoptimizer := Lenses.AdamOptimizer( :learning_rate := 0.01,[127X[104X
+    [4X[25X>[125X [27X                beta1 := 0.9, beta2 := 0.999, epsilon := 1.e-7 );[127X[104X
+    [4X[28Xfunction( n ) ... end[128X[104X
+    [4X[25Xgap>[125X [27Xdummy_input := CreateContextualVariables( [ "t", "m", "v", "theta", "g" ] );[127X[104X
+    [4X[28X[ t, m, v, theta, g ][128X[104X
+    [4X[25Xgap>[125X [27XDisplay( optimizer( 1 ) : dummy_input := dummy_input );[127X[104X
+    [4X[28X(ℝ^4, ℝ^4) -> (ℝ^1, ℝ^1) defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XGet Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^4 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ theta[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XPut Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^5 -> ℝ^4[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ t + 1[128X[104X
+    [4X[28X‣ 0.9 * m + 0.1 * g[128X[104X
+    [4X[28X‣ 0.999 * v + 0.001 * g ^ 2[128X[104X
+    [4X[28X‣ theta + 0.01 / (1 - 0.999 ^ t) * ((0.9 * m + 0.1 * g) /[128X[104X
+    [4X[28X(1.e-07 + Sqrt( (0.999 * v + 0.001 * g ^ 2) / (1 - 0.999 ^ t) )))[128X[104X
+    [4X[25Xgap>[125X [27Xupdate_lens := OneEpochUpdateLens( f, optimizer, [ [ ] ], 1 );[127X[104X
+    [4X[28X(ℝ^4, ℝ^4) -> (ℝ^1, ℝ^0) defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XGet Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^4 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XPut Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^4 -> ℝ^4[128X[104X
+    [4X[25Xgap>[125X [27Xdummy_input := CreateContextualVariables( [ "t", "m", "v", "theta" ] );[127X[104X
+    [4X[28X[ t, m, v, theta ][128X[104X
+    [4X[25Xgap>[125X [27XDisplay( update_lens : dummy_input := dummy_input );[127X[104X
+    [4X[28X(ℝ^4, ℝ^4) -> (ℝ^1, ℝ^0) defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XGet Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^4 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ (theta ^ 3 + (- theta ^ 2) + -4) ^ 2 / 1 / 1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XPut Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^4 -> ℝ^4[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ t + 1[128X[104X
+    [4X[28X‣ 0.9 * m + 0.1 * (-1 * (1 * (2 * (theta ^ 3 + (- theta ^ 2) + -4) ^ 1 *[128X[104X
+    [4X[28X  (3 * theta ^ 2 + (- 2 * theta ^ 1)) * 1) * 1 * 1))[128X[104X
+    [4X[28X‣ 0.999 * v + 0.001 * (-1 * (1 * (2 * (theta ^ 3 + (- theta ^ 2) + -4) ^ 1 *[128X[104X
+    [4X[28X  (3 * theta ^ 2 + (- 2 * theta ^ 1)) * 1) * 1 * 1)) ^ 2[128X[104X
+    [4X[28X‣ theta + 0.01 / (1 - 0.999 ^ t) * ((0.9 * m + 0.1 *[128X[104X
+    [4X[28X  (-1 * (1 * (2 * (theta ^ 3 + (- theta ^ 2) + -4) ^ 1 * [128X[104X
+    [4X[28X  (3 * theta ^ 2 + (- 2 * theta ^ 1)) * 1) * 1 * 1))) /[128X[104X
+    [4X[28X  (1.e-07 + Sqrt( (0.999 * v + 0.001 * (-1 * (1 * (2 *[128X[104X
+    [4X[28X  (theta ^ 3 + (- theta ^ 2) + -4) ^ 1 * (3 * theta ^ 2 + (- 2 * theta ^ 1)) * 1)[128X[104X
+    [4X[28X  * 1 * 1)) ^ 2) / (1 - 0.999 ^ t) )))[128X[104X
+    [4X[25Xgap>[125X [27XFit( update_lens, 10000, [ 1, 0, 0, 8 ] : verbose := false );[127X[104X
+    [4X[28X[ 10001, 4.11498e-13, 1463.45, 2. ][128X[104X
+    [4X[25Xgap>[125X [27XUnderlyingMorphism( f )( [ 2. ] );[127X[104X
+    [4X[28X[ 0. ][128X[104X
+  [4X[32X[104X
+  

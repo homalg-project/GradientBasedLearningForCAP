@@ -1,0 +1,650 @@
+  
+  [1X7 [33X[0;0YCategory of Lenses[133X[101X
+  
+  
+  [1X7.1 [33X[0;0YDefinition[133X[101X
+  
+  [33X[0;0YLet  [23XC[123X  be  a  cartesian category. The category of lenses [23X\mathbf{Lenses}(C)[123X
+  has:[133X
+  
+  [30X    [33X[0;6YObjects: pairs of objects [23X(S_1, S_2)[123X in [23XC[123X.[133X
+  
+  [30X    [33X[0;6YMorphisms:  a  morphism from [23Xf:(S_1, S_2) \to (T_1, T_2)[123X is given by a
+        pair of morphisms in [23XC[123X:[133X
+  
+        [30X    [33X[0;12YA "get" (or "forward") morphism [23Xf_g: S_1 \to T_1[123X in [23XC[123X.[133X
+  
+        [30X    [33X[0;12YA  "put" (or "backward") morphism [23Xf_p: S_1 \times T_2 \to S_2[123X in
+              [23XC[123X.[133X
+  
+  [30X    [33X[0;6YComposition:  given  lenses  [23Xf: (S_1, S_2) \to (T_1, T_2)[123X and [23Xh: (T_1,
+        T_2) \to (U_1, U_2)[123X, their composition [23Xf \cdot h: (S_1, S_2) \to (U_1,
+        U_2)[123X is defined by:[133X
+  
+        [30X    [33X[0;12YGet morphism: [23Xf_g \cdot h_g: S_1 \to U_1[123X.[133X
+  
+        [30X    [33X[0;12YPut   morphism:   [23X\langle   \pi_{S_1},   (f_g  \times  U_2)\cdot
+              h_p\rangle  \cdot  f_p:S_1  \times U_2 \to S_2[123X, where [23X\langle -,
+              -\rangle[123X denotes the universal morphism into the product object.[133X
+  
+  [30X    [33X[0;6YIdentity: the identity lens on [23X(S_1, S_2)[123X has:[133X
+  
+        [30X    [33X[0;12YGet morphism: [23Xid_{S_1}: S_1 \to S_1[123X.[133X
+  
+        [30X    [33X[0;12YPut  morphism: the projection morphism [23X\pi_{S_2}: S_1 \times S_2
+              \to S_2[123X.[133X
+  
+  
+  [1X7.2 [33X[0;0YConstructors[133X[101X
+  
+  [1X7.2-1 CategoryOfLenses[101X
+  
+  [33X[1;0Y[29X[2XCategoryOfLenses[102X( [3XC[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya category[133X
+  
+  [33X[0;0YConstruct  the  category  of lenses over the category [3XC[103X. A lens is a pair of
+  morphisms:  a  "get"  morphism  and  a  "put" morphism, which together model
+  bidirectional data flow used in automatic differentiation.[133X
+  
+  [1X7.2-2 ObjectConstructor[101X
+  
+  [33X[1;0Y[29X[2XObjectConstructor[102X( [3XLens[103X, [3Xobj_list[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yan object in the category of lenses[133X
+  
+  [33X[0;0YConstruct an object in the category of lenses given a pair of objects.[133X
+  
+  [1X7.2-3 MorphismConstructor[101X
+  
+  [33X[1;0Y[29X[2XMorphismConstructor[102X( [3XLens[103X, [3Xsource_obj[103X, [3Xmorphism_list[103X, [3Xtarget_obj[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya morphism in the category of lenses[133X
+  
+  [33X[0;0YConstruct  a morphism in the category of lenses given a pair of morphisms: a
+  "get" morphism and a "put" morphism.[133X
+  
+  
+  [1X7.3 [33X[0;0YAttributes[133X[101X
+  
+  [1X7.3-1 UnderlyingPairOfObjects[101X
+  
+  [33X[1;0Y[29X[2XUnderlyingPairOfObjects[102X( [3Xobj[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya pair of objects[133X
+  
+  [33X[0;0YReturns  the  underlying  pair  of  objects  [23X(S_1, S_2)[123X for an object in the
+  category of lenses. This operation is a synonym for [10XObjectDatum[110X.[133X
+  
+  [1X7.3-2 UnderlyingPairOfMorphisms[101X
+  
+  [33X[1;0Y[29X[2XUnderlyingPairOfMorphisms[102X( [3Xf[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya pair of morphisms[133X
+  
+  [33X[0;0YReturns  the  underlying pair of morphisms for a morphism in the category of
+  lenses. This operation is a synonym for [10XMorphismDatum[110X.[133X
+  
+  [1X7.3-3 GetMorphism[101X
+  
+  [33X[1;0Y[29X[2XGetMorphism[102X( [3Xf[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya morphism[133X
+  
+  [33X[0;0YReturns  the  "get"  morphism  of a lens. For a lens [23Xf: (S_1, S_2) \to (T_1,
+  T_2)[123X, the output is the get morphism [23XS_1 \to T_1[123X.[133X
+  
+  [1X7.3-4 PutMorphism[101X
+  
+  [33X[1;0Y[29X[2XPutMorphism[102X( [3Xf[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya morphism[133X
+  
+  [33X[0;0YReturns  the  "put"  morphism  of a lens. For a lens [23Xf: (S_1, S_2) \to (T_1,
+  T_2)[123X, the output is the put morphism [23XS_1 \times T_2 \to S_2[123X.[133X
+  
+  
+  [1X7.4 [33X[0;0YOperations[133X[101X
+  
+  [1X7.4-1 ReverseDifferentialLensFunctor[101X
+  
+  [33X[1;0Y[29X[2XReverseDifferentialLensFunctor[102X( [3XSmooth[103X, [3XLenses[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya functor[133X
+  
+  [33X[0;0YEmbedding  functor from the category [3XSmooth[103X of smooth maps into its category
+  of  lenses  [3XLenses[103X.  An  object [23X\mathbb{R}^m[123X in [3XSmooth[103X is mapped to the lens
+  [23X(\mathbb{R}^m,   \mathbb{R}^m)[123X,   and   a   morphism   [23Xf:  \mathbb{R}^m  \to
+  \mathbb{R}^n[123X  is  mapped  to  the lens with get morphism [23Xf: \mathbb{R}^m \to
+  \mathbb{R}^n[123X  and  put  morphism  [23XRf:  \mathbb{R}^m  \times \mathbb{R}^n \to
+  \mathbb{R}^m[123X  given by [23X(u,v) \mapsto vJ_f(u)[123X, where [23XJ_f(u) \in \mathbb{R}^{n
+  \times  m}[123X is the Jacobian matrix of [23Xf[123X evaluated at [23Xu \in \mathbb{R}^m[123X. This
+  functor  might be defined for any cartesian reverse-differentiable category,
+  but  the  category  of  smooth  maps  is  the  only  such category currently
+  implemented  in this package. For example, if [23Xf: \mathbb{R}^2 \to \mathbb{R}[123X
+  is  defined  by  [23Xf(x_1,  x_2)  =  (x_1^3  +  x_2^2)[123X,  the  the corresponding
+  [23XRf:\mathbb{R}^2  \times  \mathbb{R}  \to  \mathbb{R}^2[123X  is given by [23XRf((x_1,
+  x_2), y) = y(3x_1^2, 2x_2) = (3x_1^2y, 2x_2y)[123X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XSmooth := SkeletalCategoryOfSmoothMaps( );[127X[104X
+    [4X[28XSkeletalSmoothMaps[128X[104X
+    [4X[25Xgap>[125X [27XLenses := CategoryOfLenses( Smooth );[127X[104X
+    [4X[28XCategoryOfLenses( SkeletalSmoothMaps )[128X[104X
+    [4X[25Xgap>[125X [27XR := ReverseDifferentialLensFunctor( Smooth, Lenses );[127X[104X
+    [4X[28XEmbedding functor into category of lenses[128X[104X
+    [4X[25Xgap>[125X [27XSourceOfFunctor( R );[127X[104X
+    [4X[28XSkeletalSmoothMaps[128X[104X
+    [4X[25Xgap>[125X [27XRangeOfFunctor( R );[127X[104X
+    [4X[28XCategoryOfLenses( SkeletalSmoothMaps )[128X[104X
+    [4X[25Xgap>[125X [27Xf := DirectProductFunctorial( [ Smooth.Power(3), Smooth.Power(2) ] );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^2[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( f );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ x1 ^ 3[128X[104X
+    [4X[28X‣ x2 ^ 2[128X[104X
+    [4X[25Xgap>[125X [27Xf := PreCompose( f, Smooth.Sum(2) );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^1[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( f );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ x1 ^ 3 + x2 ^ 2[128X[104X
+    [4X[25Xgap>[125X [27XRf := ApplyFunctor( R, f );;[127X[104X
+    [4X[25Xgap>[125X [27XDisplay( Rf );[127X[104X
+    [4X[28X(ℝ^2, ℝ^2) -> (ℝ^1, ℝ^1) defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XGet Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^2 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ x1 ^ 3 + x2 ^ 2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XPut Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^3 -> ℝ^2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ x3 * (1 * (3 * x1 ^ 2) + 0)[128X[104X
+    [4X[28X‣ x3 * (0 + 1 * (2 * x2 ^ 1))[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X7.5 [33X[0;0YOptimizers[133X[101X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XSmooth := SkeletalCategoryOfSmoothMaps( );[127X[104X
+    [4X[28XSkeletalSmoothMaps[128X[104X
+    [4X[25Xgap>[125X [27XLenses := CategoryOfLenses( Smooth );[127X[104X
+    [4X[28XCategoryOfLenses( SkeletalSmoothMaps )[128X[104X
+    [4X[25Xgap>[125X [27Xoptimizer := Lenses.GradientDescentOptimizer( :learning_rate := 0.01 )( 2 );[127X[104X
+    [4X[28X(ℝ^2, ℝ^2) -> (ℝ^2, ℝ^2) defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XGet Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^2 -> ℝ^2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XPut Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^4 -> ℝ^2[128X[104X
+    [4X[25Xgap>[125X [27Xdummy_input := [ "theta_1", "theta_2", "g1", "g2" ];;[127X[104X
+    [4X[25Xgap>[125X [27Xdummy_input := CreateContextualVariables( dummy_input );[127X[104X
+    [4X[28X[ theta_1, theta_2, g1, g2 ][128X[104X
+    [4X[25Xgap>[125X [27XDisplay( optimizer : dummy_input := dummy_input );[127X[104X
+    [4X[28X(ℝ^2, ℝ^2) -> (ℝ^2, ℝ^2) defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XGet Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^2 -> ℝ^2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ theta_1[128X[104X
+    [4X[28X‣ theta_2[128X[104X
+    [4X[28XPut Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^4 -> ℝ^2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ theta_1 + 0.01 * g1[128X[104X
+    [4X[28X‣ theta_2 + 0.01 * g2[128X[104X
+    [4X[25Xgap>[125X [27Xoptimizer := Lenses.GradientDescentWithMomentumOptimizer([127X[104X
+    [4X[25X>[125X [27X            :learning_rate := 0.01, momentum := 0.9 )( 2 );[127X[104X
+    [4X[28X(ℝ^4, ℝ^4) -> (ℝ^2, ℝ^2) defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XGet Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^4 -> ℝ^2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XPut Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^6 -> ℝ^4[128X[104X
+    [4X[25Xgap>[125X [27Xdummy_input := [ "s1", "s2", "theta_1", "theta_2", "g1", "g2" ];;[127X[104X
+    [4X[25Xgap>[125X [27Xdummy_input := CreateContextualVariables( dummy_input );[127X[104X
+    [4X[28X[ s1, s2, theta_1, theta_2, g1, g2 ][128X[104X
+    [4X[25Xgap>[125X [27XDisplay( optimizer : dummy_input := dummy_input );[127X[104X
+    [4X[28X(ℝ^4, ℝ^4) -> (ℝ^2, ℝ^2) defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XGet Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^4 -> ℝ^2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ theta_1[128X[104X
+    [4X[28X‣ theta_2[128X[104X
+    [4X[28XPut Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^6 -> ℝ^4[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ 0.9 * s1 + 0.01 * g1[128X[104X
+    [4X[28X‣ 0.9 * s2 + 0.01 * g2[128X[104X
+    [4X[28X‣ theta_1 + (0.9 * s1 + 0.01 * g1)[128X[104X
+    [4X[28X‣ theta_2 + (0.9 * s2 + 0.01 * g2)[128X[104X
+    [4X[25Xgap>[125X [27Xoptimizer := Lenses.AdagradOptimizer( :learning_rate := 0.01 )( 2 );[127X[104X
+    [4X[28X(ℝ^4, ℝ^4) -> (ℝ^2, ℝ^2) defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XGet Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^4 -> ℝ^2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XPut Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^6 -> ℝ^4[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( optimizer : dummy_input := dummy_input );[127X[104X
+    [4X[28X(ℝ^4, ℝ^4) -> (ℝ^2, ℝ^2) defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XGet Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^4 -> ℝ^2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ theta_1[128X[104X
+    [4X[28X‣ theta_2[128X[104X
+    [4X[28XPut Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^6 -> ℝ^4[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ s1 + g1 ^ 2[128X[104X
+    [4X[28X‣ s2 + g2 ^ 2[128X[104X
+    [4X[28X‣ theta_1 + 0.01 * g1 / (1.e-07 + Sqrt( s1 + g1 ^ 2 ))[128X[104X
+    [4X[28X‣ theta_2 + 0.01 * g2 / (1.e-07 + Sqrt( s2 + g2 ^ 2 ))[128X[104X
+    [4X[25Xgap>[125X [27Xoptimizer := Lenses.AdamOptimizer([127X[104X
+    [4X[25X>[125X [27X          :learning_rate := 0.01, beta_1 := 0.9, beta_2 := 0.999 )( 2 );[127X[104X
+    [4X[28X(ℝ^7, ℝ^7) -> (ℝ^2, ℝ^2) defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XGet Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^7 -> ℝ^2[128X[104X
+    [4X[28XPut Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^9 -> ℝ^7[128X[104X
+    [4X[25Xgap>[125X [27Xdummy_input :=[127X[104X
+    [4X[25X>[125X [27X  [ "t", "m1", "m2", "v1", "v2", "theta_1", "theta_2", "g1", "g2" ];;[127X[104X
+    [4X[25Xgap>[125X [27Xdummy_input := CreateContextualVariables( dummy_input );[127X[104X
+    [4X[28X[ t, m1, m2, v1, v2, theta_1, theta_2, g1, g2 ][128X[104X
+    [4X[25Xgap>[125X [27XDisplay( optimizer : dummy_input := dummy_input );[127X[104X
+    [4X[28X(ℝ^7, ℝ^7) -> (ℝ^2, ℝ^2) defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XGet Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^7 -> ℝ^2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ theta_1[128X[104X
+    [4X[28X‣ theta_2[128X[104X
+    [4X[28XPut Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^9 -> ℝ^7[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ t + 1[128X[104X
+    [4X[28X‣ 0.9 * m1 + 0.1 * g1[128X[104X
+    [4X[28X‣ 0.9 * m2 + 0.1 * g2[128X[104X
+    [4X[28X‣ 0.999 * v1 + 0.001 * g1 ^ 2[128X[104X
+    [4X[28X‣ 0.999 * v2 + 0.001 * g2 ^ 2[128X[104X
+    [4X[28X‣ theta_1 + 0.01 /[128X[104X
+    [4X[28X (1 - 0.999 ^ t) *[128X[104X
+    [4X[28X    ((0.9 * m1 + 0.1 * g1) /[128X[104X
+    [4X[28X        (1.e-07 + Sqrt( (0.999 * v1 + 0.001 * g1 ^ 2) / (1 - 0.999 ^ t) )))[128X[104X
+    [4X[28X‣ theta_2 + 0.01 /[128X[104X
+    [4X[28X (1 - 0.999 ^ t) *[128X[104X
+    [4X[28X    ((0.9 * m2 + 0.1 * g2) /[128X[104X
+    [4X[28X        (1.e-07 + Sqrt( (0.999 * v2 + 0.001 * g2 ^ 2) / (1 - 0.999 ^ t) )))[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X7.6 [33X[0;0YSupported CAP Operations[133X[101X
+  
+  
+  [1X7.6-1 [33X[0;0YCategory of Lenses of Smooth Maps[133X[101X
+  
+  [33X[0;0YThe following CAP operations are supported:[133X
+  
+  [30X    [33X[0;6Y[2XAssociatorLeftToRight[102X  ([14XMonoidalCategories:  AssociatorLeftToRight for
+        IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XAssociatorLeftToRightWithGivenTensorProducts[102X      ([14XMonoidalCategories:
+        AssociatorLeftToRightWithGivenTensorProducts  for IsCapCategoryObject,
+        IsCapCategoryObject,     IsCapCategoryObject,     IsCapCategoryObject,
+        IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XAssociatorRightToLeft[102X  ([14XMonoidalCategories:  AssociatorRightToLeft for
+        IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XAssociatorRightToLeftWithGivenTensorProducts[102X      ([14XMonoidalCategories:
+        AssociatorRightToLeftWithGivenTensorProducts  for IsCapCategoryObject,
+        IsCapCategoryObject,     IsCapCategoryObject,     IsCapCategoryObject,
+        IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XBraiding[102X   ([14XMonoidalCategories:   Braiding   for  IsCapCategoryObject,
+        IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XBraidingInverse[102X      ([14XMonoidalCategories:      BraidingInverse     for
+        IsCapCategoryObject, IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XBraidingInverseWithGivenTensorProducts[102X            ([14XMonoidalCategories:
+        BraidingInverseWithGivenTensorProducts     for    IsCapCategoryObject,
+        IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XBraidingWithGivenTensorProducts[102X                   ([14XMonoidalCategories:
+        BraidingWithGivenTensorProducts        for        IsCapCategoryObject,
+        IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIdentityMorphism[102X ([14XCAP: IdentityMorphism for IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIsEndomorphism[102X ([14XCAP: IsEndomorphism for IsCapCategoryMorphism[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIsEqualForObjects[102X  ([14XCAP:  IsEqualForObjects  for  IsCapCategoryObject,
+        IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIsWellDefinedForMorphisms[102X    ([14XCAP:    IsWellDefinedForMorphisms    for
+        IsCapCategoryMorphism[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIsWellDefinedForMorphismsWithGivenSourceAndRange[102X                 ([14XCAP:
+        IsWellDefinedForMorphismsWithGivenSourceAndRange                   for
+        IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIsWellDefinedForObjects[102X      ([14XCAP:     IsWellDefinedForObjects     for
+        IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XLeftUnitor[102X ([14XMonoidalCategories: LeftUnitor for IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XLeftUnitorInverse[102X     ([14XMonoidalCategories:    LeftUnitorInverse    for
+        IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XLeftUnitorInverseWithGivenTensorProduct[102X           ([14XMonoidalCategories:
+        LeftUnitorInverseWithGivenTensorProduct    for    IsCapCategoryObject,
+        IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XLeftUnitorWithGivenTensorProduct[102X                  ([14XMonoidalCategories:
+        LeftUnitorWithGivenTensorProduct        for       IsCapCategoryObject,
+        IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XMorphismConstructor[102X ([14XCAP: MorphismConstructor for IsCapCategoryObject,
+        IsObject, IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XMorphismDatum[102X ([14XCAP: MorphismDatum for IsCapCategoryMorphism[114X)[133X
+  
+  [30X    [33X[0;6Y[2XObjectConstructor[102X ([14XCAP: ObjectConstructor for IsCapCategory, IsObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XObjectDatum[102X ([14XCAP: ObjectDatum for IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XPostCompose[102X     ([14XCAP:     PostCompose    for    IsCapCategoryMorphism,
+        IsCapCategoryMorphism[114X)[133X
+  
+  [30X    [33X[0;6Y[2XPostComposeList[102X ([14XCAP: PostComposeList for IsCapCategoryObject, IsList,
+        IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XPreCompose[102X     ([14XCAP:     PreCompose     for     IsCapCategoryMorphism,
+        IsCapCategoryMorphism[114X)[133X
+  
+  [30X    [33X[0;6Y[2XPreComposeList[102X  ([14XCAP:  PreComposeList for IsCapCategoryObject, IsList,
+        IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XRandomMorphismWithFixedSourceAndRangeByInteger[102X                   ([14XCAP:
+        RandomMorphismWithFixedSourceAndRangeByInteger                     for
+        IsCapCategoryObject, IsCapCategoryObject, IsInt[114X)[133X
+  
+  [30X    [33X[0;6Y[2XRightUnitor[102X ([14XMonoidalCategories: RightUnitor for IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XRightUnitorInverse[102X    ([14XMonoidalCategories:    RightUnitorInverse   for
+        IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XRightUnitorInverseWithGivenTensorProduct[102X          ([14XMonoidalCategories:
+        RightUnitorInverseWithGivenTensorProduct    for   IsCapCategoryObject,
+        IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XRightUnitorWithGivenTensorProduct[102X                 ([14XMonoidalCategories:
+        RightUnitorWithGivenTensorProduct       for       IsCapCategoryObject,
+        IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XSimplifyMorphism[102X  ([14XCAP:  SimplifyMorphism  for  IsCapCategoryMorphism,
+        IsObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XTensorProductOnMorphisms[102X ([14XMonoidalCategories: TensorProductOnMorphisms
+        for IsCapCategoryMorphism, IsCapCategoryMorphism[114X)[133X
+  
+  [30X    [33X[0;6Y[2XTensorProductOnMorphismsWithGivenTensorProducts[102X   ([14XMonoidalCategories:
+        TensorProductOnMorphismsWithGivenTensorProducts                    for
+        IsCapCategoryObject,   IsCapCategoryMorphism,   IsCapCategoryMorphism,
+        IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XTensorProductOnObjects[102X ([14XMonoidalCategories: TensorProductOnObjects for
+        IsCapCategoryObject, IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XTensorUnit[102X ([14XMonoidalCategories: TensorUnit for IsCapCategory[114X)[133X
+  
+  
+  [1X7.7 [33X[0;0YExamples[133X[101X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XSmooth := SkeletalCategoryOfSmoothMaps( );[127X[104X
+    [4X[28XSkeletalSmoothMaps[128X[104X
+    [4X[25Xgap>[125X [27XLenses := CategoryOfLenses( Smooth );[127X[104X
+    [4X[28XCategoryOfLenses( SkeletalSmoothMaps )[128X[104X
+    [4X[25Xgap>[125X [27XA := ObjectConstructor( Lenses, [ Smooth.( 1 ), Smooth.( 2 ) ] );[127X[104X
+    [4X[28X(ℝ^1, ℝ^2)[128X[104X
+    [4X[25Xgap>[125X [27XIsWellDefined( A );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XCapCategory( A );[127X[104X
+    [4X[28XCategoryOfLenses( SkeletalSmoothMaps )[128X[104X
+    [4X[25Xgap>[125X [27XA_datum := ObjectDatum( A );[127X[104X
+    [4X[28X[ ℝ^1, ℝ^2 ][128X[104X
+    [4X[25Xgap>[125X [27XCapCategory( A_datum[1] );[127X[104X
+    [4X[28XSkeletalSmoothMaps[128X[104X
+    [4X[25Xgap>[125X [27XB := ObjectConstructor( Lenses, [ Smooth.( 3 ), Smooth.( 4 ) ] );[127X[104X
+    [4X[28X(ℝ^3, ℝ^4)[128X[104X
+    [4X[25Xgap>[125X [27Xget := RandomMorphism( Smooth.( 1 ), Smooth.( 3 ), 5 );[127X[104X
+    [4X[28Xℝ^1 -> ℝ^3[128X[104X
+    [4X[25Xgap>[125X [27Xput := RandomMorphism( Smooth.( 1 + 4 ), Smooth.( 2 ), 5 );[127X[104X
+    [4X[28Xℝ^5 -> ℝ^2[128X[104X
+    [4X[25Xgap>[125X [27Xf := MorphismConstructor( Lenses, A, [ get, put ], B );[127X[104X
+    [4X[28X(ℝ^1, ℝ^2) -> (ℝ^3, ℝ^4) defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XGet Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^1 -> ℝ^3[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XPut Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^5 -> ℝ^2[128X[104X
+    [4X[25Xgap>[125X [27XMorphismDatum( f );[127X[104X
+    [4X[28X[ ℝ^1 -> ℝ^3, ℝ^5 -> ℝ^2 ][128X[104X
+    [4X[25Xgap>[125X [27XIsWellDefined( f );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( f );[127X[104X
+    [4X[28X(ℝ^1, ℝ^2) -> (ℝ^3, ℝ^4) defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XGet Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^1 -> ℝ^3[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ 0.766 * x1 ^ 4 + 0.234[128X[104X
+    [4X[28X‣ 1. * x1 ^ 4 + 0.388[128X[104X
+    [4X[28X‣ 0.459 * x1 ^ 4 + 0.278[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XPut Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^5 -> ℝ^2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ 0.677 * x1 ^ 5 + 0.19 * x2 ^ 4 + 0.659 * x3 ^ 4[128X[104X
+    [4X[28X+ 0.859 * x4 ^ 5 + 0.28 * x5 ^ 1 + 0.216[128X[104X
+    [4X[28X‣ 0.37 * x1 ^ 5 + 0.571 * x2 ^ 4 + 0.835 * x3 ^ 4[128X[104X
+    [4X[28X+ 0.773 * x4 ^ 5 + 0.469 * x5 ^ 1 + 0.159[128X[104X
+    [4X[25Xgap>[125X [27Xid_A := IdentityMorphism( Lenses, A );[127X[104X
+    [4X[28X(ℝ^1, ℝ^2) -> (ℝ^1, ℝ^2) defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XGet Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^1 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XPut Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^3 -> ℝ^2[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( id_A );[127X[104X
+    [4X[28X(ℝ^1, ℝ^2) -> (ℝ^1, ℝ^2) defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XGet Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^1 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ x1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XPut Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^3 -> ℝ^2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ x2[128X[104X
+    [4X[28X‣ x3[128X[104X
+    [4X[25Xgap>[125X [27XIsCongruentForMorphisms( PreCompose( id_A, f ), f );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XTensorUnit( Lenses );[127X[104X
+    [4X[28X(ℝ^0, ℝ^0)[128X[104X
+    [4X[25Xgap>[125X [27XTensorProductOnObjects( A, B );[127X[104X
+    [4X[28X(ℝ^4, ℝ^6)[128X[104X
+    [4X[25Xgap>[125X [27Xf1 := RandomMorphism( A, B, 5 );[127X[104X
+    [4X[28X(ℝ^1, ℝ^2) -> (ℝ^3, ℝ^4) defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XGet Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^1 -> ℝ^3[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XPut Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^5 -> ℝ^2[128X[104X
+    [4X[25Xgap>[125X [27Xf2 := RandomMorphism( A, B, 5 );[127X[104X
+    [4X[28X(ℝ^1, ℝ^2) -> (ℝ^3, ℝ^4) defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XGet Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^1 -> ℝ^3[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XPut Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^5 -> ℝ^2[128X[104X
+    [4X[25Xgap>[125X [27Xf3 := RandomMorphism( A, B, 5 );[127X[104X
+    [4X[28X(ℝ^1, ℝ^2) -> (ℝ^3, ℝ^4) defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XGet Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^1 -> ℝ^3[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XPut Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^5 -> ℝ^2[128X[104X
+    [4X[25Xgap>[125X [27Xf1_f2 := TensorProductOnMorphisms( Lenses, f1, f2 );[127X[104X
+    [4X[28X(ℝ^2, ℝ^4) -> (ℝ^6, ℝ^8) defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XGet Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^2 -> ℝ^6[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XPut Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^10 -> ℝ^4[128X[104X
+    [4X[25Xgap>[125X [27Xf2_f3 := TensorProductOnMorphisms( Lenses, f2, f3 );[127X[104X
+    [4X[28X(ℝ^2, ℝ^4) -> (ℝ^6, ℝ^8) defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XGet Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^2 -> ℝ^6[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XPut Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^10 -> ℝ^4[128X[104X
+    [4X[25Xgap>[125X [27Xt1 := TensorProductOnMorphisms( Lenses, f1_f2, f3 );[127X[104X
+    [4X[28X(ℝ^3, ℝ^6) -> (ℝ^9, ℝ^12) defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XGet Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^3 -> ℝ^9[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XPut Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^15 -> ℝ^6[128X[104X
+    [4X[25Xgap>[125X [27Xt2 := TensorProductOnMorphisms( Lenses, f1, f2_f3 );[127X[104X
+    [4X[28X(ℝ^3, ℝ^6) -> (ℝ^9, ℝ^12) defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XGet Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^3 -> ℝ^9[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XPut Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^15 -> ℝ^6[128X[104X
+    [4X[25Xgap>[125X [27XIsCongruentForMorphisms( t1, t2 );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( Braiding( A, B ) );[127X[104X
+    [4X[28X(ℝ^4, ℝ^6) -> (ℝ^4, ℝ^6) defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XGet Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^4 -> ℝ^4[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ x2[128X[104X
+    [4X[28X‣ x3[128X[104X
+    [4X[28X‣ x4[128X[104X
+    [4X[28X‣ x1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XPut Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^10 -> ℝ^6[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ x9[128X[104X
+    [4X[28X‣ x10[128X[104X
+    [4X[28X‣ x5[128X[104X
+    [4X[28X‣ x6[128X[104X
+    [4X[28X‣ x7[128X[104X
+    [4X[28X‣ x8[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( PreCompose( Braiding( A, B ), BraidingInverse( A, B ) ) );[127X[104X
+    [4X[28X(ℝ^4, ℝ^6) -> (ℝ^4, ℝ^6) defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XGet Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^4 -> ℝ^4[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ x1[128X[104X
+    [4X[28X‣ x2[128X[104X
+    [4X[28X‣ x3[128X[104X
+    [4X[28X‣ x4[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XPut Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^10 -> ℝ^6[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ x5[128X[104X
+    [4X[28X‣ x6[128X[104X
+    [4X[28X‣ x7[128X[104X
+    [4X[28X‣ x8[128X[104X
+    [4X[28X‣ x9[128X[104X
+    [4X[28X‣ x10[128X[104X
+  [4X[32X[104X
+  
+  
+  [1X7.8 [33X[0;0YGAP Categories[133X[101X
+  
+  [1X7.8-1 IsCategoryOfLenses[101X
+  
+  [33X[1;0Y[29X[2XIsCategoryOfLenses[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YThe [5XGAP[105X category of a category of lenses.[133X
+  
+  [1X7.8-2 IsObjectInCategoryOfLenses[101X
+  
+  [33X[1;0Y[29X[2XIsObjectInCategoryOfLenses[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YThe [5XGAP[105X category of objects in a category of lenses.[133X
+  
+  [1X7.8-3 IsMorphismInCategoryOfLenses[101X
+  
+  [33X[1;0Y[29X[2XIsMorphismInCategoryOfLenses[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YThe [5XGAP[105X category of morphisms in a category of lenses.[133X
+  

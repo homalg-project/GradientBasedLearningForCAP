@@ -1,20 +1,357 @@
   
-  [1X2 [33X[0;0YGradientDescentForCAP automatic generated documentation[133X[101X
+  [1X2 [33X[0;0YExamples for neural networks[133X[101X
   
   
-  [1X2.1 [33X[0;0YGradientDescentForCAP automatic generated documentation of categories[133X[101X
+  [1X2.1 [33X[0;0YBinary-class neural network with binary cross-entropy loss function[133X[101X
   
-  [1X2.1-1 IsObjectInCategoryOfLenses[101X
+  [33X[0;0YThis  example  demonstrates how to train a small feed-forward neural network
+  for       a       binary       classification       task      using      the
+  [23X\texttt{GradientBasedLearningForCAP}[123X    package.    We    use   the   binary
+  cross-entropy  loss  and  optimise  the  network  parameters  with  gradient
+  descent.[133X
   
-  [33X[1;0Y[29X[2XIsObjectInCategoryOfLenses[102X( [3Xarg[103X ) [32X filter[133X
-  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  [33X[0;0YThe  dataset  consists  of  points [23X(x_1, x_2) \in \mathbb{R}^2[123X labelled by a
+  non-linear decision rule describing two regions that form [23X\emph{class 0}[123X:[133X
   
-  [33X[0;0YThe [5XGAP[105X category of objects in path categories.[133X
+  [33X[0;0YAll  remaining  points  belong  to  [23X\emph{class 1}[123X. Hence the classification
+  boundary is not linearly separable and requires a non-linear model. We build
+  a  neural  network  with three hidden layers and a sigmoid output, fit it on
+  the  provided  training  examples  for several epochs, and then evaluate the
+  trained  model  on  a grid of input points to visualise the learned decision
+  regions.[133X
   
-  [1X2.1-2 IsMorphismInCategoryOfLenses[101X
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XSmooth := SkeletalSmoothMaps;[127X[104X
+    [4X[28XSkeletalSmoothMaps[128X[104X
+    [4X[25Xgap>[125X [27XLenses := CategoryOfLenses( Smooth );[127X[104X
+    [4X[28XCategoryOfLenses( SkeletalSmoothMaps )[128X[104X
+    [4X[25Xgap>[125X [27XPara := CategoryOfParametrisedMorphisms( Smooth );[127X[104X
+    [4X[28XCategoryOfParametrisedMorphisms( SkeletalSmoothMaps )[128X[104X
+    [4X[25Xgap>[125X [27Xhidden_layers := [ 6, 6, 6 ];;[127X[104X
+    [4X[25Xgap>[125X [27Xf := NeuralNetworkLossMorphism( Para, 2, hidden_layers, 1, "Sigmoid" );;[127X[104X
+    [4X[25Xgap>[125X [27Xoptimizer := Lenses.GradientDescentOptimizer( : learning_rate := 0.01 );[127X[104X
+    [4X[28Xfunction( n ) ... end[128X[104X
+    [4X[25Xgap>[125X [27Xtraining_examples_path := Filename([127X[104X
+    [4X[25X>[125X [27X  DirectoriesPackageLibrary("GradientBasedLearningForCAP", "examples")[1],[127X[104X
+    [4X[25X>[125X [27X  "NeuralNetwork_BinaryCrossEntropy/data/training_examples.txt" );;[127X[104X
+    [4X[25Xgap>[125X [27Xbatch_size := 2;[127X[104X
+    [4X[28X2[128X[104X
+    [4X[25Xgap>[125X [27Xone_epoch_update := OneEpochUpdateLens( f, optimizer,[127X[104X
+    [4X[25X>[125X [27X                        training_examples_path, batch_size );[127X[104X
+    [4X[28X(ℝ^109, ℝ^109) -> (ℝ^1, ℝ^0) defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XGet Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^109 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XPut Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^109 -> ℝ^109[128X[104X
+    [4X[25Xgap>[125X [27Xnr_weights := RankOfObject( Source( PutMorphism( one_epoch_update ) ) );[127X[104X
+    [4X[28X109[128X[104X
+    [4X[25Xgap>[125X [27Xrs := RandomSource( IsMersenneTwister, 1 );;[127X[104X
+    [4X[25Xgap>[125X [27Xw := List( [ 1 .. nr_weights ], i -> 0.001 * Random( rs, [ -1000 .. 1000 ] ) );;[127X[104X
+    [4X[25Xgap>[125X [27Xw{[ 1 .. 5 ]};[127X[104X
+    [4X[28X[ 0.789, -0.767, -0.613, -0.542, 0.301 ][128X[104X
+    [4X[25Xgap>[125X [27Xnr_epochs := 25;[127X[104X
+    [4X[28X25[128X[104X
+    [4X[25Xgap>[125X [27Xw := Fit( one_epoch_update, nr_epochs, w : verbose := true );;[127X[104X
+    [4X[28XEpoch  0/25 - loss = 0.6274786697292678[128X[104X
+    [4X[28XEpoch  1/25 - loss = 0.50764552556010512[128X[104X
+    [4X[28XEpoch  2/25 - loss = 0.46701509497218296[128X[104X
+    [4X[28XEpoch  3/25 - loss = 0.43998434603387304[128X[104X
+    [4X[28XEpoch  4/25 - loss = 0.41390897205434185[128X[104X
+    [4X[28XEpoch  5/25 - loss = 0.38668229524419645[128X[104X
+    [4X[28XEpoch  6/25 - loss = 0.3615103023137366[128X[104X
+    [4X[28XEpoch  7/25 - loss = 0.33852687543477167[128X[104X
+    [4X[28XEpoch  8/25 - loss = 0.31713408584173464[128X[104X
+    [4X[28XEpoch  9/25 - loss = 0.29842876608165969[128X[104X
+    [4X[28XEpoch 10/25 - loss = 0.28310739567373933[128X[104X
+    [4X[28XEpoch 11/25 - loss = 0.26735508537538627[128X[104X
+    [4X[28XEpoch 12/25 - loss = 0.25227135017462571[128X[104X
+    [4X[28XEpoch 13/25 - loss = 0.23858070423434527[128X[104X
+    [4X[28XEpoch 14/25 - loss = 0.22557724727481232[128X[104X
+    [4X[28XEpoch 15/25 - loss = 0.2151923109202202[128X[104X
+    [4X[28XEpoch 16/25 - loss = 0.20589044111812799[128X[104X
+    [4X[28XEpoch 17/25 - loss = 0.19857151366814263[128X[104X
+    [4X[28XEpoch 18/25 - loss = 0.19229381748983518[128X[104X
+    [4X[28XEpoch 19/25 - loss = 0.18814544378812006[128X[104X
+    [4X[28XEpoch 20/25 - loss = 0.18465371077598913[128X[104X
+    [4X[28XEpoch 21/25 - loss = 0.18166012790192537[128X[104X
+    [4X[28XEpoch 22/25 - loss = 0.17685616213693178[128X[104X
+    [4X[28XEpoch 23/25 - loss = 0.17665872918251943[128X[104X
+    [4X[28XEpoch 24/25 - loss = 0.17073585936950184[128X[104X
+    [4X[28XEpoch 25/25 - loss = 0.16744783175344116[128X[104X
+    [4X[25Xgap>[125X [27Xw;[127X[104X
+    [4X[28X[ 1.47751, -0.285187, -1.87358, -1.87839, 0.687266,[128X[104X
+    [4X[28X  -0.88329, -0.607225, 0.57876, 0.084489, 1.1218,[128X[104X
+    [4X[28X  0.289778, -1.15844, 0.562299, -0.725222, 0.724775,[128X[104X
+    [4X[28X  0.643942, 0.202536, 0.131565, 0.768751, -0.345379,[128X[104X
+    [4X[28X  -0.147853, -1.52103, -1.26183, 1.39931, 0.00143737,[128X[104X
+    [4X[28X  -0.819752, -0.90015, -0.534457, 0.74204, -0.768,[128X[104X
+    [4X[28X  -1.85381, 0.225274, -0.384199, 1.1034, 0.82565,[128X[104X
+    [4X[28X  0.423966, 0.719847, 0.487972, 0.266537, -0.442324,[128X[104X
+    [4X[28X  0.520839, 0.306871, -0.205834, -0.314044, 0.0395323,[128X[104X
+    [4X[28X  -0.489954, -0.368816, 0.305383, -0.181872, 0.775344,[128X[104X
+    [4X[28X  -0.57507, -0.792, -0.937068, 1.39995, -0.0236236,[128X[104X
+    [4X[28X  0.370827, -0.778542, -0.783943, 0.034, 0.343554,[128X[104X
+    [4X[28X  -1.00419, 0.857391, -1.07632, -0.677147, 0.839605,[128X[104X
+    [4X[28X  0.719, 1.40418, -0.221851, 1.29824, 0.510027,[128X[104X
+    [4X[28X  0.217811, 0.344086, 0.579, 0.576412, 0.070248,[128X[104X
+    [4X[28X  -0.145523, 0.468713, 0.680618, 0.199966, -0.497,[128X[104X
+    [4X[28X  -0.408801, 0.0519444, -0.597412, 0.137205, 1.25696,[128X[104X
+    [4X[28X  -0.0884903, -0.252, -0.721624, -1.25962, 0.894349,[128X[104X
+    [4X[28X  0.447327, -1.00492, -1.54383, 0.464574, -0.723211,[128X[104X
+    [4X[28X  -0.108064, -0.486439, -0.385, -0.484, -0.862,[128X[104X
+    [4X[28X  -0.121845, 1.0856, 1.09068, 1.69466, 0.938733,[128X[104X
+    [4X[28X  0.529301, -0.465345, 1.23872, 1.07609 ][128X[104X
+    [4X[25Xgap>[125X [27Xpredict := NeuralNetworkPredictionMorphism( Para, 2, hidden_layers, 1, "Sigmoid" );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^1 defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Object:[128X[104X
+    [4X[28X-----------------[128X[104X
+    [4X[28Xℝ^109[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Morphism:[128X[104X
+    [4X[28X-------------------[128X[104X
+    [4X[28Xℝ^111 -> ℝ^1[128X[104X
+    [4X[25Xgap>[125X [27Xpredict_given_w := ReparametriseMorphism( predict, Smooth.Constant( w ) );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^1 defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Object:[128X[104X
+    [4X[28X-----------------[128X[104X
+    [4X[28Xℝ^0[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Morphism:[128X[104X
+    [4X[28X-------------------[128X[104X
+    [4X[28Xℝ^2 -> ℝ^1[128X[104X
+    [4X[25Xgap>[125X [27Xpredict_using_w := UnderlyingMorphism( predict_given_w );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^1[128X[104X
+    [4X[25Xgap>[125X [27Xinputs := Cartesian( 0.1 * [ -10 .. 10 ], 0.1 * [ -10 .. 10 ] );;[127X[104X
+    [4X[25Xgap>[125X [27Xpredictions := List( inputs, x -> [127X[104X
+    [4X[25X>[125X [27X          SelectBasedOnCondition( predict_using_w( x )[1] > 0.5, 1, 0 ) );;[127X[104X
+    [4X[25Xgap>[125X [27X# ScatterPlotUsingPython( inputs, predictions );[127X[104X
+  [4X[32X[104X
   
-  [33X[1;0Y[29X[2XIsMorphismInCategoryOfLenses[102X( [3Xarg[103X ) [32X filter[133X
-  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  [33X[0;0YExecuting  the  command  [23X\texttt{ScatterPlotUsingPython( inputs, predictions
+  );}[123X produces the following plot:[133X
   
-  [33X[0;0YThe [5XGAP[105X category of morphisms in path categories.[133X
+  
+  [1X2.2 [33X[0;0YMulti-class neural network with cross-entropy loss function[133X[101X
+  
+  [33X[0;0YThis  example  demonstrates how to train a small feed-forward neural network
+  for      a      multi-class      classification      task      using     the
+  [23X\texttt{GradientBasedLearningForCAP}[123X  package.  We  employ the cross-entropy
+  loss function and optimise the network parameters with gradient descent.[133X
+  
+  [33X[0;0YThe  dataset  consists  of  points [23X(x_1, x_2) \in \mathbb{R}^2[123X labelled by a
+  non-linear  decision  rule  describing  three  regions  that form We build a
+  neural  network with three hidden layers and a Softmax output, fit it on the
+  provided training examples for several epochs, and then evaluate the trained
+  model on a grid of input points to visualise the learned decision regions.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XSmooth := SkeletalSmoothMaps;[127X[104X
+    [4X[28XSkeletalSmoothMaps[128X[104X
+    [4X[25Xgap>[125X [27XLenses := CategoryOfLenses( Smooth );[127X[104X
+    [4X[28XCategoryOfLenses( SkeletalSmoothMaps )[128X[104X
+    [4X[25Xgap>[125X [27XPara := CategoryOfParametrisedMorphisms( Smooth );[127X[104X
+    [4X[28XCategoryOfParametrisedMorphisms( SkeletalSmoothMaps )[128X[104X
+    [4X[25Xgap>[125X [27Xhidden_layers := [ 6, 6, 6 ];;[127X[104X
+    [4X[25Xgap>[125X [27Xf := NeuralNetworkLossMorphism( Para, 2, hidden_layers, 3, "Softmax" );;[127X[104X
+    [4X[25Xgap>[125X [27Xoptimizer := Lenses.GradientDescentOptimizer( : learning_rate := 0.1 );[127X[104X
+    [4X[28Xfunction( n ) ... end[128X[104X
+    [4X[25Xgap>[125X [27Xtraining_examples_path := Filename([127X[104X
+    [4X[25X>[125X [27X  DirectoriesPackageLibrary("GradientBasedLearningForCAP", "examples")[1],[127X[104X
+    [4X[25X>[125X [27X  "NeuralNetwork_CrossEntropy/data/training_examples.txt" );;[127X[104X
+    [4X[25Xgap>[125X [27Xbatch_size := 4;[127X[104X
+    [4X[28X4[128X[104X
+    [4X[25Xgap>[125X [27Xone_epoch_update := OneEpochUpdateLens( f, optimizer,[127X[104X
+    [4X[25X>[125X [27X                        training_examples_path, batch_size );[127X[104X
+    [4X[28X(ℝ^123, ℝ^123) -> (ℝ^1, ℝ^0) defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XGet Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^123 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XPut Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^123 -> ℝ^123[128X[104X
+    [4X[25Xgap>[125X [27Xnr_weights := RankOfObject( Source( PutMorphism( one_epoch_update ) ) );[127X[104X
+    [4X[28X123[128X[104X
+    [4X[25Xgap>[125X [27Xrs := RandomSource( IsMersenneTwister, 1 );;[127X[104X
+    [4X[25Xgap>[125X [27Xw := List( [ 1 .. nr_weights ], i -> 0.001 * Random( rs, [ -1000 .. 1000 ] ) );;[127X[104X
+    [4X[25Xgap>[125X [27XDisplay( w{[ 1 .. 5 ]} );[127X[104X
+    [4X[28X[ 0.789, -0.767, -0.613, -0.542, 0.301 ][128X[104X
+    [4X[25Xgap>[125X [27Xnr_epochs := 16;[127X[104X
+    [4X[28X16[128X[104X
+    [4X[25Xgap>[125X [27Xw := Fit( one_epoch_update, nr_epochs, w : verbose := true );;[127X[104X
+    [4X[28XEpoch  0/16 - loss = 0.80405334335407785[128X[104X
+    [4X[28XEpoch  1/16 - loss = 0.18338542093217905[128X[104X
+    [4X[28XEpoch  2/16 - loss = 0.1491650040794873[128X[104X
+    [4X[28XEpoch  3/16 - loss = 0.13186409729963983[128X[104X
+    [4X[28XEpoch  4/16 - loss = 0.12293129048146505[128X[104X
+    [4X[28XEpoch  5/16 - loss = 0.11742704538825839[128X[104X
+    [4X[28XEpoch  6/16 - loss = 0.11191588532335346[128X[104X
+    [4X[28XEpoch  7/16 - loss = 0.10441947487056685[128X[104X
+    [4X[28XEpoch  8/16 - loss = 0.095102838431592687[128X[104X
+    [4X[28XEpoch  9/16 - loss = 0.092441708967385072[128X[104X
+    [4X[28XEpoch 10/16 - loss = 0.097057579505470393[128X[104X
+    [4X[28XEpoch 11/16 - loss = 0.093295953606638768[128X[104X
+    [4X[28XEpoch 12/16 - loss = 0.082114375099200984[128X[104X
+    [4X[28XEpoch 13/16 - loss = 0.082910416530212819[128X[104X
+    [4X[28XEpoch 14/16 - loss = 0.082815082271383303[128X[104X
+    [4X[28XEpoch 15/16 - loss = 0.085405485529683856[128X[104X
+    [4X[28XEpoch 16/16 - loss = 0.087825108242740729[128X[104X
+    [4X[25Xgap>[125X [27Xw;[127X[104X
+    [4X[28X[ 0.789, -1.09294, -1.43008, -0.66714, 1.27126, -1.12774, -0.240397, 0.213, [128X[104X
+    [4X[28X  -0.382376, 1.42204, 0.300837, -1.79451, 0.392967, -0.868913, 0.858, [128X[104X
+    [4X[28X  1.16231, 0.769031, 0.309303, 0.555253, -0.142223, 0.0703106, -0.997, [128X[104X
+    [4X[28X  -0.746, 0.9, -0.248, -0.801, -0.317, -0.826, 0.0491083, -1.51073, -1.01246, [128X[104X
+    [4X[28X  0.371752, -0.852, 0.342548, 1.01666, 1.39005, 0.958034, 0.357176, 0.3225, [128X[104X
+    [4X[28X  -0.29, -1.0095, 0.154876, -0.460859, -0.582425, 0.223943, -0.402, -0.368, [128X[104X
+    [4X[28X  0.275911, -0.0791975, 0.0986371, -0.487903, -0.699542, -0.553485, 0.766, [128X[104X
+    [4X[28X  1.88163, 0.903741, -0.895688, -0.949546, 0.034, 0.13, -0.91, 0.67043, [128X[104X
+    [4X[28X  -0.784672, -0.195688, 1.49813, 0.881451, 0.679593, -0.380004, 0.743062, [128X[104X
+    [4X[28X  0.529804, 0.221497, 0.487694, 1.12092, 1.38134, -0.313891, 0.780071, [128X[104X
+    [4X[28X  0.00526383, 0.422997, 0.287254, -0.42555, -0.0525988, -0.159442, -0.256285, [128X[104X
+    [4X[28X  -0.296361, 0.822117, -0.23663, -0.252, -0.986452, -0.955211, 0.52727, [128X[104X
+    [4X[28X  0.261295, -0.867, -0.787, -0.395, -0.871, -0.205, -0.315, -0.385, [128X[104X
+    [4X[28X  -0.292919, -1.46115, -0.634953, 0.818446, 0.903525, 0.833456, 1.59504, [128X[104X
+    [4X[28X  -0.500531, -0.191608, 0.390861, 0.808496, -1.94883, 0.445591, -1.62511, [128X[104X
+    [4X[28X  -0.601054, -0.154008, -1.20266, -0.255521, 0.989522, 0.29963, 0.372084, [128X[104X
+    [4X[28X  1.07529, -0.909025, 0.454265, 0.539106 ][128X[104X
+    [4X[25Xgap>[125X [27Xpredict := NeuralNetworkPredictionMorphism( Para, 2, hidden_layers, 3, "Softmax" );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^3 defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Object:[128X[104X
+    [4X[28X-----------------[128X[104X
+    [4X[28Xℝ^123[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Morphism:[128X[104X
+    [4X[28X-------------------[128X[104X
+    [4X[28Xℝ^125 -> ℝ^3[128X[104X
+    [4X[25Xgap>[125X [27Xpredict_given_w := ReparametriseMorphism( predict, Smooth.Constant( w ) );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^3 defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Object:[128X[104X
+    [4X[28X-----------------[128X[104X
+    [4X[28Xℝ^0[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Morphism:[128X[104X
+    [4X[28X-------------------[128X[104X
+    [4X[28Xℝ^2 -> ℝ^3[128X[104X
+    [4X[25Xgap>[125X [27Xpredict_using_w := UnderlyingMorphism( predict_given_w );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^3[128X[104X
+    [4X[25Xgap>[125X [27Xinputs := Cartesian( 0.1 * [ -10 .. 10 ], 0.1 * [ -10 .. 10 ] );;[127X[104X
+    [4X[25Xgap>[125X [27Xpredictions := List( inputs, x ->[127X[104X
+    [4X[25X>[125X [27X    -1 + Position( predict_using_w( x ), Maximum( predict_using_w( x ) ) ) );;[127X[104X
+    [4X[25Xgap>[125X [27X# ScatterPlotUsingPython( inputs, predictions );[127X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YExecuting  the  command  [23X\texttt{ScatterPlotUsingPython( inputs, predictions
+  );}[123X produces the following plot:[133X
+  
+  
+  [1X2.3 [33X[0;0YNeural network with quadratic loss function[133X[101X
+  
+  [33X[0;0YThis  example  demonstrates how to train a small feed-forward neural network
+  for   a   regression  task  using  the  [23X\texttt{GradientBasedLearningForCAP}[123X
+  package.  We  employ  the  quadratic  loss function and optimise the network
+  parameters  with gradient descent. The dataset consists of points [23X(x_1, x_2)
+  \in  \mathbb{R}^2[123X with corresponding outputs [23Xy \in \mathbb{R}[123X generated by a
+  linear function with some added noise. Concretely, the outputs are generated
+  according  to  the formula We build a neural network with input dimension 2,
+  no  hidden  layers,  and  output  dimension 1. Hence, the affine map between
+  input  and  output  layer has the following matrix dimensions (together with
+  bias vector): Where [23XW_1 \in \mathbb{R}^{2 \times 1}[123X and [23Xb_1 \in \mathbb{R}^1[123X
+  are  the  weights and bias to be learned. Equivalently, the network computes
+  for an input [23Xa_0 \in \mathbb{R}^2[123X the output Hence, the number of parameters
+  to  learn  is 3 (two weights and one bias). We fit the neural network on the
+  provided  training  examples  for  30  epochs,  and then compare the learned
+  parameters  to  the perfect weights used to generate the dataset. We use the
+  Adam  optimiser  for gradient descent. Hence, the initiat weights vector [23X(t,
+  m_1,  m_2,  m_3,  v_1,  v_2,  v_3,  w_1,  w_2, b_1) \in \mathbb{R}^{1+3+3+3}[123X
+  contains  additional  parameters  for  the  optimiser  (the [23Xm[123X's and [23Xv[123X's). We
+  initialise [23Xt[123X to [23X1[123X and [23Xm[123X's and [23Xv[123X's to [23X0[123X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XSmooth := SkeletalSmoothMaps;[127X[104X
+    [4X[28XSkeletalSmoothMaps[128X[104X
+    [4X[25Xgap>[125X [27XLenses := CategoryOfLenses( Smooth );[127X[104X
+    [4X[28XCategoryOfLenses( SkeletalSmoothMaps )[128X[104X
+    [4X[25Xgap>[125X [27XPara := CategoryOfParametrisedMorphisms( Smooth );[127X[104X
+    [4X[28XCategoryOfParametrisedMorphisms( SkeletalSmoothMaps )[128X[104X
+    [4X[25Xgap>[125X [27Xf := NeuralNetworkLossMorphism( Para, 2, [ ], 1, "IdFunc" );[127X[104X
+    [4X[28Xℝ^3 -> ℝ^1 defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Object:[128X[104X
+    [4X[28X-----------------[128X[104X
+    [4X[28Xℝ^3[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Morphism:[128X[104X
+    [4X[28X-------------------[128X[104X
+    [4X[28Xℝ^6 -> ℝ^1[128X[104X
+    [4X[25Xgap>[125X [27Xoptimizer := Lenses.AdamOptimizer();[127X[104X
+    [4X[28Xfunction( n ) ... end[128X[104X
+    [4X[25Xgap>[125X [27Xtraining_examples_path := Filename([127X[104X
+    [4X[25X>[125X [27X    DirectoriesPackageLibrary("GradientBasedLearningForCAP", "examples")[1],[127X[104X
+    [4X[25X>[125X [27X    "NeuralNetwork_QuadraticLoss/data/training_examples.txt" );;[127X[104X
+    [4X[25Xgap>[125X [27Xbatch_size := 5;[127X[104X
+    [4X[28X5[128X[104X
+    [4X[25Xgap>[125X [27Xone_epoch_update := OneEpochUpdateLens( f, optimizer, [127X[104X
+    [4X[25X>[125X [27X                        training_examples_path, batch_size );[127X[104X
+    [4X[28X(ℝ^10, ℝ^10) -> (ℝ^1, ℝ^0) defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XGet Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^10 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XPut Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^10 -> ℝ^10[128X[104X
+    [4X[25Xgap>[125X [27Xw := [ 1, 0, 0, 0, 0, 0, 0, 0.21, -0.31, 0.7 ];[127X[104X
+    [4X[28X[ 1, 0, 0, 0, 0, 0, 0, 0.21, -0.31, 0.7 ][128X[104X
+    [4X[25Xgap>[125X [27Xnr_epochs := 30;[127X[104X
+    [4X[28X30[128X[104X
+    [4X[25Xgap>[125X [27Xw := Fit( one_epoch_update, nr_epochs, w );;[127X[104X
+    [4X[28XEpoch  0/30 - loss = 4.4574869198[128X[104X
+    [4X[28XEpoch  1/30 - loss = 1.0904439656285798[128X[104X
+    [4X[28XEpoch  2/30 - loss = 0.44893422753741707[128X[104X
+    [4X[28XEpoch  3/30 - loss = 0.24718222552679428[128X[104X
+    [4X[28XEpoch  4/30 - loss = 0.15816538314892969[128X[104X
+    [4X[28XEpoch  5/30 - loss = 0.11009214898573197[128X[104X
+    [4X[28XEpoch  6/30 - loss = 0.080765189573546586[128X[104X
+    [4X[28XEpoch  7/30 - loss = 0.061445427900729599[128X[104X
+    [4X[28XEpoch  8/30 - loss = 0.04803609207319106[128X[104X
+    [4X[28XEpoch  9/30 - loss = 0.038370239087861441[128X[104X
+    [4X[28XEpoch 10/30 - loss = 0.031199992288917108[128X[104X
+    [4X[28XEpoch 11/30 - loss = 0.025760084031019172[128X[104X
+    [4X[28XEpoch 12/30 - loss = 0.021557800050973547[128X[104X
+    [4X[28XEpoch 13/30 - loss = 0.018263315597330656[128X[104X
+    [4X[28XEpoch 14/30 - loss = 0.01564869258749324[128X[104X
+    [4X[28XEpoch 15/30 - loss = 0.013552162640841157[128X[104X
+    [4X[28XEpoch 16/30 - loss = 0.011856309185255345[128X[104X
+    [4X[28XEpoch 17/30 - loss = 0.010474254262187581[128X[104X
+    [4X[28XEpoch 18/30 - loss = 0.0093406409193010267[128X[104X
+    [4X[28XEpoch 19/30 - loss = 0.008405587711401704[128X[104X
+    [4X[28XEpoch 20/30 - loss = 0.0076305403249797375[128X[104X
+    [4X[28XEpoch 21/30 - loss = 0.0069853659369945552[128X[104X
+    [4X[28XEpoch 22/30 - loss = 0.0064462805409909937[128X[104X
+    [4X[28XEpoch 23/30 - loss = 0.0059943461353685126[128X[104X
+    [4X[28XEpoch 24/30 - loss = 0.0056143650058947617[128X[104X
+    [4X[28XEpoch 25/30 - loss = 0.0052940553411779294[128X[104X
+    [4X[28XEpoch 26/30 - loss = 0.0050234291867088457[128X[104X
+    [4X[28XEpoch 27/30 - loss = 0.0047943179297568897[128X[104X
+    [4X[28XEpoch 28/30 - loss = 0.0046000067074985669[128X[104X
+    [4X[28XEpoch 29/30 - loss = 0.004434950161766555[128X[104X
+    [4X[28XEpoch 30/30 - loss = 0.0042945495896027528[128X[104X
+    [4X[25Xgap>[125X [27Xw;[127X[104X
+    [4X[28X[ 601, -0.00814765, -0.0328203, 0.00154532, 0.0208156, 0.0756998,[128X[104X
+    [4X[28X0.047054, 2.01399, -2.9546, 0.989903 ][128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YWe notice that the learned weights [23Xw_1 \approx 2.01399[123X, [23Xw_2 \approx -2.9546[123X,
+  and  [23Xb_1 \approx 0.989903[123X are close to the perfect weights [23X2[123X, [23X-3[123X, and [23X1[123X used
+  to generate the dataset.[133X
   

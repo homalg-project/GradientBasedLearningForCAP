@@ -1,0 +1,851 @@
+  
+  [1X4 [33X[0;0YSkeletal Category of Smooth Maps[133X[101X
+  
+  
+  [1X4.1 [33X[0;0YConstructors[133X[101X
+  
+  [1X4.1-1 SkeletalCategoryOfSmoothMaps[101X
+  
+  [33X[1;0Y[29X[2XSkeletalCategoryOfSmoothMaps[102X( [3Xarg[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ya category[133X
+  
+  [33X[0;0YConstruct the category of skeletal smooth maps. Objects in this category are
+  the Euclidean spaces [23X\mathbb{R}^n[123X for non-negative integers [23Xn[123X. Morphisms are
+  smooth  maps  between  these  spaces,  represented by a map function and its
+  Jacobian matrix.[133X
+  
+  [1X4.1-2 ObjectConstructor[101X
+  
+  [33X[1;0Y[29X[2XObjectConstructor[102X( [3XSmooth[103X, [3Xn[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Yan object in the category of skeletal smooth maps[133X
+  
+  [33X[0;0YConstruct  the object representing the Euclidean space [23X\mathbb{R}^{n}[123X in the
+  category of skeletal smooth maps. Points in Euclidean spaces are represented
+  as row vectors.[133X
+  
+  [1X4.1-3 MorphismConstructor[101X
+  
+  [33X[1;0Y[29X[2XMorphismConstructor[102X( [3XSmooth[103X, [3Xsource[103X, [3Xdatum[103X, [3Xtarget[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya morphism in the category of skeletal smooth maps[133X
+  
+  [33X[0;0YConstruct a smooth morphism from [3Xsource[103X to [3Xtarget[103X using the given [3Xdatum[103X. The
+  [3Xdatum[103X should be a pair [10X[ map_func, jacobian_func ][110X where:[133X
+  
+  [30X    [33X[0;6Y[3Xmap_func[103X is a function that takes a list of [22Xm[122X elements (where [22Xm[122X is the
+        rank  of [3Xsource[103X) and returns a list of [22Xn[122X elements (where [22Xn[122X is the rank
+        of  [3Xtarget[103X).  This represents the smooth map [22Xf: R^m -> R^n[122X, [23X[x_1, x_2,
+        \ldots,  x_m]  \mapsto  [f_1(x_1, \ldots, x_m), f_2(x_1, \ldots, x_m),
+        \ldots, f_n(x_1, \ldots, x_m)][123X.[133X
+  
+  [30X    [33X[0;6Y[3Xjacobian_func[103X  is  a  function  that  takes  a  list of [22Xm[122X elements and
+        returns  an  [22Xn  ×  m[122X  matrix  (represented  as a list of [22Xn[122X lists, each
+        containing  [22Xm[122X  elements). This matrix represents the Jacobian [22XDf(x)[122X at
+        point [22Xx[122X, where entry [22X(i,j)[122X is [22Xfrac∂ f_i∂ x_j(x)[122X.[133X
+  
+  [1X4.1-4 SmoothMap[101X
+  
+  [33X[1;0Y[29X[2XSmoothMap[102X( [3XSmooth[103X, [3Xsource[103X, [3Xdatum[103X, [3Xtarget[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya morphism in the category of skeletal smooth maps[133X
+  
+  [33X[0;0YDelegates to MorphismConstructor to create a smooth morphism.[133X
+  
+  
+  [1X4.2 [33X[0;0YAttributes[133X[101X
+  
+  [1X4.2-1 RankOfObject[101X
+  
+  [33X[1;0Y[29X[2XRankOfObject[102X( [3Xobj[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya non-negative integer[133X
+  
+  [33X[0;0YThe  rank  (dimension) of the Euclidean space represented by the object [3Xobj[103X.
+  For an object representing [23X\mathbb{R}^n[123X, this returns [23Xn[123X.[133X
+  
+  [1X4.2-2 Map[101X
+  
+  [33X[1;0Y[29X[2XMap[102X( [3Xf[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya function[133X
+  
+  [33X[0;0YThe  underlying  map  function  of  a  smooth  morphism [3Xf[103X. For a morphism [23Xf:
+  \mathbb{R}^m  \to  \mathbb{R}^n[123X,  this  is a function that takes a list of [23Xm[123X
+  elements and returns a list of [23Xn[123X elements.[133X
+  
+  [1X4.2-3 JacobianMatrix[101X
+  
+  [33X[1;0Y[29X[2XJacobianMatrix[102X( [3Xf[103X ) [32X attribute[133X
+  [6XReturns:[106X  [33X[0;10Ya function[133X
+  
+  [33X[0;0YThe  Jacobian  matrix  function  of  a  smooth morphism [3Xf[103X. For a morphism [23Xf:
+  \mathbb{R}^m  \to  \mathbb{R}^n[123X,  this  is a function that takes a list of [23Xm[123X
+  elements  and  returns  an  [23Xn  \times  m[123X  matrix  representing  the  partial
+  derivatives.[133X
+  
+  
+  [1X4.3 [33X[0;0YOperations[133X[101X
+  
+  [1X4.3-1 Eval[101X
+  
+  [33X[1;0Y[29X[2XEval[102X( [3Xf[103X, [3Xx[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya dense list[133X
+  
+  [33X[0;0YEvaluate the smooth morphism [3Xf[103X at the point [3Xx[103X.[133X
+  
+  [1X4.3-2 EvalJacobianMatrix[101X
+  
+  [33X[1;0Y[29X[2XEvalJacobianMatrix[102X( [3Xf[103X, [3Xx[103X ) [32X operation[133X
+  [6XReturns:[106X  [33X[0;10Ya matrix (list of lists)[133X
+  
+  [33X[0;0YEvaluate the Jacobian matrix of the smooth morphism [3Xf[103X at the point [3Xx[103X.[133X
+  
+  
+  [1X4.4 [33X[0;0YAvailable Smooth Maps[133X[101X
+  
+  [1X4.4-1 AvailableSkeletalSmoothMaps[101X
+  
+  [33X[1;0Y[29X[2XAvailableSkeletalSmoothMaps[102X( [3XSmooth[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ya list of strings[133X
+  
+  [33X[0;0YList the names of available skeletal smooth maps.[133X
+  
+  [1X4.4-2 DummyInputForAffineTransformation[101X
+  
+  [33X[1;0Y[29X[2XDummyInputForAffineTransformation[102X( [3Xm[103X, [3Xn[103X, [3Xweight_str[103X, [3Xbias_str[103X, [3Xlogits_str[103X ) [32X function[133X
+  [6XReturns:[106X  [33X[0;10Ya list of expressions[133X
+  
+  [33X[0;0YGenerate  dummy input expressions for an affine transformation with [3Xm[103X inputs
+  and  [3Xn[103X  outputs.  Its length is [23X(m+1)n + m[123X. Additional arguments specify the
+  weight  string,  bias  string, and a logits string. For example, for [3Xm[103X=2 and
+  [3Xn[103X=3,  with  weight  string  "w", bias string "b", and logits string "z", the
+  output is [10X[ w1_1, w2_1, b_1, w1_2, w2_2, b_2, w1_3, w2_3, b_3, z1, z2 ][110X.[133X
+  
+  
+  [1X4.5 [33X[0;0YSupported CAP Operations[133X[101X
+  
+  
+  [1X4.5-1 [33X[0;0YSkeletalSmoothMaps[133X[101X
+  
+  [33X[0;0YThe following CAP operations are supported:[133X
+  
+  [30X    [33X[0;6Y[2XAdditionForMorphisms[102X        ([14XCAP:       AdditionForMorphisms       for
+        IsCapCategoryMorphism, IsCapCategoryMorphism[114X)[133X
+  
+  [30X    [33X[0;6Y[2XAdditiveInverseForMorphisms[102X   ([14XCAP:   AdditiveInverseForMorphisms  for
+        IsCapCategoryMorphism[114X)[133X
+  
+  [30X    [33X[0;6Y[2XAssociatorLeftToRight[102X  ([14XMonoidalCategories:  AssociatorLeftToRight for
+        IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XAssociatorLeftToRightWithGivenTensorProducts[102X      ([14XMonoidalCategories:
+        AssociatorLeftToRightWithGivenTensorProducts  for IsCapCategoryObject,
+        IsCapCategoryObject,     IsCapCategoryObject,     IsCapCategoryObject,
+        IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XAssociatorRightToLeft[102X  ([14XMonoidalCategories:  AssociatorRightToLeft for
+        IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XAssociatorRightToLeftWithGivenTensorProducts[102X      ([14XMonoidalCategories:
+        AssociatorRightToLeftWithGivenTensorProducts  for IsCapCategoryObject,
+        IsCapCategoryObject,     IsCapCategoryObject,     IsCapCategoryObject,
+        IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XBraiding[102X   ([14XMonoidalCategories:   Braiding   for  IsCapCategoryObject,
+        IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XBraidingInverse[102X      ([14XMonoidalCategories:      BraidingInverse     for
+        IsCapCategoryObject, IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XBraidingInverseWithGivenTensorProducts[102X            ([14XMonoidalCategories:
+        BraidingInverseWithGivenTensorProducts     for    IsCapCategoryObject,
+        IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XBraidingWithGivenTensorProducts[102X                   ([14XMonoidalCategories:
+        BraidingWithGivenTensorProducts        for        IsCapCategoryObject,
+        IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XCartesianAssociatorLeftToRight[102X                   ([14XCartesianCategories:
+        CartesianAssociatorLeftToRight         for        IsCapCategoryObject,
+        IsCapCategoryObject, IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XCartesianAssociatorLeftToRightWithGivenDirectProducts[102X
+        ([14XCartesianCategories:
+        CartesianAssociatorLeftToRightWithGivenDirectProducts              for
+        IsCapCategoryObject,     IsCapCategoryObject,     IsCapCategoryObject,
+        IsCapCategoryObject, IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XCartesianAssociatorRightToLeft[102X                   ([14XCartesianCategories:
+        CartesianAssociatorRightToLeft         for        IsCapCategoryObject,
+        IsCapCategoryObject, IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XCartesianAssociatorRightToLeftWithGivenDirectProducts[102X
+        ([14XCartesianCategories:
+        CartesianAssociatorRightToLeftWithGivenDirectProducts              for
+        IsCapCategoryObject,     IsCapCategoryObject,     IsCapCategoryObject,
+        IsCapCategoryObject, IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XCartesianBraiding[102X    ([14XCartesianCategories:    CartesianBraiding    for
+        IsCapCategoryObject, IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XCartesianBraidingInverse[102X                         ([14XCartesianCategories:
+        CartesianBraidingInverse for IsCapCategoryObject, IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XCartesianBraidingInverseWithGivenDirectProducts[102X  ([14XCartesianCategories:
+        CartesianBraidingInverseWithGivenDirectProducts                    for
+        IsCapCategoryObject,     IsCapCategoryObject,     IsCapCategoryObject,
+        IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XCartesianBraidingWithGivenDirectProducts[102X         ([14XCartesianCategories:
+        CartesianBraidingWithGivenDirectProducts    for   IsCapCategoryObject,
+        IsCapCategoryObject, IsCapCategoryObject, IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XCartesianDiagonal[102X    ([14XCartesianCategories:    CartesianDiagonal    for
+        IsCapCategoryObject, IsInt[114X)[133X
+  
+  [30X    [33X[0;6Y[2XCartesianDiagonalWithGivenCartesianPower[102X         ([14XCartesianCategories:
+        CartesianDiagonalWithGivenCartesianPower    for   IsCapCategoryObject,
+        IsInt, IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XCartesianLeftUnitor[102X   ([14XCartesianCategories:   CartesianLeftUnitor  for
+        IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XCartesianLeftUnitorInverse[102X                       ([14XCartesianCategories:
+        CartesianLeftUnitorInverse for IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XCartesianLeftUnitorInverseWithGivenDirectProduct[102X ([14XCartesianCategories:
+        CartesianLeftUnitorInverseWithGivenDirectProduct                   for
+        IsCapCategoryObject, IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XCartesianLeftUnitorWithGivenDirectProduct[102X        ([14XCartesianCategories:
+        CartesianLeftUnitorWithGivenDirectProduct   for   IsCapCategoryObject,
+        IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XCartesianRightUnitor[102X  ([14XCartesianCategories:  CartesianRightUnitor  for
+        IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XCartesianRightUnitorInverse[102X                      ([14XCartesianCategories:
+        CartesianRightUnitorInverse for IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XCartesianRightUnitorInverseWithGivenDirectProduct[102X
+        ([14XCartesianCategories:
+        CartesianRightUnitorInverseWithGivenDirectProduct                  for
+        IsCapCategoryObject, IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XCartesianRightUnitorWithGivenDirectProduct[102X       ([14XCartesianCategories:
+        CartesianRightUnitorWithGivenDirectProduct   for  IsCapCategoryObject,
+        IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XComponentOfMorphismIntoDirectProduct[102X                             ([14XCAP:
+        ComponentOfMorphismIntoDirectProduct     for    IsCapCategoryMorphism,
+        IsList, IsInt[114X)[133X
+  
+  [30X    [33X[0;6Y[2XDirectProduct[102X ([14XCAP: DirectProduct[114X)[133X
+  
+  [30X    [33X[0;6Y[2XDirectProductFunctorial[102X   ([14XCAP:  DirectProductFunctorial  for  IsList,
+        IsList, IsList[114X)[133X
+  
+  [30X    [33X[0;6Y[2XDirectProductFunctorialWithGivenDirectProducts[102X                   ([14XCAP:
+        DirectProductFunctorialWithGivenDirectProducts                     for
+        IsCapCategoryObject, IsList, IsList, IsList, IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XDirectProductOnMorphisms[102X                         ([14XCartesianCategories:
+        DirectProductOnMorphisms           for          IsCapCategoryMorphism,
+        IsCapCategoryMorphism[114X)[133X
+  
+  [30X    [33X[0;6Y[2XDirectProductOnMorphismsWithGivenDirectProducts[102X  ([14XCartesianCategories:
+        DirectProductOnMorphismsWithGivenDirectProducts                    for
+        IsCapCategoryObject,   IsCapCategoryMorphism,   IsCapCategoryMorphism,
+        IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIdentityMorphism[102X ([14XCAP: IdentityMorphism for IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIsCongruentForMorphisms[102X      ([14XCAP:     IsCongruentForMorphisms     for
+        IsCapCategoryMorphism, IsCapCategoryMorphism[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIsEndomorphism[102X ([14XCAP: IsEndomorphism for IsCapCategoryMorphism[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIsEqualForMorphisms[102X        ([14XCAP:        IsEqualForMorphisms        for
+        IsCapCategoryMorphism, IsCapCategoryMorphism[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIsEqualForMorphismsOnMor[102X     ([14XCAP:     IsEqualForMorphismsOnMor    for
+        IsCapCategoryMorphism, IsCapCategoryMorphism[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIsEqualForObjects[102X  ([14XCAP:  IsEqualForObjects  for  IsCapCategoryObject,
+        IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIsEqualToIdentityMorphism[102X    ([14XCAP:    IsEqualToIdentityMorphism    for
+        IsCapCategoryMorphism[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIsEqualToZeroMorphism[102X       ([14XCAP:       IsEqualToZeroMorphism      for
+        IsCapCategoryMorphism[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIsIdempotent[102X ([14XCAP: IsIdempotent for IsCapCategoryMorphism[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIsOne[102X ([14XCAP: IsOne for IsCapCategoryMorphism[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIsTerminal[102X ([14XCAP: IsTerminal for IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIsWellDefinedForMorphisms[102X    ([14XCAP:    IsWellDefinedForMorphisms    for
+        IsCapCategoryMorphism[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIsWellDefinedForMorphismsWithGivenSourceAndRange[102X                 ([14XCAP:
+        IsWellDefinedForMorphismsWithGivenSourceAndRange                   for
+        IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIsWellDefinedForObjects[102X      ([14XCAP:     IsWellDefinedForObjects     for
+        IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIsZeroForMorphisms[102X ([14XCAP: IsZeroForMorphisms for IsCapCategoryMorphism[114X)[133X
+  
+  [30X    [33X[0;6Y[2XIsZeroForObjects[102X ([14XCAP: IsZeroForObjects for IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XJointPairwiseDifferencesOfMorphismsIntoDirectProduct[102X             ([14XCAP:
+        JointPairwiseDifferencesOfMorphismsIntoDirectProduct               for
+        IsCapCategoryObject, IsList[114X)[133X
+  
+  [30X    [33X[0;6Y[2XLeftUnitor[102X ([14XMonoidalCategories: LeftUnitor for IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XLeftUnitorInverse[102X     ([14XMonoidalCategories:    LeftUnitorInverse    for
+        IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XLeftUnitorInverseWithGivenTensorProduct[102X           ([14XMonoidalCategories:
+        LeftUnitorInverseWithGivenTensorProduct    for    IsCapCategoryObject,
+        IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XLeftUnitorWithGivenTensorProduct[102X                  ([14XMonoidalCategories:
+        LeftUnitorWithGivenTensorProduct        for       IsCapCategoryObject,
+        IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XLinearCombinationOfMorphisms[102X  ([14XCAP:  LinearCombinationOfMorphisms  for
+        IsCapCategoryObject, IsList, IsList, IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XMorphismBetweenDirectProducts[102X              ([14XToolsForCategoricalTowers:
+        MorphismBetweenDirectProducts for IsList, IsList, IsList[114X)[133X
+  
+  [30X    [33X[0;6Y[2XMorphismBetweenDirectProductsWithGivenDirectProducts[102X
+        ([14XToolsForCategoricalTowers:
+        MorphismBetweenDirectProductsWithGivenDirectProducts               for
+        IsCapCategoryObject, IsList, IsList, IsList, IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XMorphismConstructor[102X ([14XCAP: MorphismConstructor for IsCapCategoryObject,
+        IsObject, IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XMorphismDatum[102X ([14XCAP: MorphismDatum for IsCapCategoryMorphism[114X)[133X
+  
+  [30X    [33X[0;6Y[2XMultiplicationForMorphisms[102X               ([14XGradientBasedLearningForCAP:
+        MultiplicationForMorphisms          for         IsCapCategoryMorphism,
+        IsCapCategoryMorphism[114X)[133X
+  
+  [30X    [33X[0;6Y[2XMultiplyWithElementOfCommutativeRingForMorphisms[102X                 ([14XCAP:
+        MultiplyWithElementOfCommutativeRingForMorphisms   for  IsRingElement,
+        IsCapCategoryMorphism[114X)[133X
+  
+  [30X    [33X[0;6Y[2XObjectConstructor[102X ([14XCAP: ObjectConstructor for IsCapCategory, IsObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XObjectDatum[102X ([14XCAP: ObjectDatum for IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XPostCompose[102X     ([14XCAP:     PostCompose    for    IsCapCategoryMorphism,
+        IsCapCategoryMorphism[114X)[133X
+  
+  [30X    [33X[0;6Y[2XPostComposeList[102X ([14XCAP: PostComposeList for IsCapCategoryObject, IsList,
+        IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XPreCompose[102X     ([14XCAP:     PreCompose     for     IsCapCategoryMorphism,
+        IsCapCategoryMorphism[114X)[133X
+  
+  [30X    [33X[0;6Y[2XPreComposeList[102X  ([14XCAP:  PreComposeList for IsCapCategoryObject, IsList,
+        IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XProjectionInFactorOfDirectProduct[102X                                ([14XCAP:
+        ProjectionInFactorOfDirectProduct for IsList, IsInt[114X)[133X
+  
+  [30X    [33X[0;6Y[2XProjectionInFactorOfDirectProductWithGivenDirectProduct[102X          ([14XCAP:
+        ProjectionInFactorOfDirectProductWithGivenDirectProduct   for  IsList,
+        IsInt, IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XRandomMorphismWithFixedSourceAndRangeByInteger[102X                   ([14XCAP:
+        RandomMorphismWithFixedSourceAndRangeByInteger                     for
+        IsCapCategoryObject, IsCapCategoryObject, IsInt[114X)[133X
+  
+  [30X    [33X[0;6Y[2XReverseDifferential[102X  ([14XGradientBasedLearningForCAP: ReverseDifferential
+        for IsCapCategoryMorphism[114X)[133X
+  
+  [30X    [33X[0;6Y[2XReverseDifferentialWithGivenObjects[102X      ([14XGradientBasedLearningForCAP:
+        ReverseDifferentialWithGivenObjects      for      IsCapCategoryObject,
+        IsCapCategoryMorphism, IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XRightUnitor[102X ([14XMonoidalCategories: RightUnitor for IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XRightUnitorInverse[102X    ([14XMonoidalCategories:    RightUnitorInverse   for
+        IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XRightUnitorInverseWithGivenTensorProduct[102X          ([14XMonoidalCategories:
+        RightUnitorInverseWithGivenTensorProduct    for   IsCapCategoryObject,
+        IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XRightUnitorWithGivenTensorProduct[102X                 ([14XMonoidalCategories:
+        RightUnitorWithGivenTensorProduct       for       IsCapCategoryObject,
+        IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XSimplifyMorphism[102X  ([14XCAP:  SimplifyMorphism  for  IsCapCategoryMorphism,
+        IsObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XSubtractionForMorphisms[102X      ([14XCAP:     SubtractionForMorphisms     for
+        IsCapCategoryMorphism, IsCapCategoryMorphism[114X)[133X
+  
+  [30X    [33X[0;6Y[2XSumOfMorphisms[102X  ([14XCAP:  SumOfMorphisms for IsCapCategoryObject, IsList,
+        IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XTensorProductOnMorphisms[102X ([14XMonoidalCategories: TensorProductOnMorphisms
+        for IsCapCategoryMorphism, IsCapCategoryMorphism[114X)[133X
+  
+  [30X    [33X[0;6Y[2XTensorProductOnMorphismsWithGivenTensorProducts[102X   ([14XMonoidalCategories:
+        TensorProductOnMorphismsWithGivenTensorProducts                    for
+        IsCapCategoryObject,   IsCapCategoryMorphism,   IsCapCategoryMorphism,
+        IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XTensorProductOnObjects[102X ([14XMonoidalCategories: TensorProductOnObjects for
+        IsCapCategoryObject, IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XTensorUnit[102X ([14XMonoidalCategories: TensorUnit for IsCapCategory[114X)[133X
+  
+  [30X    [33X[0;6Y[2XTerminalObject[102X ([14XCAP: TerminalObject for IsCapCategory[114X)[133X
+  
+  [30X    [33X[0;6Y[2XTerminalObjectFunctorial[102X     ([14XCAP:     TerminalObjectFunctorial    for
+        IsCapCategory[114X)[133X
+  
+  [30X    [33X[0;6Y[2XTerminalObjectFunctorialWithGivenTerminalObjects[102X                 ([14XCAP:
+        TerminalObjectFunctorialWithGivenTerminalObjects                   for
+        IsCapCategoryObject, IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XUniversalMorphismIntoDirectProduct[102X                               ([14XCAP:
+        UniversalMorphismIntoDirectProduct  for  IsList,  IsCapCategoryObject,
+        IsList[114X)[133X
+  
+  [30X    [33X[0;6Y[2XUniversalMorphismIntoDirectProductWithGivenDirectProduct[102X         ([14XCAP:
+        UniversalMorphismIntoDirectProductWithGivenDirectProduct  for  IsList,
+        IsCapCategoryObject, IsList, IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XUniversalMorphismIntoTerminalObject[102X                              ([14XCAP:
+        UniversalMorphismIntoTerminalObject for IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XUniversalMorphismIntoTerminalObjectWithGivenTerminalObject[102X       ([14XCAP:
+        UniversalMorphismIntoTerminalObjectWithGivenTerminalObject         for
+        IsCapCategoryObject, IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XZeroMorphism[102X     ([14XCAP:     ZeroMorphism    for    IsCapCategoryObject,
+        IsCapCategoryObject[114X)[133X
+  
+  
+  [1X4.5-2 [33X[0;0YGenerate Documentation[133X[101X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XLoadPackage( "GradientBasedLearningForCAP", false );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XCAP_INTERNAL_GENERATE_DOCUMENTATION_FOR_CATEGORY_INSTANCES([127X[104X
+    [4X[25X>[125X [27X    [[127X[104X
+    [4X[25X>[125X [27X        [ SkeletalSmoothMaps, "SkeletalSmoothMaps", 0 ],[127X[104X
+    [4X[25X>[125X [27X    ],[127X[104X
+    [4X[25X>[125X [27X    "GradientBasedLearningForCAP",[127X[104X
+    [4X[25X>[125X [27X    "SkeletalCategoryOfSmoothMaps.autogen.gd",[127X[104X
+    [4X[25X>[125X [27X    "Skeletal Category of Smooth Maps",[127X[104X
+    [4X[25X>[125X [27X    "Supported CAP Operations"[127X[104X
+    [4X[25X>[125X [27X);[127X[104X
+  [4X[32X[104X
+  
+  
+  [1X4.6 [33X[0;0YExamples[133X[101X
+  
+  [33X[0;0YIn     this     example,     we     demonstrate    the    usage    of    the
+  SkeletalCategoryOfSmoothMaps   by   constructing   objects   and  morphisms,
+  performing various operations, and utilizing built-in functions.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XSmooth := SkeletalCategoryOfSmoothMaps( );[127X[104X
+    [4X[28XSkeletalSmoothMaps[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( Smooth );[127X[104X
+    [4X[28XA CAP category with name SkeletalSmoothMaps:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X49 primitive operations were used to derive 92 operations for this category wh\[128X[104X
+    [4X[28Xich algorithmically[128X[104X
+    [4X[28X* IsCartesianCategory[128X[104X
+    [4X[28X* IsLinearCategoryOverCommutativeRing[128X[104X
+    [4X[28X* IsSymmetricMonoidalCategory[128X[104X
+    [4X[28Xand furthermore mathematically[128X[104X
+    [4X[28X* IsStrictMonoidalCategory[128X[104X
+    [4X[25Xgap>[125X [27XR2 := ObjectConstructor( Smooth, 2 );[127X[104X
+    [4X[28Xℝ^2[128X[104X
+    [4X[25Xgap>[125X [27XR2 = Smooth.2;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xr := RandomMorphism( R2, R2, 3 );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^2[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( r );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ 0.766 * x1 ^ 1 + 0.234 * x2 ^ 2 + 1.[128X[104X
+    [4X[28X‣ 0.388 * x1 ^ 1 + 0.459 * x2 ^ 2 + 0.278[128X[104X
+    [4X[25Xgap>[125X [27Xf := MorphismConstructor( Smooth,[127X[104X
+    [4X[25X>[125X [27X        Smooth.2,[127X[104X
+    [4X[25X>[125X [27X        Pair([127X[104X
+    [4X[25X>[125X [27X          x -> [ x[1] ^ 2 + Sin( x[2] ), Exp( x[1] ) + 3 * x[2] ],[127X[104X
+    [4X[25X>[125X [27X          x -> [ [ 2 * x[1], Cos( x[2] ) ], [ Exp( x[1] ), 3 ] ] ),[127X[104X
+    [4X[25X>[125X [27X        Smooth.2 );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^2[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( f );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ x1 ^ 2 + Sin( x2 )[128X[104X
+    [4X[28X‣ Exp( x1 ) + 3 * x2[128X[104X
+    [4X[25Xgap>[125X [27Xdummy_input := CreateContextualVariables( [ "x1", "x2" ] );[127X[104X
+    [4X[28X[ x1, x2 ][128X[104X
+    [4X[25Xgap>[125X [27XMap( f )( dummy_input );[127X[104X
+    [4X[28X[ x1 ^ 2 + Sin( x2 ), Exp( x1 ) + 3 * x2 ][128X[104X
+    [4X[25Xgap>[125X [27XJacobianMatrix( f )( dummy_input );[127X[104X
+    [4X[28X[ [ 2 * x1, Cos( x2 ) ], [ Exp( x1 ), 3 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xx := [ 0.2, 0.3 ];[127X[104X
+    [4X[28X[ 0.2, 0.3 ][128X[104X
+    [4X[25Xgap>[125X [27XMap( f )( x );[127X[104X
+    [4X[28X[ 0.33552, 2.1214 ][128X[104X
+    [4X[25Xgap>[125X [27XJacobianMatrix( f )( x );[127X[104X
+    [4X[28X[ [ 0.4, 0.955336 ], [ 1.2214, 3 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xg := MorphismConstructor( Smooth,[127X[104X
+    [4X[25X>[125X [27X        Smooth.2,[127X[104X
+    [4X[25X>[125X [27X        Pair([127X[104X
+    [4X[25X>[125X [27X          x -> [ 3 * x[1], Exp( x[2] ), x[1] ^ 3 + Log( x[2] ) ],[127X[104X
+    [4X[25X>[125X [27X          x -> [ [ 3, 0 ],[127X[104X
+    [4X[25X>[125X [27X                 [ 0, Exp( x[2] ) ],[127X[104X
+    [4X[25X>[125X [27X                 [ 3 * x[1] ^ 2, 1 / x[2] ] ] ),[127X[104X
+    [4X[25X>[125X [27X        Smooth.3 );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^3[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( g );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^3[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ 3 * x1[128X[104X
+    [4X[28X‣ Exp( x2 )[128X[104X
+    [4X[28X‣ x1 ^ 3 + Log( x2 )[128X[104X
+    [4X[25Xgap>[125X [27XMap( g )( dummy_input );[127X[104X
+    [4X[28X[ 3 * x1, Exp( x2 ), x1 ^ 3 + Log( x2 ) ][128X[104X
+    [4X[25Xgap>[125X [27XJacobianMatrix( g )( dummy_input );[127X[104X
+    [4X[28X[ [ 3, 0 ], [ 0, Exp( x2 ) ], [ 3 * x1 ^ 2, 1 / x2 ] ][128X[104X
+    [4X[25Xgap>[125X [27Xh := PostCompose( g, f );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^3[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( h );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^3[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ 3 * (x1 ^ 2 + Sin( x2 ))[128X[104X
+    [4X[28X‣ Exp( Exp( x1 ) + 3 * x2 )[128X[104X
+    [4X[28X‣ (x1 ^ 2 + Sin( x2 )) ^ 3 + Log( Exp( x1 ) + 3 * x2 )[128X[104X
+    [4X[25Xgap>[125X [27Xx;[127X[104X
+    [4X[28X[ 0.2, 0.3 ][128X[104X
+    [4X[25Xgap>[125X [27XMap( h )( x );[127X[104X
+    [4X[28X[ 1.00656, 8.34283, 0.789848 ][128X[104X
+    [4X[25Xgap>[125X [27XEval( h, x );[127X[104X
+    [4X[28X[ 1.00656, 8.34283, 0.789848 ][128X[104X
+    [4X[25Xgap>[125X [27XMap( g )( Map( f )( x ) );[127X[104X
+    [4X[28X[ 1.00656, 8.34283, 0.789848 ][128X[104X
+    [4X[25Xgap>[125X [27XJacobianMatrix( h )( x );[127X[104X
+    [4X[28X[ [ 1.2, 2.86601 ], [ 10.19, 25.0285 ], [ 0.710841, 1.7368 ] ][128X[104X
+    [4X[25Xgap>[125X [27XEvalJacobianMatrix( h, x );[127X[104X
+    [4X[28X[ [ 1.2, 2.86601 ], [ 10.19, 25.0285 ], [ 0.710841, 1.7368 ] ][128X[104X
+    [4X[25Xgap>[125X [27XJacobianMatrix( g )( Map( f )( x ) ) * JacobianMatrix( f )( x );[127X[104X
+    [4X[28X[ [ 1.2, 2.86601 ], [ 10.19, 25.0285 ], [ 0.710841, 1.7368 ] ][128X[104X
+    [4X[25Xgap>[125X [27XIsCongruentForMorphisms( Smooth, f + f, 2 * f );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XIsCongruentForMorphisms( Smooth, 2 * f - f, f );[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27Xs := SimplifyMorphism( h, infinity );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^3[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( s );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^3[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ 3 * x1 ^ 2 + 3 * Sin( x2 )[128X[104X
+    [4X[28X‣ Exp( 3 * x2 + Exp( x1 ) )[128X[104X
+    [4X[28X‣ (x1 ^ 2 + Sin( x2 )) ^ 3 + Log( 3 * x2 + Exp( x1 ) )[128X[104X
+    [4X[25Xgap>[125X [27XR2 := Smooth.( 2 );[127X[104X
+    [4X[28Xℝ^2[128X[104X
+    [4X[25Xgap>[125X [27XR3 := Smooth.( 3 );[127X[104X
+    [4X[28Xℝ^3[128X[104X
+    [4X[25Xgap>[125X [27XDirectProduct( R2, R3 );[127X[104X
+    [4X[28Xℝ^5[128X[104X
+    [4X[25Xgap>[125X [27Xp1 := ProjectionInFactorOfDirectProduct( [ R2, R3 ], 1 );[127X[104X
+    [4X[28Xℝ^5 -> ℝ^2[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( p1 );[127X[104X
+    [4X[28Xℝ^5 -> ℝ^2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ x1[128X[104X
+    [4X[28X‣ x2[128X[104X
+    [4X[25Xgap>[125X [27Xp2 := ProjectionInFactorOfDirectProduct( [ R2, R3 ], 2 );[127X[104X
+    [4X[28Xℝ^5 -> ℝ^3[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( p2 );[127X[104X
+    [4X[28Xℝ^5 -> ℝ^3[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ x3[128X[104X
+    [4X[28X‣ x4[128X[104X
+    [4X[28X‣ x5[128X[104X
+    [4X[25Xgap>[125X [27Xu := UniversalMorphismIntoDirectProduct( Smooth, [ f, g ] );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^5[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( u );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^5[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ x1 ^ 2 + Sin( x2 )[128X[104X
+    [4X[28X‣ Exp( x1 ) + 3 * x2[128X[104X
+    [4X[28X‣ 3 * x1[128X[104X
+    [4X[28X‣ Exp( x2 )[128X[104X
+    [4X[28X‣ x1 ^ 3 + Log( x2 )[128X[104X
+    [4X[25Xgap>[125X [27XPreCompose( Smooth, u, p1 ) = f;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XPreCompose( Smooth, u, p2 ) = g;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( f );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ x1 ^ 2 + Sin( x2 )[128X[104X
+    [4X[28X‣ Exp( x1 ) + 3 * x2[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( g );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^3[128X[104X
+    [4X[28X‣ 3 * x1[128X[104X
+    [4X[28X‣ Exp( x2 )[128X[104X
+    [4X[28X‣ x1 ^ 3 + Log( x2 )[128X[104X
+    [4X[25Xgap>[125X [27Xd := DirectProductFunctorial( Smooth, [ f, g ] );[127X[104X
+    [4X[28Xℝ^4 -> ℝ^5[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( d );[127X[104X
+    [4X[28Xℝ^4 -> ℝ^5[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ x1 ^ 2 + Sin( x2 )[128X[104X
+    [4X[28X‣ Exp( x1 ) + 3 * x2[128X[104X
+    [4X[28X‣ 3 * x3[128X[104X
+    [4X[28X‣ Exp( x4 )[128X[104X
+    [4X[28X‣ x3 ^ 3 + Log( x4 )[128X[104X
+    [4X[25Xgap>[125X [27XRf := ReverseDifferential( f );[127X[104X
+    [4X[28Xℝ^4 -> ℝ^2[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( Rf );[127X[104X
+    [4X[28Xℝ^4 -> ℝ^2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ x3 * (2 * x1) + x4 * Exp( x1 )[128X[104X
+    [4X[28X‣ x3 * Cos( x2 ) + x4 * 3[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( Smooth.Sqrt );[127X[104X
+    [4X[28Xℝ^1 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ Sqrt( x1 )[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( Smooth.Exp );[127X[104X
+    [4X[28Xℝ^1 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ Exp( x1 )[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( Smooth.Log );[127X[104X
+    [4X[28Xℝ^1 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ Log( x1 )[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( Smooth.Sin );[127X[104X
+    [4X[28Xℝ^1 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ Sin( x1 )[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( Smooth.Cos );[127X[104X
+    [4X[28Xℝ^1 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ Cos( x1 )[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( Smooth.Constant( [ 1.2, 3.4 ] ) );[127X[104X
+    [4X[28Xℝ^0 -> ℝ^2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ 1.2[128X[104X
+    [4X[28X‣ 3.4[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( Smooth.Zero( 2, 3 ) );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^3[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ 0[128X[104X
+    [4X[28X‣ 0[128X[104X
+    [4X[28X‣ 0[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( Smooth.IdFunc( 2 ) );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ x1[128X[104X
+    [4X[28X‣ x2[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( Smooth.Relu( 2 ) );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ Relu( x1 )[128X[104X
+    [4X[28X‣ Relu( x2 )[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( Smooth.Mul( 3 ) );[127X[104X
+    [4X[28Xℝ^3 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ x1 * x2 * x3[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( Smooth.Sum( 3 ) );[127X[104X
+    [4X[28Xℝ^3 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ x1 + x2 + x3[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( Smooth.Mean( 3 ) );[127X[104X
+    [4X[28Xℝ^3 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ (x1 + x2 + x3) / 3[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( Smooth.Variance( 3 ) );[127X[104X
+    [4X[28Xℝ^3 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ ((x1 - (x1 + x2 + x3) / 3) ^ 2 + (x2 - (x1 + x2 + x3) / 3) ^ 2[128X[104X
+    [4X[28X   + (x3 - (x1 + x2 + x3) / 3) ^ 2) / 3[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( Smooth.StandardDeviation( 3 ) );[127X[104X
+    [4X[28Xℝ^3 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ Sqrt( ((x1 - (x1 + x2 + x3) / 3) ^ 2 + (x2 - (x1 + x2 + x3) / 3) ^ 2[128X[104X
+    [4X[28X  + (x3 - (x1 + x2 + x3) / 3) ^ 2) / 3 )[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( Smooth.Power( 6 ) );[127X[104X
+    [4X[28Xℝ^1 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ x1 ^ 6[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( Smooth.PowerBase( 6 ) );[127X[104X
+    [4X[28Xℝ^1 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ 6 ^ x1[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( Smooth.Sigmoid( 2 ) );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ 1 / (1 + Exp( - x1 ))[128X[104X
+    [4X[28X‣ 1 / (1 + Exp( - x2 ))[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( Smooth.Softmax( 2 ) );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ Exp( x1 ) / (Exp( x1 ) + Exp( x2 ))[128X[104X
+    [4X[28X‣ Exp( x2 ) / (Exp( x1 ) + Exp( x2 ))[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( Smooth.QuadraticLoss( 2 ) );[127X[104X
+    [4X[28Xℝ^4 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ ((x1 - x3) ^ 2 + (x2 - x4) ^ 2) / 2[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( Smooth.BinaryCrossEntropyLoss( 1 ) );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ - (x2 * Log( x1 ) + (1 - x2) * Log( 1 - x1 ))[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( Smooth.SigmoidBinaryCrossEntropyLoss( 1 ) );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ Log( 1 + Exp( - x1 ) ) + (1 - x2) * x1[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( Smooth.CrossEntropyLoss( 3 ) );[127X[104X
+    [4X[28Xℝ^6 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ (- (Log( x1 ) * x4 + Log( x2 ) * x5 + Log( x3 ) * x6)) / 3[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( Smooth.SoftmaxCrossEntropyLoss( 3 ) );[127X[104X
+    [4X[28Xℝ^6 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ ((Log( Exp( x1 ) + Exp( x2 ) + Exp( x3 ) ) - x1) * x4[128X[104X
+    [4X[28X  + (Log( Exp( x1 ) + Exp( x2 ) + Exp( x3 ) ) - x2) * x5[128X[104X
+    [4X[28X  + (Log( Exp( x1 ) + Exp( x2 ) + Exp( x3 ) ) - x3) * x6) / 3[128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YIn  this  example,  we  illustrate the various convenience ways to construct
+  smooth maps. For instance, the smooth map:[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XSmooth := SkeletalCategoryOfSmoothMaps( );[127X[104X
+    [4X[28XSkeletalSmoothMaps[128X[104X
+    [4X[25Xgap>[125X [27Xdummy_input := CreateContextualVariables( [ "x1", "x2" ] );[127X[104X
+    [4X[28X[ x1, x2 ][128X[104X
+    [4X[25Xgap>[125X [27Xg1 := MorphismConstructor( Smooth,[127X[104X
+    [4X[25X>[125X [27X        Smooth.2,[127X[104X
+    [4X[25X>[125X [27X        Pair([127X[104X
+    [4X[25X>[125X [27X          x -> [ 3 * x[1], Exp( x[2] ), x[1] ^ 3 + Log( x[2] ) ],[127X[104X
+    [4X[25X>[125X [27X          x -> [ [ 3, 0 ],[127X[104X
+    [4X[25X>[125X [27X                 [ 0, Exp( x[2] ) ],[127X[104X
+    [4X[25X>[125X [27X                 [ 3 * x[1] ^ 2, 1 / x[2] ] ] ),[127X[104X
+    [4X[25X>[125X [27X        Smooth.3 );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^3[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( g1 );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^3[128X[104X
+    [4X[28X‣ 3 * x1[128X[104X
+    [4X[28X‣ Exp( x2 )[128X[104X
+    [4X[28X‣ x1 ^ 3 + Log( x2 )[128X[104X
+    [4X[25Xgap>[125X [27XMap( g1 )( dummy_input );[127X[104X
+    [4X[28X[ 3 * x1, Exp( x2 ), x1 ^ 3 + Log( x2 ) ][128X[104X
+    [4X[25Xgap>[125X [27XJacobianMatrix( g1 )( dummy_input );[127X[104X
+    [4X[28X[ [ 3, 0 ], [ 0, Exp( x2 ) ], [ 3 * x1 ^ 2, 1 / x2 ] ][128X[104X
+    [4X[25Xgap>[125X [27X"# Use python to compute the Jacobian Matrix";;[127X[104X
+    [4X[25Xgap>[125X [27Xg2 := SmoothMap( Smooth,[127X[104X
+    [4X[25X>[125X [27X        Smooth.2,[127X[104X
+    [4X[25X>[125X [27X        x -> [ 3 * x[1], Exp( x[2] ), x[1] ^ 3 + Log( x[2] ) ],[127X[104X
+    [4X[25X>[125X [27X        Smooth.3,[127X[104X
+    [4X[25X>[125X [27X        true[127X[104X
+    [4X[25X>[125X [27X      );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^3[128X[104X
+    [4X[25Xgap>[125X [27Xg1 = g2;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27X"# Use python to compute the Jacobian Matrix";;[127X[104X
+    [4X[25Xgap>[125X [27Xg3 := SmoothMap( Smooth,[127X[104X
+    [4X[25X>[125X [27X        Smooth.2,[127X[104X
+    [4X[25X>[125X [27X        [ "3 * x1", "Exp( x2 )", "x1 ^ 3 + Log( x2 )" ],[127X[104X
+    [4X[25X>[125X [27X        Smooth.3,[127X[104X
+    [4X[25X>[125X [27X        true[127X[104X
+    [4X[25X>[125X [27X      );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^3[128X[104X
+    [4X[25Xgap>[125X [27Xg3 = g1;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27X"# Lazy evaluation of the Jacobian Matrix";;[127X[104X
+    [4X[25Xgap>[125X [27Xg4 := SmoothMap( Smooth,[127X[104X
+    [4X[25X>[125X [27X        Smooth.2,[127X[104X
+    [4X[25X>[125X [27X        [ "3 * x1", "Exp( x2 )", "x1 ^ 3 + Log( x2 )" ],[127X[104X
+    [4X[25X>[125X [27X        Smooth.3,[127X[104X
+    [4X[25X>[125X [27X        false[127X[104X
+    [4X[25X>[125X [27X      );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^3[128X[104X
+    [4X[25Xgap>[125X [27Xg4 = g1;[127X[104X
+    [4X[28Xtrue[128X[104X
+    [4X[25Xgap>[125X [27XMap( g4 )( dummy_input );[127X[104X
+    [4X[28X[ 3 * x1, Exp( x2 ), x1 ^ 3 + Log( x2 ) ][128X[104X
+    [4X[25Xgap>[125X [27XJ := JacobianMatrix( g4 )( [ 1, 2 ] );[127X[104X
+    [4X[28X[ [ Diff( [ "x1", "x2" ], "3 * x1", 1 )( [ 1, 2 ] ),[128X[104X
+    [4X[28X      Diff( [ "x1", "x2" ], "3 * x1", 2 )( [ 1, 2 ] ) ], [128X[104X
+    [4X[28X  [ Diff( [ "x1", "x2" ], "Exp( x2 )", 1 )( [ 1, 2 ] ),[128X[104X
+    [4X[28X      Diff( [ "x1", "x2" ], "Exp( x2 )", 2 )( [ 1, 2 ] ) ], [128X[104X
+    [4X[28X  [ Diff( [ "x1", "x2" ], "x1 ^ 3 + Log( x2 )", 1 )( [ 1, 2 ] ), [128X[104X
+    [4X[28X      Diff( [ "x1", "x2" ], "x1 ^ 3 + Log( x2 )", 2 )( [ 1, 2 ] ) ] ][128X[104X
+    [4X[25Xgap>[125X [27X"# Evaluation uses python to compute the derivatives";;[127X[104X
+    [4X[25Xgap>[125X [27XEval( J[3][2] );[127X[104X
+    [4X[28X1/2[128X[104X
+    [4X[25Xgap>[125X [27XDiff( [ "x1", "x2" ], "x1 ^ 3 + Log( x2 )", 2 )( [ 1, 2 ] );[127X[104X
+    [4X[28X1/2[128X[104X
+    [4X[25Xgap>[125X [27XEval( J );[127X[104X
+    [4X[28X[ [ 3, 0 ], [ 0, 7.38906 ], [ 3, 1/2 ] ][128X[104X
+  [4X[32X[104X
+  
+  [33X[0;0YIn  the  following  example, we demonstrate the construction and usage of an
+  affine transformation morphism within the SkeletalCategoryOfSmoothMaps.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XSmooth := SkeletalCategoryOfSmoothMaps( );[127X[104X
+    [4X[28XSkeletalSmoothMaps[128X[104X
+    [4X[25Xgap>[125X [27Xaffine_trans := Smooth.AffineTransformation( 2, 3 );[127X[104X
+    [4X[28Xℝ^11 -> ℝ^3[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( affine_trans );[127X[104X
+    [4X[28Xℝ^11 -> ℝ^3[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ x1 * x10 + x2 * x11 + x3[128X[104X
+    [4X[28X‣ x4 * x10 + x5 * x11 + x6[128X[104X
+    [4X[28X‣ x7 * x10 + x8 * x11 + x9[128X[104X
+    [4X[25Xgap>[125X [27Xdummy_input := DummyInputForAffineTransformation( 2, 3, "w", "b", "z" );[127X[104X
+    [4X[28X[ w1_1, w2_1, b_1, w1_2, w2_2, b_2, w1_3, w2_3, b_3, z1, z2 ][128X[104X
+    [4X[25Xgap>[125X [27XMap( affine_trans )( dummy_input );[127X[104X
+    [4X[28X[ w1_1 * z1 + w2_1 * z2 + b_1,[128X[104X
+    [4X[28X  w1_2 * z1 + w2_2 * z2 + b_2,[128X[104X
+    [4X[28X  w1_3 * z1 + w2_3 * z2 + b_3 ][128X[104X
+    [4X[25Xgap>[125X [27XJacobianMatrix( affine_trans )( dummy_input );[127X[104X
+    [4X[28X[ [ z1, z2, 1, 0, 0, 0, 0, 0, 0, w1_1, w2_1 ],[128X[104X
+    [4X[28X  [ 0, 0, 0, z1, z2, 1, 0, 0, 0, w1_2, w2_2 ],[128X[104X
+    [4X[28X  [ 0, 0, 0, 0, 0, 0, z1, z2, 1, w1_3, w2_3 ] ][128X[104X
+  [4X[32X[104X
+  
+  
+  [1X4.7 [33X[0;0YGAP Categories[133X[101X
+  
+  [1X4.7-1 IsSkeletalCategoryOfSmoothMaps[101X
+  
+  [33X[1;0Y[29X[2XIsSkeletalCategoryOfSmoothMaps[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YThe [5XGAP[105X category of a category of skeletal smooth maps.[133X
+  
+  [1X4.7-2 IsObjectInSkeletalCategoryOfSmoothMaps[101X
+  
+  [33X[1;0Y[29X[2XIsObjectInSkeletalCategoryOfSmoothMaps[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YThe [5XGAP[105X category of objects in a category of skeletal smooth maps.[133X
+  
+  [1X4.7-3 IsMorphismInSkeletalCategoryOfSmoothMaps[101X
+  
+  [33X[1;0Y[29X[2XIsMorphismInSkeletalCategoryOfSmoothMaps[102X( [3Xarg[103X ) [32X filter[133X
+  [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
+  
+  [33X[0;0YThe [5XGAP[105X category of morphisms in a category of skeletal smooth maps.[133X
+  

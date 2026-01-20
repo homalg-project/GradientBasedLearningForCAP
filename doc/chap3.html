@@ -5,7 +5,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-<title>GAP (GradientDescentForCAP) - Chapter 3: operations for machine learning in CAP</title>
+<title>GAP (GradientBasedLearningForCAP) - Chapter 3: Expressions</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
 <meta name="generator" content="GAPDoc2HTML" />
 <link rel="stylesheet" type="text/css" href="manual.css" />
@@ -15,63 +15,243 @@
 <body class="chap3"  onload="jscontent()">
 
 
-<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinktop"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chapInd.html">Ind</a>  </div>
 
-<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap2.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapInd.html">[Next Chapter]</a>&nbsp;  </div>
+<div class="chlinkprevnexttop">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap2.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap4.html">[Next Chapter]</a>&nbsp;  </div>
 
 <p id="mathjaxlink" class="pcenter"><a href="chap3_mj.html">[MathJax on]</a></p>
-<p><a id="X7CE2F0D87B5FF1C2" name="X7CE2F0D87B5FF1C2"></a></p>
-<div class="ChapSects"><a href="chap3.html#X7CE2F0D87B5FF1C2">3 <span class="Heading">operations for machine learning in CAP</span></a>
-<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X85C8C80F785AEB5E">3.1 <span class="Heading">Add-methods</span></a>
+<p><a id="X7BAFE9C1817253C6" name="X7BAFE9C1817253C6"></a></p>
+<div class="ChapSects"><a href="chap3.html#X7BAFE9C1817253C6">3 <span class="Heading">Expressions</span></a>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X86EC0F0A78ECBC10">3.1 <span class="Heading">Constructors</span></a>
 </span>
 <div class="ContSSBlock">
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X8688F4D3793B5B8F">3.1-1 AddMultiplicationForMorphisms</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7B2B94F783875AEF">3.1-2 AddReverseDifferential</a></span>
-<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7B4EA6FD833F0E6E">3.1-3 AddReverseDifferentialWithGivenObjects</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X87F19EAB7A8E4E36">3.1-1 Expression</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X83FCD80D85A1F070">3.1-2 ConstantExpression</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X7C701DBF7BAE649A">3.2 <span class="Heading">Attributes</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7F18B3B284346A0B">3.2-1 Variables</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7D5D0D7587411CCF">3.2-2 String</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X783DFF2F7906AD05">3.2-3 AsFunction</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X7DE8E16C7C2D387B">3.3 <span class="Heading">Operations</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X819ADC557EE90386">3.3-1 DummyInput</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X8126317783DFCEFE">3.4 <span class="Heading">Global Functions</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7D5DEF9C7FCA4896">3.4-1 ConvertToConstantExpressions</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X81F9E4D8839614BA">3.4-2 CreateContextualVariables</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X85A995A382424D2F">3.4-3 AssignExpressions</a></span>
+</div></div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X7A489A5D79DA9E5C">3.5 <span class="Heading">Examples</span></a>
+</span>
+</div>
+<div class="ContSect"><span class="tocline"><span class="nocss">&nbsp;</span><a href="chap3.html#X7D03633A7D98026B">3.6 <span class="Heading">GAP Categories</span></a>
+</span>
+<div class="ContSSBlock">
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7CCBD5CD7DD5BD10">3.6-1 IsExpression</a></span>
+<span class="ContSS"><br /><span class="nocss">&nbsp;&nbsp;</span><a href="chap3.html#X7E142FEE78AB93AF">3.6-2 IsConstantExpression</a></span>
 </div></div>
 </div>
 
-<h3>3 <span class="Heading">operations for machine learning in CAP</span></h3>
+<h3>3 <span class="Heading">Expressions</span></h3>
 
-<p><a id="X85C8C80F785AEB5E" name="X85C8C80F785AEB5E"></a></p>
+<p><a id="X86EC0F0A78ECBC10" name="X86EC0F0A78ECBC10"></a></p>
 
-<h4>3.1 <span class="Heading">Add-methods</span></h4>
+<h4>3.1 <span class="Heading">Constructors</span></h4>
 
-<p><a id="X8688F4D3793B5B8F" name="X8688F4D3793B5B8F"></a></p>
+<p><a id="X87F19EAB7A8E4E36" name="X87F19EAB7A8E4E36"></a></p>
 
-<h5>3.1-1 AddMultiplicationForMorphisms</h5>
+<h5>3.1-1 Expression</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddMultiplicationForMorphisms</code>( <var class="Arg">C</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddMultiplicationForMorphisms</code>( <var class="Arg">C</var>, <var class="Arg">F</var>, <var class="Arg">weight</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: nothing</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Expression</code>( <var class="Arg">variables</var>, <var class="Arg">string</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: an expression</p>
 
-<p>The arguments are a category <span class="Math">C</span> and a function <span class="Math">F</span>. This operation adds the given function <span class="Math">F</span> to the category for the basic operation <code class="code">MultiplicationForMorphisms</code>. Optionally, a weight (default: 100) can be specified which should roughly correspond to the computational complexity of the function (lower weight = less complex = faster execution). <span class="Math">F: ( alpha, beta ) \mapsto \mathtt{MultiplicationForMorphisms}(alpha, beta)</span>.</p>
+<p>Create an expression from a list of <var class="Arg">variables</var> and a <var class="Arg">string</var> representation.</p>
 
-<p><a id="X7B2B94F783875AEF" name="X7B2B94F783875AEF"></a></p>
+<p><a id="X83FCD80D85A1F070" name="X83FCD80D85A1F070"></a></p>
 
-<h5>3.1-2 AddReverseDifferential</h5>
+<h5>3.1-2 ConstantExpression</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddReverseDifferential</code>( <var class="Arg">C</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddReverseDifferential</code>( <var class="Arg">C</var>, <var class="Arg">F</var>, <var class="Arg">weight</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: nothing</p>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConstantExpression</code>( <var class="Arg">string</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a constant expression</p>
 
-<p>The arguments are a category <span class="Math">C</span> and a function <span class="Math">F</span>. This operation adds the given function <span class="Math">F</span> to the category for the basic operation <code class="code">ReverseDifferential</code>. Optionally, a weight (default: 100) can be specified which should roughly correspond to the computational complexity of the function (lower weight = less complex = faster execution). <span class="Math">F: ( alpha ) \mapsto \mathtt{ReverseDifferential}(alpha)</span>.</p>
+<p>Create a constant expression from a <var class="Arg">string</var>. The expression will have no variables and will also be registered as a global constant.</p>
 
-<p><a id="X7B4EA6FD833F0E6E" name="X7B4EA6FD833F0E6E"></a></p>
+<p><a id="X7C701DBF7BAE649A" name="X7C701DBF7BAE649A"></a></p>
 
-<h5>3.1-3 AddReverseDifferentialWithGivenObjects</h5>
+<h4>3.2 <span class="Heading">Attributes</span></h4>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddReverseDifferentialWithGivenObjects</code>( <var class="Arg">C</var>, <var class="Arg">F</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AddReverseDifferentialWithGivenObjects</code>( <var class="Arg">C</var>, <var class="Arg">F</var>, <var class="Arg">weight</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
-<p>Returns: nothing</p>
+<p><a id="X7F18B3B284346A0B" name="X7F18B3B284346A0B"></a></p>
 
-<p>The arguments are a category <span class="Math">C</span> and a function <span class="Math">F</span>. This operation adds the given function <span class="Math">F</span> to the category for the basic operation <code class="code">ReverseDifferentialWithGivenObjects</code>. Optionally, a weight (default: 100) can be specified which should roughly correspond to the computational complexity of the function (lower weight = less complex = faster execution). <span class="Math">F: ( source, alpha, range ) \mapsto \mathtt{ReverseDifferentialWithGivenObjects}(source, alpha, range)</span>.</p>
+<h5>3.2-1 Variables</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; Variables</code>( <var class="Arg">e</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a list of strings</p>
+
+<p>The list of variables of an expression.</p>
+
+<p><a id="X7D5D0D7587411CCF" name="X7D5D0D7587411CCF"></a></p>
+
+<h5>3.2-2 String</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; String</code>( <var class="Arg">e</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a string</p>
+
+<p>The string representation of an expression.</p>
+
+<p><a id="X783DFF2F7906AD05" name="X783DFF2F7906AD05"></a></p>
+
+<h5>3.2-3 AsFunction</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AsFunction</code>( <var class="Arg">e</var> )</td><td class="tdright">(&nbsp;attribute&nbsp;)</td></tr></table></div>
+<p>Returns: a function</p>
+
+<p>Convert an expression to a <strong class="pkg">GAP</strong> function that can be evaluated numerically.</p>
+
+<p><a id="X7DE8E16C7C2D387B" name="X7DE8E16C7C2D387B"></a></p>
+
+<h4>3.3 <span class="Heading">Operations</span></h4>
+
+<p><a id="X819ADC557EE90386" name="X819ADC557EE90386"></a></p>
+
+<h5>3.3-1 DummyInput</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; DummyInput</code>( <var class="Arg">var</var>, <var class="Arg">n</var> )</td><td class="tdright">(&nbsp;operation&nbsp;)</td></tr></table></div>
+<p>Returns: a list of expressions</p>
+
+<p>Generate a list of dummy input expressions using base name <var class="Arg">var</var> with indices from 1 to <var class="Arg">n</var>. For example, <code class="code">DummyInput("x", 3)</code> returns a list of three expressions <code class="code">x1, x2, x3</code>. Those can be used as input to smooth morphisms constructed from expressions.</p>
+
+<p><a id="X8126317783DFCEFE" name="X8126317783DFCEFE"></a></p>
+
+<h4>3.4 <span class="Heading">Global Functions</span></h4>
+
+<p><a id="X7D5DEF9C7FCA4896" name="X7D5DEF9C7FCA4896"></a></p>
+
+<h5>3.4-1 ConvertToConstantExpressions</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; ConvertToConstantExpressions</code>( <var class="Arg">constants</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Returns: a list of constant expressions</p>
+
+<p>Assign to each string in <var class="Arg">constants</var> a global constant expression defined by that string. The variables of these expressions will be empty. For example, <code class="code">ConvertToConstantExpressions( ["Pi"] )</code> returns <code class="code">[ Pi ]</code>, and <code class="code">Variables(Pi)=[]</code>.</p>
+
+<p><a id="X81F9E4D8839614BA" name="X81F9E4D8839614BA"></a></p>
+
+<h5>3.4-2 CreateContextualVariables</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; CreateContextualVariables</code>( <var class="Arg">variables</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Returns: a list of expressions</p>
+
+<p>Assigns to each string in <var class="Arg">variables</var> an expression with the same name. The variables of these expressions equals the list <var class="Arg">variables</var> itself. After that, one would be able for example to construct more complex expressions using these variables, e.g., <code class="code">x1 + Sin(x2)</code>. For example, <code class="code">ConvertToExpressions( ["x1", "x2"] )</code> returns a pair <code class="code">[ x1, x2 ]</code>, where <code class="code">x1</code> and <code class="code">x2</code> are expressions with string representations "x1" and "x2", and <code class="code">Variables(x1) = ["x1", "x2"]</code>, <code class="code">Variables(x2) = ["x1", "x2"]</code>.</p>
+
+<p><a id="X85A995A382424D2F" name="X85A995A382424D2F"></a></p>
+
+<h5>3.4-3 AssignExpressions</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; AssignExpressions</code>( <var class="Arg">vars</var> )</td><td class="tdright">(&nbsp;function&nbsp;)</td></tr></table></div>
+<p>Assign each expression in <var class="Arg">vars</var> to a global variable with the same name. For example, if <code class="code">vars = [ x1, x2 ]</code>, this function will create global variables <code class="code">x1</code> and <code class="code">x2</code> corresponding to the expressions in the list.</p>
+
+<p><a id="X7A489A5D79DA9E5C" name="X7A489A5D79DA9E5C"></a></p>
+
+<h4>3.5 <span class="Heading">Examples</span></h4>
 
 
-<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap2.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chapInd.html">[Next Chapter]</a>&nbsp;  </div>
+<div class="example"><pre>
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e1 := Expression( ["x", "y"], "x + Sin( y )" );</span>
+x + Sin( y )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e2 := Expression( ["y", "z"], "( y + Sin( z ) ) ^ 2" );</span>
+(y + Sin( z )) ^ 2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">CategoriesOfObject( e1 );</span>
+[ "IsExtAElement", "IsNearAdditiveElement", "IsNearAdditiveElementWithZero",
+  "IsNearAdditiveElementWithInverse", "IsAdditiveElement", "IsExtLElement",
+  "IsExtRElement", "IsMultiplicativeElement", "IsExpression" ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">KnownAttributesOfObject( e1 );</span>
+[ "String", "Variables" ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">String( e1 );</span>
+"x + Sin( y )"
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Variables( e1 );</span>
+[ "x", "y" ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Variables( e2 );</span>
+[ "y", "z" ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e1 + e2;</span>
+x + Sin( y ) + (y + Sin( z )) ^ 2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e1 * e2;</span>
+(x + Sin( y )) * (y + Sin( z )) ^ 2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e := Sin( e1 ) / e2;</span>
+Sin( x + Sin( y ) ) / (y + Sin( z )) ^ 2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Variables( e );</span>
+[ "x", "y", "z" ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">ConstantExpression( "tau" );</span>
+#I  MakeReadWriteGlobal: tau already read-write
+tau
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Variables( tau );</span>
+[  ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">e3 := e1 * Sin( tau );</span>
+(x + Sin( y )) * Sin( tau )
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Variables( e3 );</span>
+[ "x", "y" ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f := AsFunction( e );</span>
+function( vec ) ... end
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( f );</span>
+function ( vec )
+    local x, y, z;
+    Assert( 0, IsDenseList( vec ) and Length( vec ) = 3 );
+    x := vec[1];
+    y := vec[2];
+    z := vec[3];
+    return Sin( x + Sin( y ) ) / (y + Sin( z )) ^ 2;
+end
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x := [ 3, 2, 4 ];</span>
+[ 3, 2, 4 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f( x );</span>
+-0.449348
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">dummy_input := CreateContextualVariables( [ "x1", "x2", "x3" ] );</span>
+[ x1, x2, x3 ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">f( dummy_input );</span>
+Sin( x1 + Sin( x2 ) ) / (x2 + Sin( x3 )) ^ 2
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">AssignExpressions( dummy_input );</span>
+#I  MakeReadWriteGlobal: x1 already read-write
+#I  MakeReadWriteGlobal: x2 already read-write
+#I  MakeReadWriteGlobal: x3 already read-write
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">x1;</span>
+x1
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Variables( x1 );</span>
+[ "x1", "x2", "x3" ]
+<span class="GAPprompt">gap&gt;</span> <span class="GAPinput">[ [ x1, x2 ] ] * [ [ x3 ], [ -x3 ] ];</span>
+[ [ x1 * x3 + x2 * (- x3) ] ]
+</pre></div>
+
+<p><a id="X7D03633A7D98026B" name="X7D03633A7D98026B"></a></p>
+
+<h4>3.6 <span class="Heading">GAP Categories</span></h4>
+
+<p><a id="X7CCBD5CD7DD5BD10" name="X7CCBD5CD7DD5BD10"></a></p>
+
+<h5>3.6-1 IsExpression</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsExpression</code>( <var class="Arg">e</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
+
+<p>The <strong class="pkg">GAP</strong> category of symbolic expressions. Expressions are used to represent mathematical formulas symbolically, allowing operations like differentiation to be performed symbolically before evaluation.</p>
+
+<p><a id="X7E142FEE78AB93AF" name="X7E142FEE78AB93AF"></a></p>
+
+<h5>3.6-2 IsConstantExpression</h5>
+
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsConstantExpression</code>( <var class="Arg">e</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
+
+<p>The <strong class="pkg">GAP</strong> category of constant expressions (expressions with no variables). Constant expressions represent fixed numerical values and can be evaluated directly.</p>
 
 
-<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chapInd.html">Ind</a>  </div>
+<div class="chlinkprevnextbot">&nbsp;<a href="chap0.html">[Top of Book]</a>&nbsp;  <a href="chap0.html#contents">[Contents]</a>&nbsp;  &nbsp;<a href="chap2.html">[Previous Chapter]</a>&nbsp;  &nbsp;<a href="chap4.html">[Next Chapter]</a>&nbsp;  </div>
+
+
+<div class="chlinkbot"><span class="chlink1">Goto Chapter: </span><a href="chap0.html">Top</a>  <a href="chap1.html">1</a>  <a href="chap2.html">2</a>  <a href="chap3.html">3</a>  <a href="chap4.html">4</a>  <a href="chap5.html">5</a>  <a href="chap6.html">6</a>  <a href="chap7.html">7</a>  <a href="chap8.html">8</a>  <a href="chap9.html">9</a>  <a href="chap10.html">10</a>  <a href="chapInd.html">Ind</a>  </div>
 
 <hr />
 <p class="foot">generated by <a href="https://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc">GAPDoc2HTML</a></p>
