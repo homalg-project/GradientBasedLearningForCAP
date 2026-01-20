@@ -1,9 +1,9 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# GradientDescentForCAP: Exploring categorical machine learning in CAP
+# GradientBasedLearningForCAP: Gradient Based Learning via Category Theory
 #
 # Implementations
 #
-InstallMethod( LogitsMorphismOfNeuralNetwork,
+InstallMethod( NeuralNetworkLogitsMorphism,
           [ IsCategoryOfParametrisedMorphisms, IsPosInt, IsDenseList, IsPosInt ],
   
   function ( Para, input_layer_dim, hidden_layers_dims, output_layer_dim )
@@ -38,13 +38,13 @@ InstallMethod( LogitsMorphismOfNeuralNetwork,
 end );
 
 ##
-InstallMethod( PredictionMorphismOfNeuralNetwork,
+InstallMethod( NeuralNetworkPredictionMorphism,
           [ IsCategoryOfParametrisedMorphisms, IsPosInt, IsDenseList, IsPosInt, IsString ],
   
   function ( Para, input_layer_dim, hidden_layers_dims, output_layer_dim, activation )
     local logits;
     
-    logits := LogitsMorphismOfNeuralNetwork( Para, input_layer_dim, hidden_layers_dims, output_layer_dim );
+    logits := NeuralNetworkLogitsMorphism( Para, input_layer_dim, hidden_layers_dims, output_layer_dim );
     
     if not activation in [ "Softmax", "Sigmoid", "IdFunc" ] then
         Error( "unrecognized activation functions!\n" );
@@ -55,7 +55,7 @@ InstallMethod( PredictionMorphismOfNeuralNetwork,
 end );
 
 ##
-InstallMethod( LossMorphismOfNeuralNetwork,
+InstallMethod( NeuralNetworkLossMorphism,
           [ IsCategoryOfParametrisedMorphisms, IsPosInt, IsDenseList, IsPosInt, IsString ],
   
   function ( Para, input_layer_dim, hidden_layers_dims, output_layer_dim, activation )
@@ -63,7 +63,7 @@ InstallMethod( LossMorphismOfNeuralNetwork,
     
     Smooth := UnderlyingCategory( Para );
     
-    logits := LogitsMorphismOfNeuralNetwork( Para, input_layer_dim, hidden_layers_dims, output_layer_dim );
+    logits := NeuralNetworkLogitsMorphism( Para, input_layer_dim, hidden_layers_dims, output_layer_dim );
     
     paramter_obj := UnderlyingObject( logits );
     
@@ -102,5 +102,32 @@ InstallMethod( LossMorphismOfNeuralNetwork,
           ObjectConstructor( Para, Smooth.( input_layer_dim + output_layer_dim ) ),
           Pair( paramter_obj, PreCompose( Smooth, logits, loss ) ),
           ObjectConstructor( Para, Smooth.( 1 ) ) );
+    
+end );
+
+
+##
+InstallGlobalFunction( DummyInputStringsForNeuralNetwork,
+  
+  function ( input_layer_dim, hidden_layers_dims, output_layer_dim )
+    local Smooth, dims, N, weights_strings, input_strings;
+    
+    dims := Concatenation( [ input_layer_dim ], hidden_layers_dims, [ output_layer_dim ] );
+    
+    N := Length( dims );
+    
+    weights_strings := List( [ 1 .. N - 1 ], i -> DummyInputStringsForAffineTransformation( dims[i], dims[i + 1], Concatenation( "w", String( i ), "_" ), Concatenation( "b", String( i ) ) ){ [ 1 .. ( dims[i] + 1 ) * dims[i + 1] ] } );
+    
+    input_strings := List( [ 1 .. input_layer_dim ], j -> Concatenation( "z", String( j ) ) );
+    
+    return Concatenation( Concatenation( Reversed( weights_strings ) ), input_strings );
+    
+end );
+
+##
+InstallGlobalFunction( DummyInputForNeuralNetwork,
+  function ( input_layer_dim, hidden_layers_dims, output_layer_dim )
+    
+    return CreateContextualVariables( DummyInputStringsForNeuralNetwork( input_layer_dim, hidden_layers_dims, output_layer_dim ) );
     
 end );

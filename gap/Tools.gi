@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# GradientDescentForCAP: Exploring categorical machine learning in CAP
+# GradientBasedLearningForCAP: Gradient Based Learning via Category Theory
 #
 # Implementations
 #
@@ -88,13 +88,14 @@ InstallMethod( SplitDenseList,
           [ IsDenseList, IsPosInt ],
   
   function ( l, n )
-    local N;
+    local a, b, dims;
     
-    if Length( l ) mod n <> 0 then
-        Error( "the length of the passed list 'l' must be divisible by passed positive integers 'n'!\n" );
-    fi;
+    a := QuoInt( Length( l ), n );
+    b := RemInt( Length( l ), n );
     
-    return SplitDenseList( l, ListWithIdenticalEntries( Length( l ) / n, n ) );
+    dims := Concatenation( ListWithIdenticalEntries( a, n ), SelectBasedOnCondition( b = 0, [ ], [ b ] ) );
+    
+    return SplitDenseList( l, dims );
     
 end );
 
@@ -157,7 +158,7 @@ InstallMethod( LazyDiff,
     
     return
       function ( vec )
-        local vec_vars;
+        local vec_vars, expressions;
         
         if ForAll( vec, e -> IsFloat( e ) or IsRat( e ) ) then
             vec := List( vec, e -> Expression( [ ], String( e ) ) );
@@ -166,8 +167,9 @@ InstallMethod( LazyDiff,
         # obviously
         Assert( 0, IsDenseList( vec ) and Length( vars ) = Length( vec ) );
         
-        # all entries of vec must be expressions defined by the same variables
-        Assert( 0, Length( Set( List( vec, Variables ) ) ) = 1 );
+        # all non-float expressions should have the same variables if any expression is non-float
+        expressions := Filtered( vec, e -> IsExpression( e ) );
+        Assert( 0, IsEmpty( expressions ) or ForAll( expressions, e -> Variables( e ) = Variables( expressions[1] ) ) );
         
         if not IsEmpty( vec ) then
             vec_vars := Variables( vec[1] );
@@ -200,10 +202,10 @@ InstallOtherMethod( LazyDiff,
 InstallMethod( SimplifyExpressionUsingPython,
           [ IsDenseList, IsDenseList ],
   
-  function ( vars, exps )
-    local constants, dir, input_path, input_file, output_path, import, symbols, functions, g_ops, p_ops, define_exps, simplify, write_output, stream, err, output_file, outputs, j, i, exp, o;
+  function ( vars, expressions )
+    local constants, indices, exps, dir, input_path, input_file, output_path, import, symbols, functions, g_ops, p_ops, define_exps, simplify, write_output, stream, err, output_file, raw_outputs, outputs, j, i;
     
-    if not ( ForAll( exps, IsString ) and ForAll( vars, IsString ) ) then
+    if not ( ForAll( expressions, IsString ) and ForAll( vars, IsString ) ) then
         TryNextMethod( );
     fi;
     
@@ -212,7 +214,17 @@ InstallMethod( SimplifyExpressionUsingPython,
     vars := Concatenation( vars, constants );
     
     # create a copy
-    exps := List( [ 1 .. Length( exps ) ], i -> exps[i] );
+    expressions := List( [ 1 .. Length( expressions ) ], i -> expressions[i] );
+    
+    # skip expressions that contain Diff 
+    indices := PositionsProperty( expressions, exp -> PositionSublist( exp, "Diff" ) = fail );
+    
+    # nothing to simplify (all expressions contain Diff)
+    if IsEmpty( indices ) then
+        return expressions;
+    fi;
+    
+    exps := expressions{ indices };
     
     dir := DirectoryTemporary( );
     
@@ -267,18 +279,21 @@ InstallMethod( SimplifyExpressionUsingPython,
     
     output_file := IO_File( output_path, "r" );
     
-    outputs := IO_ReadLines( output_file );
+    raw_outputs := IO_ReadLines( output_file );
     
     IO_Close( output_file );
     
-    Assert( 0, Length( outputs ) = Length( exps ) );
+    Assert( 0, Length( raw_outputs ) = Length( exps ) );
     
-    for j in [ 1 .. Length( outputs ) ] do
+    # start with the original expressions; overwrite only those that were simplified
+    outputs := ShallowCopy( expressions );
+    
+    for j in [ 1 .. Length( indices ) ] do
       
-      outputs[j] := ReplacedString( outputs[j], "\n", "" );
+      outputs[ indices[j] ] := ReplacedString( raw_outputs[j], "\n", "" );
       
       for i in [ 1 .. Length( g_ops ) ] do
-         outputs[j] := ReplacedString( outputs[j], p_ops[i], g_ops[i] );
+         outputs[ indices[j] ] := ReplacedString( outputs[ indices[j] ], p_ops[i], g_ops[i] );
       od;
       
     od;
@@ -424,7 +439,7 @@ InstallOtherMethod( JacobianMatrix,
   
   function ( vars, map_func, indices )
     
-    return JacobianMatrix( map_func( ConvertToExpressions( vars ) ), indices );
+    return JacobianMatrix( map_func( CreateContextualVariables( vars ) ), indices );
     
 end );
 
@@ -460,7 +475,7 @@ InstallOtherMethod( LazyJacobianMatrix,
       function( vec )
          
         if exps = fail then
-          exps := map_func( ConvertToExpressions( vars ) );
+          exps := map_func( CreateContextualVariables( vars ) );
         fi;
         
         return LazyJacobianMatrix( exps, indices )( vec );
@@ -704,108 +719,96 @@ end );
 
 ##
 InstallMethod( ScatterPlotUsingPython,
-          [ IsDenseList, IsDenseList ],
+      [ IsDenseList, IsDenseList ],
   
   function ( points, labels )
-    local dir, path, file, size, action, stream, err, p;
+  local dir, path, file, size, action, stream, err, p;
+  
+  dir := DirectoryTemporary( );
+  
+  Info( InfoPython, 1, dir );
+  
+  path := Filename( dir, "plot.py" );
+  
+  file := IO_File( path, "w" );
+  
+  size := CAP_INTERNAL_RETURN_OPTION_OR_DEFAULT( "size", "100" );
+  
+  action := CAP_INTERNAL_RETURN_OPTION_OR_DEFAULT( "action", "show" );
+  
+  IO_Write( file,
+    Concatenation(
+    "import matplotlib.pyplot as plt\n",
+    "import matplotlib.patches as patches\n\n",
     
-    dir := DirectoryTemporary( );
+    "points =", String( points ), "\n",
+    "labels = [ str(label) for label in ", String( labels ), "]\n",
     
-    Info( InfoPython, 1, dir );
+    "# Convert the points to separate x and y lists\n",
+    "x1 = [p[0] for p in points]\n",
+    "y1 = [p[1] for p in points]\n",
     
-    path := Filename( dir, "plot.py" );
+    "# Unique classes (use sorted order to make mapping deterministic)\n",
+    "unique_classes = sorted(set(labels))\n",
     
-    file := IO_File( path, "w" );
+    "# Number of unique classes\n",
+    "num_classes = len(unique_classes)\n",
     
-    size := CAP_INTERNAL_RETURN_OPTION_OR_DEFAULT( "size", "20" );
+    "marker_list = ['+', '*', 'o', 'v', '^', '<', '>', '1', '2', '3', '4', 's', 'p', 'x', 'h', 'H', '.', ',', 'D', 'd', '|', '_']\n",
     
-    action := CAP_INTERNAL_RETURN_OPTION_OR_DEFAULT( "action", "show" );
+    "# Generate a deterministic list of colors from a fixed colormap\n",
+    "colormap = plt.get_cmap('viridis')\n",
+    "colors = [colormap(i / max(num_classes - 1, 1)) for i in range(num_classes)]\n",
     
-    IO_Write( file,
-      Concatenation(
-        "import matplotlib.pyplot as plt\n",
-        "import matplotlib.patches as patches\n\n",
-        
-        "points =", String( points ), "\n",
-        "labels = [ str(label) for label in ", String( labels ), "]\n",
-        
-        #"#test_points =", String( test_points ), "\n",
-        #"#test_labels = [ str(label) for label in ", String( test_labels ), "]\n",
-        
-        "# Convert the points to separate x and y lists\n",
-        "x1 = [p[0] for p in points]\n",
-        "y1 = [p[1] for p in points]\n",
-        
-        "#x2 = [p[0] for p in test_points]\n",
-        "#y2 = [p[1] for p in test_points]\n",
-        
-        "# Unique classes\n",
-        "unique_classes = list(set(labels))\n",
-        
-        "# Number of unique classes\n",
-        "num_classes = len(unique_classes)\n",
-        
-        "markers = ['+', '*', 'o', 'v', '^', '<', '>', '1', '2', '3', '4', 's', 'p', 'x', 'h', 'H', '.', ',', 'D', 'd', '|', '_']\n",
-        
-        "# Generate a list of colors using a colormap\n",
-        "colormap = plt.get_cmap('rainbow')\n",
-        "colors = [colormap(i / num_classes) for i in range(num_classes)]",
-        
-        "# Map classes to colors\n",
-        "style_map = {cls: colors[i] for i, cls in enumerate(unique_classes)}\n",
-        "markers = {cls : markers[i] for i, cls in enumerate(unique_classes)}\n",
-        "# Create a figure and an axes\n",
-        "fig, ax = plt.subplots()\n",
-        
-        "# Create a scatter plots\n",
-        "for cls in unique_classes:",
-        "\n     ",
-        "x1_class = [x1[i] for i in range(len(x1)) if labels[i] == cls]",
-        "\n     ",
-        "y1_class = [y1[i] for i in range(len(y1)) if labels[i] == cls]",
-        "\n     ",
-        "scatter1 = plt.scatter(x1_class, y1_class, color=style_map[cls], marker=markers[cls], s=", size, ", label=cls)\n",
-        
-        "\n     ",
-        "#x2_class = [x2[i] for i in range(len(x2)) if test_labels[i] == cls]",
-        "\n     ",
-        "#y2_class = [y2[i] for i in range(len(y2)) if test_labels[i] == cls]",
-        "\n     ",
-        "#scatter2 = plt.scatter(x2_class, y2_class, color=style_map[cls], marker='v', s=100, label=cls)\n",
-      
-        "# Set the limits of the plot based on min and max values of x and y\n",
-        "plt.xlim(min(x1) - 0.1, max(x1) + 0.1)\n",
-        "plt.ylim(min(y1) - 0.1, max(y1) + 0.1)\n",
-        
-        "plt.xlabel('X-axis')\n",
-        "plt.ylabel('Y-axis')\n",
-        "plt.title('Scatter Plot using Matplotlib')\n",
-        "plt.legend()\n",
-        SelectBasedOnCondition(
-            action = "save",
-            Concatenation( "plt.savefig('", Filename( dir, "plot.png" ), "', dpi=400)\n" ),
-            "plt.show()\n" ) ) );
+    "# Map classes to styles deterministically (by sorted class order)\n",
+    "style_map = {cls: colors[i] for i, cls in enumerate(unique_classes)}\n",
+    "markers = {cls: marker_list[i % len(marker_list)] for i, cls in enumerate(unique_classes)}\n",
     
-    IO_Close( file );
+    "# Create a figure and an axes\n",
+    "fig, ax = plt.subplots()\n",
     
-    stream := IO_Popen3( IO_FindExecutable( "python" ), [ path, "&" ] );
+    "# Create a scatter plots\n",
+    "for cls in unique_classes:",
+    "\n     ",
+    "x1_class = [x1[i] for i in range(len(x1)) if labels[i] == cls]",
+    "\n     ",
+    "y1_class = [y1[i] for i in range(len(y1)) if labels[i] == cls]",
+    "\n     ",
+    "scatter1 = plt.scatter(x1_class, y1_class, color=style_map[cls], marker=markers[cls], s=", size, ", label=cls)\n",
     
-    err := Concatenation( IO_ReadLines( stream.stderr ) );
+    "# Set the limits of the plot based on min and max values of x and y\n",
+    "plt.xlim(min(x1) - 0.1, max(x1) + 0.1)\n",
+    "plt.ylim(min(y1) - 0.1, max(y1) + 0.1)\n",
     
-    IO_ReadLines( stream.stdout );
+    "plt.xlabel('X-axis')\n",
+    "plt.ylabel('Y-axis')\n",
+    "plt.title('Scatter Plot using Matplotlib')\n",
+    "plt.legend()\n",
+    SelectBasedOnCondition(
+      action = "save",
+      Concatenation( "plt.savefig('", Filename( dir, "plot.png" ), "', dpi=400)\n" ),
+      "plt.show()\n" ) ) );
+  
+  IO_Close( file );
+  
+  stream := IO_Popen3( IO_FindExecutable( "python" ), [ path, "&" ] );
+  
+  err := Concatenation( IO_ReadLines( stream.stderr ) );
+  
+  IO_ReadLines( stream.stdout );
+  
+  IO_Close( stream.stdin );
+  
+  IO_Close( stream.stdout );
+  
+  IO_Close( stream.stderr );
+  
+  if not IsEmpty( err ) then
     
-    IO_Close( stream.stdin );
+    Error( err, "\n" );
     
-    IO_Close( stream.stdout );
-    
-    IO_Close( stream.stderr );
-    
-    if not IsEmpty( err ) then
-      
-      Error( err, "\n" );
-      
-    fi;
-    
-    return dir;
-    
+  fi;
+  
+  return dir;
+  
 end );

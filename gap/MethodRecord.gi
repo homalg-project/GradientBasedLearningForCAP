@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# GradientDescentForCAP: Exploring categorical machine learning in CAP
+# GradientBasedLearningForCAP: Gradient Based Learning via Category Theory
 #
 # Implementations
 #
@@ -65,12 +65,12 @@ CAP_INTERNAL_ENHANCE_NAME_RECORD( CRDC_INTERNAL_METHOD_NAME_RECORD );
 
 CAP_INTERNAL_GENERATE_DECLARATIONS_AND_INSTALLATIONS_FROM_METHOD_NAME_RECORD(
     CRDC_INTERNAL_METHOD_NAME_RECORD,
-    "GradientDescentForCAP",
+    "GradientBasedLearningForCAP",
     "MethodRecord.",
-    "operations for machine learning in CAP",
-    "Add-methods"
+    "CAP Operations for GradientBasedLearningForCAP",
+    "Add-Methods"
 );
 
-CAP_INTERNAL_REGISTER_METHOD_NAME_RECORD_OF_PACKAGE( CRDC_INTERNAL_METHOD_NAME_RECORD, "GradientDescentForCAP" );
+CAP_INTERNAL_REGISTER_METHOD_NAME_RECORD_OF_PACKAGE( CRDC_INTERNAL_METHOD_NAME_RECORD, "GradientBasedLearningForCAP" );
 
 CAP_INTERNAL_INSTALL_ADDS_FROM_RECORD( CRDC_INTERNAL_METHOD_NAME_RECORD );

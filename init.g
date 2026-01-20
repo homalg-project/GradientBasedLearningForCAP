@@ -1,15 +1,17 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# GradientDescentForCAP: Exploring categorical machine learning in CAP
+# GradientBasedLearningForCAP: Gradient Based Learning via Category Theory
 #
 # Reading the declaration part of the package.
 #
 
-ReadPackage( "GradientDescentForCAP", "gap/Tools.gd" );
-ReadPackage( "GradientDescentForCAP", "gap/Expressions.gd" );
-ReadPackage( "GradientDescentForCAP", "gap/MethodRecord.gd" );
-ReadPackage( "GradientDescentForCAP", "gap/MethodRecord.Declarations.autogen.gd" );
-ReadPackage( "GradientDescentForCAP", "gap/CategoryOfSkeletalSmoothMaps.gd" );
-ReadPackage( "GradientDescentForCAP", "gap/CategoryOfParametrisedMorphisms.gd" );
-ReadPackage( "GradientDescentForCAP", "gap/CategoryOfLenses.gd" );
-ReadPackage( "GradientDescentForCAP", "gap/FitParameters.gd" );
-ReadPackage( "GradientDescentForCAP", "gap/NeuralNetworks.gd" );
+ReadPackage( "GradientBasedLearningForCAP", "gap/Tools.gd" );
+ReadPackage( "GradientBasedLearningForCAP", "gap/Expressions.gd" );
+ReadPackage( "GradientBasedLearningForCAP", "gap/MethodRecord.gd" );
+ReadPackage( "GradientBasedLearningForCAP", "gap/MethodRecord.Declarations.autogen.gd" );
+ReadPackage( "GradientBasedLearningForCAP", "gap/SkeletalCategoryOfSmoothMaps.gd" );
+ReadPackage( "GradientBasedLearningForCAP", "gap/CategoryOfParametrisedMorphisms.gd" );
+ReadPackage( "GradientBasedLearningForCAP", "gap/CategoryOfParametrisedMorphisms.autogen.gd" );
+ReadPackage( "GradientBasedLearningForCAP", "gap/CategoryOfLenses.gd" );
+ReadPackage( "GradientBasedLearningForCAP", "gap/CategoryOfLenses.autogen.gd" );
+ReadPackage( "GradientBasedLearningForCAP", "gap/FitParameters.gd" );
+ReadPackage( "GradientBasedLearningForCAP", "gap/NeuralNetworks.gd" );

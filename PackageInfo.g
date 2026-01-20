@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# GradientDescentForCAP: Exploring categorical machine learning in CAP
+# GradientBasedLearningForCAP: Gradient Based Learning via Category Theory
 #
 # This file contains package meta data. For additional information on
 # the meaning and correct usage of these fields, please consult the
@@ -8,9 +8,9 @@
 #
 SetPackageInfo( rec(
 
-PackageName := "GradientDescentForCAP",
-Subtitle := "Exploring categorical machine learning in CAP",
-Version := "2025.11-01",
+PackageName := "GradientBasedLearningForCAP",
+Subtitle := "Gradient Based Learning via Category Theory",
+Version := "2026.01-01",
 Date := (function ( ) if IsBound( GAPInfo.SystemEnvironment.GAP_PKG_RELEASE_DATE ) then return GAPInfo.SystemEnvironment.GAP_PKG_RELEASE_DATE; else return Concatenation( ~.Version{[ 1 .. 4 ]}, "-", ~.Version{[ 6, 7 ]}, "-01" ); fi; end)( ),
 License := "GPL-2.0-or-later",
 
@@ -34,13 +34,13 @@ Persons := [
 # BEGIN URLS
 SourceRepository := rec(
     Type := "git",
-    URL := "https://github.com/homalg-project/GradientDescentForCAP",
+    URL := "https://github.com/homalg-project/GradientBasedLearningForCAP",
 ),
 IssueTrackerURL := Concatenation( ~.SourceRepository.URL, "/issues" ),
-PackageWWWHome  := "https://homalg-project.github.io/pkg/GradientDescentForCAP",
-PackageInfoURL  := "https://homalg-project.github.io/GradientDescentForCAP/PackageInfo.g",
-README_URL      := "https://homalg-project.github.io/GradientDescentForCAP/README.md",
-ArchiveURL      := Concatenation( "https://github.com/homalg-project/GradientDescentForCAP/releases/download/v", ~.Version, "/GradientDescentForCAP-", ~.Version ),
+PackageWWWHome  := "https://homalg-project.github.io/pkg/GradientBasedLearningForCAP",
+PackageInfoURL  := "https://homalg-project.github.io/GradientBasedLearningForCAP/PackageInfo.g",
+README_URL      := "https://homalg-project.github.io/GradientBasedLearningForCAP/README.md",
+ArchiveURL      := Concatenation( "https://github.com/homalg-project/GradientBasedLearningForCAP/releases/download/v", ~.Version, "/GradientBasedLearningForCAP-", ~.Version ),
 # END URLS
 
 ArchiveFormats := ".tar.gz .zip",
@@ -58,16 +58,16 @@ Status := "dev",
 AbstractHTML   :=  "",
 
 PackageDoc := rec(
-  BookName  := "GradientDescentForCAP",
+  BookName  := "GradientBasedLearningForCAP",
   ArchiveURLSubset := ["doc"],
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
-  LongTitle := "Exploring categorical machine learning in CAP",
+  LongTitle := "Gradient Based Learning via Category Theory",
 ),
 
 Dependencies := rec(
-  GAP := ">= 4.15.1",
+  GAP := ">= 4.13.0",
   NeededOtherPackages := [
                    [ "GAPDoc", ">= 1.5" ],
                    [ "CAP", ">= 2024.09-12" ],

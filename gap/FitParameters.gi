@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# GradientDescentForCAP: Exploring categorical machine learning in CAP
+# GradientBasedLearningForCAP: Gradient Based Learning via Category Theory
 #
 # Implementations
 #
@@ -43,9 +43,9 @@ InstallMethod( OneEpochUpdateLens,
         
     fi;
     
-    parametrised_morphism := AdjustToBatchSize( parametrised_morphism, batch_size );
+    parametrised_morphism := Batchify( parametrised_morphism, batch_size );
     
-    cost := SwitchSourceAndUnderlyingObject( parametrised_morphism );
+    cost := FlipParameterAndSource( parametrised_morphism );
     
     costs :=
       List( SplitDenseList( training_examples, batch_size ),
@@ -55,7 +55,7 @@ InstallMethod( OneEpochUpdateLens,
     
     Lenses := CapCategory( optimizer );
     
-    L := EmbeddingIntoCategoryOfLenses( Smooth, Lenses );
+    L := ReverseDifferentialLensFunctor( Smooth, Lenses );
     
     costs := List( costs, cost -> ApplyFunctor( L, cost ) );
     
@@ -116,11 +116,14 @@ InstallMethod( Fit,
           [ IsMorphismInCategoryOfLenses, IsPosInt, IsDenseList ],
   
   function( epoch_lens, n, w )
-    local MOD, get, put, get_source, get_target, put_source, put_target, l, l_n, str_i, l_i, spaces, loss, i;
+    local verbose, MOD, get, put, get_source, get_target, put_source, put_target, l, l_n, str_i, l_i, spaces, loss, i;
     
-    MOD := GradientDescentForCAP.MOD;
+    # get the option to print training progress
+    verbose := CAP_INTERNAL_RETURN_OPTION_OR_DEFAULT( "verbose", true );
     
-    GradientDescentForCAP.MOD := "train";
+    MOD := GradientBasedLearningForCAP.MOD;
+    
+    GradientBasedLearningForCAP.MOD := "train";
     
     get := GetMorphism( epoch_lens );
     put := PutMorphism( epoch_lens );
@@ -139,27 +142,33 @@ InstallMethod( Fit,
     
     l_n := Length( String( n ) );
     
-    Print( "Epoch ", JoinStringsWithSeparator( ListWithIdenticalEntries( l_n - 1, " " ), "" ), "0/", String( n ), " - loss = ", String( get( w )[1] ), "\n" );
+    if verbose then
+        Print( "Epoch ", JoinStringsWithSeparator( ListWithIdenticalEntries( l_n - 1, " " ), "" ), "0/", String( n ), " - loss = ", String( get( w )[1] ), "\n" );
+    fi;
     
     for i in [ 1 .. n ] do
         
-        str_i := String( i );
-        
-        l_i := Length( str_i );
-        
-        spaces := JoinStringsWithSeparator( ListWithIdenticalEntries( l_n - l_i, " " ), "" );
+        if verbose then
+          
+          l_i := Length( String( i ) );
+          
+          spaces := JoinStringsWithSeparator( ListWithIdenticalEntries( l_n - l_i, " " ), "" );
+          
+        fi;
         
         w := put( w );
         
-        loss := get( w );
-        
-        Print( "Epoch ", spaces, String( i ), "/", String( n ), " - loss = ", String( loss[1] ), "\n" );
-        
-        #Display( w );
+        if verbose then
+            
+            loss := get( w );
+            
+            Print( "Epoch ", spaces, String( i ), "/", String( n ), " - loss = ", String( loss[1] ), "\n" );
+            
+        fi;
         
     od;
     
-    GradientDescentForCAP.MOD := MOD;
+    GradientBasedLearningForCAP.MOD := MOD;
     
     return w;
     

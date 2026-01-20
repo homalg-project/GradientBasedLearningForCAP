@@ -1,1 +1,101 @@
-@Chapter Examples and Tests
+@Chapter Introduction
+
+This package provides tools for exploring categorical machine learning using the CAP (Categories, Algorithms, Programming) system.
+It implements automatic differentiation using the lens pattern and provides constructs for building and training neural networks.
+
+@Section Overview
+
+The package implements the following main concepts:
+
+* **Examples**: Examples for creating and training neural networks.
+
+* **Expressions**: A symbolic expression system for representing mathematical formulas.
+
+* **Skeletal Category of Smooth Maps**: A category where objects are Euclidean spaces $\mathbb{R}^n$ and morphisms are smooth maps with their Jacobian matrices.
+
+* **Category of Parametrised Morphisms**: A category that represents morphisms with learnable parameters, used to model neural network layers.
+
+* **Neural Networks**: High-level operations for constructing and training neural networks.
+
+* **Category of Lenses**: A category that models bidirectional data flow, essential for backpropagation in neural networks.
+
+* **Fitting Parameters**: Explain how to learn the parameters in order to minimize a parametrised morphism.
+
+* **CAP Operation**: The new categorical operations needed in this package.
+
+* **Tools**: Few GAP operations and helper functions.
+
+
+@Chapter Examples for neural networks
+
+@Section Binary-class neural network with binary cross-entropy loss function
+@Section Multi-class neural network with cross-entropy loss function
+@Section Neural network with quadratic loss function
+
+@Chapter Expressions
+
+@Section Constructors
+@Section Attributes
+@Section Operations
+@Section Global Functions
+@Section Examples
+@Section GAP Categories
+
+@Chapter Skeletal Category of Smooth Maps
+
+@Section Constructors
+@Section Attributes
+@Section Operations
+@Section Available Smooth Maps
+@Section Supported CAP Operations
+@Section Examples
+@Section GAP Categories
+
+@Chapter Category of Parametrised Morphisms
+
+@Section Definition
+@Section Constructors
+@Section Attributes
+@Section Operations
+@Section Available Parametrised Morphisms
+@Section Supported CAP Operations
+@Section Examples
+@Section GAP Categories
+
+@Chapter Neural Networks
+
+@Section Definition
+@Section Operations
+@Section Examples
+
+@Chapter Category of Lenses
+
+@Section Definition
+@Section Constructors
+@Section Attributes
+@Section Operations
+@Section Available Lenses
+@Section Optimizers
+@Section Supported CAP Operations
+@Section Examples
+@Section GAP Categories
+
+
+@Chapter Fitting Parameters
+
+@Section Introduction
+@Section Notes on Batching
+@Section Operations
+@Section Examples
+
+@Chapter CAP Operations for GradientBasedLearningForCAP
+
+@Section Basic Operations
+@Section Add-Methods
+
+@Chapter Tools
+
+@Section Mathematical Operations
+@Section List Operations
+@Section Helper Functions
+@Section Python Integration

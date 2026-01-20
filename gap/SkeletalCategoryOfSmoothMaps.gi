@@ -1,15 +1,15 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# GradientDescentForCAP: Exploring categorical machine learning in CAP
+# GradientBasedLearningForCAP: Gradient Based Learning via Category Theory
 #
 # Implementations
 #
 
 ##
-InstallValue( GradientDescentForCAP,
+InstallValue( GradientBasedLearningForCAP,
   rec( MOD := "basic" ) ); # or train
 
 ##
-InstallGlobalFunction( CategoryOfSkeletalSmoothMaps,
+InstallGlobalFunction( SkeletalCategoryOfSmoothMaps,
   
   function ( )
     local name, Smooth, reals;
@@ -17,14 +17,14 @@ InstallGlobalFunction( CategoryOfSkeletalSmoothMaps,
     name := "SkeletalSmoothMaps";
     
     Smooth := CreateCapCategory( name,
-                  IsCategoryOfSkeletalSmoothMaps,
-                  IsObjectInCategoryOfSkeletalSmoothMaps,
-                  IsMorphismInCategoryOfSkeletalSmoothMaps,
+                  IsSkeletalCategoryOfSmoothMaps,
+                  IsObjectInSkeletalCategoryOfSmoothMaps,
+                  IsMorphismInSkeletalCategoryOfSmoothMaps,
                   IsCapCategoryTwoCell
                   : overhead := false
                   );
     
-    Smooth!.is_computable := false;
+    #Smooth!.is_computable := false;
     
     SetIsCartesianCategory( Smooth, true );
     SetIsStrictMonoidalCategory( Smooth, true );
@@ -111,6 +111,47 @@ InstallGlobalFunction( CategoryOfSkeletalSmoothMaps,
       function ( Smooth, f )
         
         return IsFunction( Map( f ) ) and IsFunction( JacobianMatrix( f ) );
+        
+    end );
+    
+    ##
+    AddIsCongruentForMorphisms( Smooth,
+      
+      function ( Smooth, f, g )
+        local rank_S, 1000_random_inputs, compare_maps, compare_jacobian_matrices;
+        
+        # DisplayString operation applies both maps on dummy inputs
+        if DisplayString( f ) = DisplayString( g ) then
+          
+          return true;
+          
+        else
+          
+          # If the DisplayString check fails, we do numerical tests
+          rank_S := RankOfObject( Source( f ) );
+          
+          1000_random_inputs := List( [ 1 .. 1000 ], i -> List( [ 1 .. rank_S ], j -> 0.01 * Random( [ 1 .. 100 ] ) ) );
+          
+          compare_maps :=
+            ForAll( 1000_random_inputs, x -> ForAll( ListN( Eval( f, x ), Eval( g, x ), { a, b } -> AbsoluteValue(a - b) < 1.e-6 ), IdFunc ) );
+          
+          compare_jacobian_matrices :=
+            ForAll( 1000_random_inputs, x -> ForAll( ListN( EvalJacobianMatrix( f, x ), EvalJacobianMatrix( g, x ), { a, b } -> AbsoluteValue( Sum(a - b) ) < 1.e-6 ), IdFunc ) );
+          
+          Info( InfoWarning, 2, "Based on numerical tests with 1000 random inputs and error tolerance 1.e-6, the output seems to be:" );
+          
+          return compare_maps and compare_jacobian_matrices;
+          
+        fi;
+        
+    end );
+    
+    ##
+    AddIsEqualForMorphisms( Smooth,
+      
+      function ( Smooth, f, g )
+        
+        return DisplayString( f ) = DisplayString( g );
         
     end );
     
@@ -651,7 +692,7 @@ InstallGlobalFunction( CategoryOfSkeletalSmoothMaps,
                       1, [ x{[ rank_S + 1 .. rank_S + rank_T ]} ], rank_T,
                       rank_T, JacobianMatrix( f )( x{[ 1 .. rank_S ]} ), rank_S )[1];
         
-        return SmoothMorphism( Smooth, source, map, target, false );
+        return SmoothMap( Smooth, source, map, target, false );
         
     end );
     
@@ -706,42 +747,11 @@ InstallGlobalFunction( CategoryOfSkeletalSmoothMaps,
 end );
 
 ##
-BindGlobal( "SkeletalSmoothMaps", CategoryOfSkeletalSmoothMaps( ) );
-
-##
-InstallOtherMethod( IsCongruentForMorphisms,
-        [ IsCategoryOfSkeletalSmoothMaps, IsMorphismInCategoryOfSkeletalSmoothMaps, IsMorphismInCategoryOfSkeletalSmoothMaps ],
-  
-  function ( Smooth, f, g )
-    local rank_S, 100_random_inputs, compare_maps, compare_jacobian_matrices;
-    
-    rank_S := RankOfObject( Source( f ) );
-    
-    100_random_inputs := List( [ 1 .. 100 ], i -> List( [ 1 .. rank_S ], j -> 0.001 * Random( [ 1 .. 100 ] ) ) );
-    
-    compare_maps :=
-      ForAll( 100_random_inputs, x -> ForAll( ListN( Eval( f, x ), Eval( g, x ), { a, b } -> (a - b) - 1.e-10 < 0. ), IdFunc ) );
-    
-    compare_jacobian_matrices :=
-      ForAll( 100_random_inputs, x -> ForAll( ListN( EvalJacobianMatrix( f, x ), EvalJacobianMatrix( g, x ), { a, b } -> Sum( a - b ) - 1.e-10 < 0. ), IdFunc ) );
-    
-    return compare_maps and compare_jacobian_matrices;
-    
-end );
-
-##
-InstallOtherMethod( IsEqualForMorphisms,
-        [ IsCategoryOfSkeletalSmoothMaps, IsMorphismInCategoryOfSkeletalSmoothMaps, IsMorphismInCategoryOfSkeletalSmoothMaps ],
-  
-  function ( Smooth, f, g )
-    
-    return Map( f ) = Map( g ) and JacobianMatrix( f ) = JacobianMatrix( g );
-    
-end );
+BindGlobal( "SkeletalSmoothMaps", SkeletalCategoryOfSmoothMaps( ) );
 
 ##
 InstallMethod( Eval,
-          [ IsMorphismInCategoryOfSkeletalSmoothMaps, IsDenseList ],
+          [ IsMorphismInSkeletalCategoryOfSmoothMaps, IsDenseList ],
   
   function ( f, x )
     local y;
@@ -758,7 +768,7 @@ end );
 
 ##
 InstallOtherMethod( CallFuncList,
-          [ IsMorphismInCategoryOfSkeletalSmoothMaps, IsDenseList ],
+          [ IsMorphismInSkeletalCategoryOfSmoothMaps, IsDenseList ],
   
   function ( f, L )
     
@@ -768,14 +778,14 @@ end );
 
 ##
 InstallOtherMethod( Eval,
-        [ IsMorphismInCategoryOfSkeletalSmoothMaps ],
+        [ IsMorphismInSkeletalCategoryOfSmoothMaps ],
   
   f -> Eval( f, DummyInput( f ) )
 );
 
 ##
 InstallMethod( EvalJacobianMatrix,
-          [ IsMorphismInCategoryOfSkeletalSmoothMaps, IsDenseList ],
+          [ IsMorphismInSkeletalCategoryOfSmoothMaps, IsDenseList ],
   
   function ( f, x )
     
@@ -787,14 +797,15 @@ end );
 
 ##
 InstallOtherMethod( EvalJacobianMatrix,
-        [ IsMorphismInCategoryOfSkeletalSmoothMaps ],
+        [ IsMorphismInSkeletalCategoryOfSmoothMaps ],
   
   f -> EvalJacobianMatrix( f, DummyInput( f ) )
 );
 
 ##
-InstallMethod( SmoothMorphism,
-          [ IsCategoryOfSkeletalSmoothMaps, IsObjectInCategoryOfSkeletalSmoothMaps, IsDenseList, IsObjectInCategoryOfSkeletalSmoothMaps ],
+InstallMethod( SmoothMap,
+          "datum as in MorphismConstructor",
+          [ IsSkeletalCategoryOfSmoothMaps, IsObjectInSkeletalCategoryOfSmoothMaps, IsDenseList, IsObjectInSkeletalCategoryOfSmoothMaps ],
   
   function ( Smooth, S, datum, T )
     
@@ -803,8 +814,9 @@ InstallMethod( SmoothMorphism,
 end );
 
 ##
-InstallOtherMethod( SmoothMorphism,
-          [ IsCategoryOfSkeletalSmoothMaps, IsObjectInCategoryOfSkeletalSmoothMaps, IsDenseList, IsObjectInCategoryOfSkeletalSmoothMaps, IsBool ],
+InstallOtherMethod( SmoothMap,
+          "datum is a list of strings in variables x1, x2, ...; and a boolean use_python",
+          [ IsSkeletalCategoryOfSmoothMaps, IsObjectInSkeletalCategoryOfSmoothMaps, IsDenseList, IsObjectInSkeletalCategoryOfSmoothMaps, IsBool ],
   
   function ( Smooth, S, maps, T, use_python )
     local rank_S, rank_T, vars, jacobian_matrix, map;
@@ -818,7 +830,7 @@ InstallOtherMethod( SmoothMorphism,
     
     Assert( 0, Length( maps ) = rank_T );
     
-    vars := List( [ 1 .. rank_S ], i -> Concatenation( "x", String( i ) ) );
+    vars := DummyInputStrings( "x", rank_S );
     
     if use_python then
       
@@ -837,8 +849,9 @@ InstallOtherMethod( SmoothMorphism,
 end );
 
 ##
-InstallOtherMethod( SmoothMorphism,
-          [ IsCategoryOfSkeletalSmoothMaps, IsObjectInCategoryOfSkeletalSmoothMaps, IsDenseList, IsObjectInCategoryOfSkeletalSmoothMaps ],
+InstallOtherMethod( SmoothMap,
+          "datum is a list of strings in variables x1, x2, ...",
+          [ IsSkeletalCategoryOfSmoothMaps, IsObjectInSkeletalCategoryOfSmoothMaps, IsDenseList, IsObjectInSkeletalCategoryOfSmoothMaps ],
   
   function ( Smooth, S, maps, T )
     
@@ -846,13 +859,16 @@ InstallOtherMethod( SmoothMorphism,
         TryNextMethod( );
     fi;
     
-    return SmoothMorphism( Smooth, S, maps, T, false );
+    Assert( 0, Length( maps ) = RankOfObject( T ) );
+    
+    return SmoothMap( Smooth, S, maps, T, false );
     
 end );
 
 ##
-InstallOtherMethod( SmoothMorphism,
-          [ IsCategoryOfSkeletalSmoothMaps, IsObjectInCategoryOfSkeletalSmoothMaps, IsFunction, IsObjectInCategoryOfSkeletalSmoothMaps, IsBool ],
+InstallOtherMethod( SmoothMap,
+          "datum is a function and a boolean use_python",
+          [ IsSkeletalCategoryOfSmoothMaps, IsObjectInSkeletalCategoryOfSmoothMaps, IsFunction, IsObjectInSkeletalCategoryOfSmoothMaps, IsBool ],
   
   function ( Smooth, S, map, T, use_python )
     local rank_S, rank_T, vars, jacobian_matrix;
@@ -860,8 +876,10 @@ InstallOtherMethod( SmoothMorphism,
     rank_S := RankOfObject( S );
     rank_T := RankOfObject( T );
     
-    vars := List( [ 1 .. rank_S ], i -> Concatenation( "x", String( i ) ) );
+    vars := DummyInputStrings( "x", rank_S );
     
+    # Remark: The map takes a row-vector and returns a row-vector, e.g., map := vec -> [ vec[1]^2 + vec[2], Sin( vec[1] ) ]
+    # 
     if use_python then
       
       jacobian_matrix := JacobianMatrix( vars, map, [ 1 .. rank_S ] );
@@ -877,18 +895,19 @@ InstallOtherMethod( SmoothMorphism,
 end );
 
 ##
-InstallOtherMethod( SmoothMorphism,
-          [ IsCategoryOfSkeletalSmoothMaps, IsObjectInCategoryOfSkeletalSmoothMaps, IsFunction, IsObjectInCategoryOfSkeletalSmoothMaps ],
+InstallOtherMethod( SmoothMap,
+          "datum is a function",
+          [ IsSkeletalCategoryOfSmoothMaps, IsObjectInSkeletalCategoryOfSmoothMaps, IsFunction, IsObjectInSkeletalCategoryOfSmoothMaps ],
   
   function ( Smooth, S, map, T )
     
-    return SmoothMorphism( Smooth, S, map, T, true );
+    return SmoothMap( Smooth, S, map, T, true );
     
 end );
 
 ##
-InstallOtherMethod( SmoothMorphism,
-          [ IsCategoryOfSkeletalSmoothMaps, IsObjectInCategoryOfSkeletalSmoothMaps, IsDenseList, IsObjectInCategoryOfSkeletalSmoothMaps ],
+InstallOtherMethod( SmoothMap,
+          [ IsSkeletalCategoryOfSmoothMaps, IsObjectInSkeletalCategoryOfSmoothMaps, IsDenseList, IsObjectInSkeletalCategoryOfSmoothMaps ],
   
   function ( Smooth, S, maps, T )
     
@@ -896,13 +915,13 @@ InstallOtherMethod( SmoothMorphism,
         TryNextMethod( );
     fi;
     
-    return SmoothMorphism( Smooth, S, maps, T, false );
+    return SmoothMap( Smooth, S, maps, T, false );
     
 end );
 
 ##
-InstallOtherMethod( SmoothMorphism,
-          [ IsCategoryOfSkeletalSmoothMaps, IsObjectInCategoryOfSkeletalSmoothMaps, IsDenseList, IsObjectInCategoryOfSkeletalSmoothMaps ],
+InstallOtherMethod( SmoothMap,
+          [ IsSkeletalCategoryOfSmoothMaps, IsObjectInSkeletalCategoryOfSmoothMaps, IsDenseList, IsObjectInSkeletalCategoryOfSmoothMaps ],
   
   function ( Smooth, S, constants, T )
     local rank_S, rank_T, map, jacobian_matrix;
@@ -924,7 +943,7 @@ end );
 
 ##
 InstallOtherMethod( \.,
-          [ IsCategoryOfSkeletalSmoothMaps, IsPosInt ],
+          [ IsSkeletalCategoryOfSmoothMaps, IsPosInt ],
   
   function ( Smooth, string_as_int )
     local i;
@@ -943,7 +962,7 @@ end );
 
 ##
 InstallOtherMethod( \.,
-          [ IsCategoryOfSkeletalSmoothMaps, IsPosInt ],
+          [ IsSkeletalCategoryOfSmoothMaps, IsPosInt ],
   
   function ( Smooth, string_as_int )
     local f, l1, l2;
@@ -992,7 +1011,7 @@ InstallOtherMethod( \.,
             
             Assert( 0, IsDenseList( l ) );
             
-            return SmoothMorphism( Smooth, Smooth.( rank_S ), l, Smooth.( Length( l ) ) );
+            return SmoothMap( Smooth, Smooth.( rank_S ), l, Smooth.( Length( l ) ) );
             
           end;
          
@@ -1223,7 +1242,7 @@ InstallOtherMethod( \.,
             jacobian_matrix :=
               function ( x )
                 
-                return DiagonalMat( List( List( [ 1 .. n ], i -> Exp( -x[i] ) ), exp -> exp / ( 1 - exp ) ^ 2 ) );
+                return DiagonalMat( List( List( [ 1 .. n ], i -> Exp( -x[i] ) ), exp -> exp / ( 1 + exp ) ^ 2 ) );
                 
               end;
               
@@ -1264,7 +1283,7 @@ InstallOtherMethod( \.,
                 local max, exp_x, s;
                 
                 # standard trick to avoid numerical overflow
-                if GradientDescentForCAP.MOD = "train" then
+                if GradientBasedLearningForCAP.MOD = "train" then
                   
                   max := Maximum( x );
                   
@@ -1286,7 +1305,7 @@ InstallOtherMethod( \.,
                 local max, exp_x, s, d;
                 
                 # standard trick to avoid numerical overflow
-                if GradientDescentForCAP.MOD = "train" then
+                if GradientBasedLearningForCAP.MOD = "train" then
                   
                   max := Maximum( x );
                   
@@ -1372,10 +1391,10 @@ InstallOtherMethod( \.,
     elif f = "BinaryCrossEntropyLoss_" then
         
         return
-          function ( n )
+          function ( arg... )
             local l1, l2;
             
-            if n <> 1 then
+            if Length( arg ) >= 1 and arg[1] <> 1 then
                 Error( "the passed argument 'n' must be equal to 1!\n" );
             fi;
             
@@ -1393,9 +1412,9 @@ InstallOtherMethod( \.,
     elif f = "BinaryCrossEntropyLoss" then
         
         return
-          function ( n )
+          function ( arg... )
             
-            if n <> 1 then
+            if Length( arg ) >= 1 and arg[1] <> 1 then
                 Error( "the passed argument 'n' must be equal to 1!\n" );
             fi;
             
@@ -1411,15 +1430,15 @@ InstallOtherMethod( \.,
     elif f = "SigmoidBinaryCrossEntropyLoss_" then
         
         return
-          function ( n )
+          function ( arg... )
             
-            if n <> 1 then
+            if Length( arg ) >= 1 and arg[1] <> 1 then
                 Error( "the passed argument 'n' must be equal to 1!\n" );
             fi;
             
             return PreCompose( Smooth,
                       DirectProductFunctorial( Smooth, [ Smooth.Sigmoid_( 1 ), Smooth.IdFunc( 1 ) ] ),
-                      Smooth.BinaryCrossEntropyLoss_( n ) );
+                      Smooth.BinaryCrossEntropyLoss_() );
             
           end;
           
@@ -1427,9 +1446,9 @@ InstallOtherMethod( \.,
     elif f = "SigmoidBinaryCrossEntropyLoss" then
         
         return
-          function ( n )
+          function ( arg... )
             
-            if n <> 1 then
+            if Length( arg ) >= 1 and arg[1] <> 1 then
                 Error( "the passed argument 'n' must be equal to 1!\n" );
             fi;
             
@@ -1524,7 +1543,7 @@ InstallOtherMethod( \.,
                 local max, l;
                 
                 # standard trick to avoid numerical overflow
-                if GradientDescentForCAP.MOD = "train" then
+                if GradientBasedLearningForCAP.MOD = "train" then
                   
                   max := Maximum( List( [ 1 .. n ], i -> x[i] ) );
                   
@@ -1544,7 +1563,7 @@ InstallOtherMethod( \.,
                 local max, exp_x, s, l, c;
                 
                 # standard trick to avoid numerical overflow
-                if GradientDescentForCAP.MOD = "train" then
+                if GradientBasedLearningForCAP.MOD = "train" then
                   
                   max := Maximum( List( [ 1 .. n ], i -> x[i] ) );
                   
@@ -1637,12 +1656,12 @@ InstallOtherMethod( \.,
               function ( x )
                 local i;
                 
-                if GradientDescentForCAP.MOD = "basic" then
+                if GradientBasedLearningForCAP.MOD = "basic" then
                   
                   # dropout is activated only while training
                   return ListWithIdenticalEntries( n, 1 );
                   
-                elif GradientDescentForCAP.MOD = "train" then
+                elif GradientBasedLearningForCAP.MOD = "train" then
                   
                   i := Int( percentage * n );
                   
@@ -1778,11 +1797,45 @@ InstallGlobalFunction( DummyInputStringsForAffineTransformation,
 end );
 
 ##
+InstallGlobalFunction( AvailableSkeletalSmoothMaps,
+  
+  function ( arg... )
+    
+    return [
+      "Sqrt",
+      "Exp",
+      "Log",
+      "Sin",
+      "Cos",
+      "Constant",
+      "Zero",
+      "IdFunc",
+      "Relu",
+      "Sum",
+      "Mean",
+      "Variance",
+      "StandardDeviation",
+      "Mul",
+      "Power",
+      "PowerBase",
+      "Sigmoid",
+      "Softmax",
+      "QuadraticLoss",
+      "BinaryCrossEntropyLoss",
+      "SigmoidBinaryCrossEntropyLoss",
+      "CrossEntropyLoss",
+      "SoftmaxCrossEntropyLoss",
+      "AffineTransformation",
+    ];
+    
+end );
+
+##
 InstallGlobalFunction( DummyInputForAffineTransformation,
   
   function ( arg... )
     
-    return ConvertToExpressions( CallFuncList( DummyInputStringsForAffineTransformation, arg ) );
+    return CreateContextualVariables( CallFuncList( DummyInputStringsForAffineTransformation, arg ) );
     
 end );
 
@@ -1830,13 +1883,13 @@ InstallGlobalFunction( DummyInputForPolynomialTransformation,
   
   function ( arg... )
     
-    return ConvertToExpressions( CallFuncList( DummyInputStringsForPolynomialTransformation, arg ) );
+    return CreateContextualVariables( CallFuncList( DummyInputStringsForPolynomialTransformation, arg ) );
     
 end );
 
 ##
 InstallOtherMethod( \^,
-        [ IsMorphismInCategoryOfSkeletalSmoothMaps, IsAdditiveElement ],
+        [ IsMorphismInSkeletalCategoryOfSmoothMaps, IsAdditiveElement ],
   
   function ( f, n )
     local Smooth, p;
@@ -1851,7 +1904,7 @@ end );
 
 ##
 InstallOtherMethod( \*,
-        [ IsMorphismInCategoryOfSkeletalSmoothMaps, IsMorphismInCategoryOfSkeletalSmoothMaps ],
+        [ IsMorphismInSkeletalCategoryOfSmoothMaps, IsMorphismInSkeletalCategoryOfSmoothMaps ],
   
   function ( f, g )
     
@@ -1861,7 +1914,7 @@ end );
 
 ##
 InstallOtherMethod( \/,
-        [ IsMorphismInCategoryOfSkeletalSmoothMaps, IsMorphismInCategoryOfSkeletalSmoothMaps ],
+        [ IsMorphismInSkeletalCategoryOfSmoothMaps, IsMorphismInSkeletalCategoryOfSmoothMaps ],
   
   function ( f, g )
     
@@ -1872,7 +1925,7 @@ end );
 
 ##
 InstallMethod( LaTeXOutput,
-        [ IsObjectInCategoryOfSkeletalSmoothMaps ],
+        [ IsObjectInSkeletalCategoryOfSmoothMaps ],
   
   function ( U )
     
@@ -1882,7 +1935,7 @@ end );
 
 ##
 InstallMethod( LaTeXOutput,
-        [ IsMorphismInCategoryOfSkeletalSmoothMaps ],
+        [ IsMorphismInSkeletalCategoryOfSmoothMaps ],
   
   function ( f )
     local dummy_input, rank_S, rank_T, vars, all, maps, jacobian_matrix;
@@ -1922,7 +1975,7 @@ end );
 
 ##
 InstallMethod( ViewString,
-          [ IsObjectInCategoryOfSkeletalSmoothMaps ],
+          [ IsObjectInSkeletalCategoryOfSmoothMaps ],
   
   function ( U )
     
@@ -1932,7 +1985,7 @@ end );
 
 ##
 InstallMethod( ViewString,
-          [ IsMorphismInCategoryOfSkeletalSmoothMaps ],
+          [ IsMorphismInSkeletalCategoryOfSmoothMaps ],
   
   function ( f )
     
@@ -1945,7 +1998,7 @@ end );
 
 ##
 InstallMethod( DisplayString,
-          [ IsMorphismInCategoryOfSkeletalSmoothMaps ],
+          [ IsMorphismInSkeletalCategoryOfSmoothMaps ],
   
   function ( f )
     local dummy_input, maps;
@@ -1965,7 +2018,7 @@ end );
 
 ##
 InstallMethod( Display,
-          [ IsMorphismInCategoryOfSkeletalSmoothMaps ],
+          [ IsMorphismInSkeletalCategoryOfSmoothMaps ],
   
   function ( f )
     local dummy_input, m;

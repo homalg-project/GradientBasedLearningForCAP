@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# GradientDescentForCAP: Exploring categorical machine learning in CAP
+# GradientBasedLearningForCAP: Gradient Based Learning via Category Theory
 #
 # This file tests if the package can be loaded without errors or warnings.
 #
@@ -7,9 +7,9 @@
 gap> PushOptions( rec( OnlyNeeded := true ) );
 gap> package_loading_info_level := InfoLevel( InfoPackageLoading );;
 gap> SetInfoLevel( InfoPackageLoading, PACKAGE_ERROR );;
-gap> LoadPackage( "GradientDescentForCAP", false );
+gap> LoadPackage( "GradientBasedLearningForCAP", false );
 true
 gap> SetInfoLevel( InfoPackageLoading, PACKAGE_INFO );;
-gap> LoadPackage( "GradientDescentForCAP" );
+gap> LoadPackage( "GradientBasedLearningForCAP" );
 true
 gap> SetInfoLevel( InfoPackageLoading, package_loading_info_level );;

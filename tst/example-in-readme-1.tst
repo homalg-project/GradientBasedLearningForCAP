@@ -1,4 +1,4 @@
-gap> LoadPackage( "GradientDescentForCAP" );
+gap> LoadPackage( "GradientBasedLearningForCAP" );
 true
 gap> Para := CategoryOfParametrisedMorphisms( SkeletalSmoothMaps );
 CategoryOfParametrisedMorphisms( SkeletalSmoothMaps )
@@ -8,7 +8,7 @@ gap> training_set := [ [ 1, 2.9 ], [ 2, 5.1 ], [ 3, 7.05 ] ];
 
 gap> input_dim := 1;; output_dim := 1;; hidden_dims := [ ];;
 
-gap> f := PredictionMorphismOfNeuralNetwork( Para, input_dim, hidden_dims, output_dim, "IdFunc" );;
+gap> f := NeuralNetworkPredictionMorphism( Para, input_dim, hidden_dims, output_dim, "IdFunc" );;
 
 gap> Display( f );
 ℝ^1 -> ℝ^1 defined by:
@@ -28,7 +28,7 @@ gap> parameters := [ 2, 1 ];; x := [ 2 ];;
 gap> Eval( f, [ parameters, x ] );
 [ 5 ]
 
-gap> ell := LossMorphismOfNeuralNetwork( Para, input_dim, hidden_dims, output_dim, "IdFunc" );;
+gap> ell := NeuralNetworkLossMorphism( Para, input_dim, hidden_dims, output_dim, "IdFunc" );;
 
 gap> Display( ell );
 ℝ^2 -> ℝ^1 defined by:

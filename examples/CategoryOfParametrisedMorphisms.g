@@ -1,14 +1,18 @@
-#! @Chapter Examples and Tests
+#! @Chapter Category of Parametrised Morphisms
 
-#! @Section Category of Parametrised Morphisms
+#! @Section Examples
 
-LoadPackage( "GradientDescentForCAP" );
+LoadPackage( "GradientBasedLearningForCAP" );
 
 #! @Example
-Smooth := CategoryOfSkeletalSmoothMaps( );
+Smooth := SkeletalCategoryOfSmoothMaps( );
 #! SkeletalSmoothMaps
 Para := CategoryOfParametrisedMorphisms( Smooth );
 #! CategoryOfParametrisedMorphisms( SkeletalSmoothMaps )
+Display( Para );
+#! A CAP category with name CategoryOfParametrisedMorphisms( SkeletalSmoothMaps ):
+#!
+#! 12 primitive operations were used to derive 21 operations for this category
 R1 := Smooth.( 1 );
 #! ℝ^1
 R2 := Smooth.( 2 );
@@ -19,156 +23,109 @@ R1 / Para;
 #! ℝ^1
 Para.( 1 );
 #! ℝ^1
-IsEqualForObjects( Para.( 1 ), R1 / Para );
+Para.( 1 ) = R1 / Para;
 #! true
-f := Smooth.Softmax( 3 );
-#! ℝ^3 -> ℝ^3
-f := MorphismConstructor( Para, R1 / Para, [ R2, f ], R3 / Para );
-#! ℝ^1 -> ℝ^3 defined by:
-#!
-#! Underlying Object:
-#! -----------------
-#! ℝ^2
-#!
-#! Underlying Morphism:
-#! -------------------
-#! ℝ^3 -> ℝ^3
+f := Para.Sin;;
 Display( f );
-#! ℝ^1 -> ℝ^3 defined by:
+#! ℝ^1 -> ℝ^1 defined by:
 #!
 #! Underlying Object:
 #! -----------------
-#! ℝ^2
+#! ℝ^0
 #!
 #! Underlying Morphism:
 #! -------------------
-#! ℝ^3 -> ℝ^3
+#! ℝ^1 -> ℝ^1
 #!
-#! ‣ Exp( x1 ) / (Exp( x1 ) + Exp( x2 ) + Exp( x3 ))
-#! ‣ Exp( x2 ) / (Exp( x1 ) + Exp( x2 ) + Exp( x3 ))
-#! ‣ Exp( x3 ) / (Exp( x1 ) + Exp( x2 ) + Exp( x3 ))
-IsWellDefined( f );
-#! true
-r := DirectProductFunctorial( Smooth, [ Smooth.Sqrt, Smooth.Cos ] );
-#! ℝ^2 -> ℝ^2
+#! ‣ Sin( x1 )
+p1 := ProjectionInFactorOfDirectProduct( Smooth, [ R3, R3 ], 1 );;
+Display( p1 );
+#! ℝ^6 -> ℝ^3
+#! 
+#! ‣ x1
+#! ‣ x2
+#! ‣ x3
+p2 := ProjectionInFactorOfDirectProduct( Smooth, [ R3, R3 ], 2 );;
+Display( p2 );
+#! ℝ^6 -> ℝ^3
+#! 
+#! ‣ x4
+#! ‣ x5
+#! ‣ x6
+m := MultiplicationForMorphisms( p1, p2 );
+#! ℝ^6 -> ℝ^3
+Display( m );
+#! ℝ^6 -> ℝ^3
+#! 
+#! ‣ x1 * x4
+#! ‣ x2 * x5
+#! ‣ x3 * x6
+h := MorphismConstructor( Para, Para.(3), [ R3, m ], Para.(3) );;
+Display( h );
+#! ℝ^3 -> ℝ^3 defined by:
+#! 
+#! Underlying Object:
+#! -----------------
+#! ℝ^3
+#! 
+#! Underlying Morphism:
+#! -------------------
+#! ℝ^6 -> ℝ^3
+#! 
+#! ‣ x1 * x4
+#! ‣ x2 * x5
+#! ‣ x3 * x6
+dummy_input := CreateContextualVariables(
+                  [ "w1", "w2", "w3", "z1", "z2", "z3" ] );
+#! [ w1, w2, w3, z1, z2, z3 ]
+Display( h : dummy_input := dummy_input );
+#! ℝ^3 -> ℝ^3 defined by:
+#! 
+#! Underlying Object:
+#! -----------------
+#! ℝ^3
+#! 
+#! Underlying Morphism:
+#! -------------------
+#! ℝ^6 -> ℝ^3
+#! 
+#! ‣ w1 * z1
+#! ‣ w2 * z2
+#! ‣ w3 * z3
+r := DirectProductFunctorial( Smooth,
+        [ Smooth.Sqrt, Smooth.Log, Smooth.Exp ] );;
 Display( r );
-#! ℝ^2 -> ℝ^2
+#! ℝ^3 -> ℝ^3
 #!
 #! ‣ Sqrt( x1 )
-#! ‣ Cos( x2 )
-g := ReparametriseMorphism( f, r );
-#! ℝ^1 -> ℝ^3 defined by:
-#!
+#! ‣ Log( x2 )
+#! ‣ Exp( x3 )
+g := ReparametriseMorphism( h, r );;
+Display( g : dummy_input := dummy_input );
+#! ℝ^3 -> ℝ^3 defined by:
+#! 
 #! Underlying Object:
 #! -----------------
-#! ℝ^2
-#!
+#! ℝ^3
+#! 
 #! Underlying Morphism:
 #! -------------------
-#! ℝ^3 -> ℝ^3
-Display( g );
-#! ℝ^1 -> ℝ^3 defined by:
-#!
-#! Underlying Object:
-#! -----------------
-#! ℝ^2
-#!
-#! Underlying Morphism:
-#! -------------------
-#! ℝ^3 -> ℝ^3
-#!
-#! ‣ Exp( Sqrt( x1 ) ) / (Exp( Sqrt( x1 ) ) + Exp( Cos( x2 ) ) + Exp( x3 ))
-#! ‣ Exp( Cos( x2 ) ) / (Exp( Sqrt( x1 ) ) + Exp( Cos( x2 ) ) + Exp( x3 ))
-#! ‣ Exp( x3 ) / (Exp( Sqrt( x1 ) ) + Exp( Cos( x2 ) ) + Exp( x3 ))
-l := Para.AffineTransformation( 3, 2 );
-#! ℝ^3 -> ℝ^2 defined by:
-#!
-#! Underlying Object:
-#! -----------------
-#! ℝ^8
-#!
-#! Underlying Morphism:
-#! -------------------
-#! ℝ^11 -> ℝ^2
-h := PreCompose( g, l );
-#! ℝ^1 -> ℝ^2 defined by:
-#!
-#! Underlying Object:
-#! -----------------
-#! ℝ^10
-#!
-#! Underlying Morphism:
-#! -------------------
-#! ℝ^11 -> ℝ^2
-Display( h );
-#! ℝ^1 -> ℝ^2 defined by:
-#!
-#! Underlying Object:
-#! -----------------
-#! ℝ^10
-#!
-#! Underlying Morphism:
-#! -------------------
-#! ℝ^11 -> ℝ^2
-#!
-#! ‣ x1 * (Exp( Sqrt( x9 ) ) / (Exp( Sqrt( x9 ) ) + Exp( Cos( x10 ) ) + Exp( x11 )))
-#!   + x2 * (Exp( Cos( x10 ) ) / (Exp( Sqrt( x9 ) ) + Exp( Cos( x10 ) ) + Exp( x11 )))
-#!   + x3 * (Exp( x11 ) / (Exp( Sqrt( x9 ) ) + Exp( Cos( x10 ) ) + Exp( x11 ))) + x4
-#! ‣ x5 * (Exp( Sqrt( x9 ) ) / (Exp( Sqrt( x9 ) ) + Exp( Cos( x10 ) ) + Exp( x11 )))
-#!   + x6 * (Exp( Cos( x10 ) ) / (Exp( Sqrt( x9 ) ) + Exp( Cos( x10 ) ) + Exp( x11 )))
-#!   + x7 * (Exp( x11 ) / (Exp( Sqrt( x9 ) ) + Exp( Cos( x10 ) ) + Exp( x11 ))) + x8
-constants := [ 0.91, 0.24, 0.88, 0.59, 0.67, 0.05, 0.85, 0.31, 0.76, 0.04 ];;
-r := Smooth.Constant( constants );
-#! ℝ^0 -> ℝ^10
-t := ReparametriseMorphism( h, r );
-#! ℝ^1 -> ℝ^2 defined by:
-#!
-#! Underlying Object:
-#! -----------------
-#! ℝ^0
-#!
-#! Underlying Morphism:
-#! -------------------
-#! ℝ^1 -> ℝ^2
-Display( t );
-#! ℝ^1 -> ℝ^2 defined by:
-#!
-#! Underlying Object:
-#! -----------------
-#! ℝ^0
-#!
-#! Underlying Morphism:
-#! -------------------
-#! ℝ^1 -> ℝ^2
-#!
-#! ‣ 0.91 * (2.39116 / (5.10727 + Exp( x1 ))) + 0.24 * (2.71611 / (5.10727 + Exp( x1 )))
-#!   + 0.88 * (Exp( x1 ) / (5.10727 + Exp( x1 ))) + 0.59
-#! ‣ 0.67 * (2.39116 / (5.10727 + Exp( x1 ))) + 0.05 * (2.71611 / (5.10727 + Exp( x1 )))
-#!   + 0.85 * (Exp( x1 ) / (5.10727 + Exp( x1 ))) + 0.31
-s := SimplifyMorphism( t, infinity );
-#! ℝ^1 -> ℝ^2 defined by:
-#!
-#! Underlying Object:
-#! -----------------
-#! ℝ^0
-#!
-#! Underlying Morphism:
-#! -------------------
-#! ℝ^1 -> ℝ^2
-Display( s );
-#! ℝ^1 -> ℝ^2 defined by:
-#!
-#! Underlying Object:
-#! -----------------
-#! ℝ^0
-#!
-#! Underlying Morphism:
-#! -------------------
-#! ℝ^1 -> ℝ^2
-#!
-#! ‣ (1.47 * Exp( x1 ) + 5.84111) / (Exp( x1 ) + 5.10727)
-#! ‣ (1.16 * Exp( x1 ) + 3.32114) / (Exp( x1 ) + 5.10727)
-iota := NaturalEmbeddingIntoCategoryOfParametrisedMorphisms( Smooth, Para );
+#! ℝ^6 -> ℝ^3
+#! 
+#! ‣ Sqrt( w1 ) * z1
+#! ‣ Log( w2 ) * z2
+#! ‣ Exp( w3 ) * z3
+#! @EndExample
+
+#! Let us illustrate the natural embedding functor from the category of smooth maps into 
+#! the category of parametrised morphisms.
+
+#! @Example
+Smooth := SkeletalCategoryOfSmoothMaps( );
+#! SkeletalSmoothMaps
+Para := CategoryOfParametrisedMorphisms( Smooth );
+#! CategoryOfParametrisedMorphisms( SkeletalSmoothMaps )
+iota := NaturalEmbedding( Smooth, Para );
 #! Natural embedding into category of parametrised morphisms
 ApplyFunctor( iota, Smooth.( 1 ) );
 #! ℝ^1
@@ -182,7 +139,7 @@ psi := ApplyFunctor( iota, Smooth.Sum( 2 ) );
 #! Underlying Morphism:
 #! -------------------
 #! ℝ^2 -> ℝ^1
-Print( DisplayString( psi ) );
+Display( psi );
 #! ℝ^2 -> ℝ^1 defined by:
 #!
 #! Underlying Object:
@@ -194,4 +151,79 @@ Print( DisplayString( psi ) );
 #! ℝ^2 -> ℝ^1
 #!
 #! ‣ x1 + x2
+#! @EndExample
+
+#! @Section Available Parametrised Morphisms
+
+#! @Example
+Smooth := SkeletalCategoryOfSmoothMaps( );
+#! SkeletalSmoothMaps
+Para := CategoryOfParametrisedMorphisms( Smooth );
+#! CategoryOfParametrisedMorphisms( SkeletalSmoothMaps )
+Display( Para.Relu( 2 ) );
+#! ℝ^2 -> ℝ^2 defined by:
+#! 
+#! Underlying Object:
+#! -----------------
+#! ℝ^0
+#! 
+#! Underlying Morphism:
+#! -------------------
+#! ℝ^2 -> ℝ^2
+#! 
+#! ‣ Relu( x1 )
+#! ‣ Relu( x2 )
+dummy_input := DummyInputForAffineTransformation( 3, 2, "w", "b", "z" );
+#! [ w1_1, w2_1, w3_1, b_1, w1_2, w2_2, w3_2, b_2, z1, z2, z3 ]
+affine_transformation := Para.AffineTransformation( 3, 2 );;
+Display( affine_transformation : dummy_input := dummy_input );
+#! ℝ^3 -> ℝ^2 defined by:
+#! 
+#! Underlying Object:
+#! -----------------
+#! ℝ^8
+#! 
+#! Underlying Morphism:
+#! -------------------
+#! ℝ^11 -> ℝ^2
+#! 
+#! ‣ w1_1 * z1 + w2_1 * z2 + w3_1 * z3 + b_1
+#! ‣ w1_2 * z1 + w2_2 * z2 + w3_2 * z3 + b_2
+"Let us convert these 2 togits to probabilities via softmax layer.";;
+softmax_layer := Para.Softmax( 2 );;
+Display( softmax_layer );
+#! ℝ^2 -> ℝ^2 defined by:
+#!
+#! Underlying Object:
+#! -----------------
+#! ℝ^0
+#!
+#! Underlying Morphism:
+#! -------------------
+#! ℝ^2 -> ℝ^2
+#!
+#! ‣ Exp( x1 ) / (Exp( x1 ) + Exp( x2 ))
+#! ‣ Exp( x2 ) / (Exp( x1 ) + Exp( x2 ))
+probs := PreCompose( affine_transformation, softmax_layer );;
+Display( probs : dummy_input := dummy_input );
+#! ℝ^3 -> ℝ^2 defined by:
+#! 
+#! Underlying Object:
+#! -----------------
+#! ℝ^8
+#! 
+#! Underlying Morphism:
+#! -------------------
+#! ℝ^11 -> ℝ^2
+#! 
+#! ‣ Exp( w1_1 * z1 + w2_1 * z2 + w3_1 * z3 + b_1 )
+#!    / (Exp( w1_1 * z1 + w2_1 * z2 + w3_1 * z3 + b_1 )
+#!     + Exp( w1_2 * z1 + w2_2 * z2 + w3_2 * z3 + b_2 ))
+#! ‣ Exp( w1_2 * z1 + w2_2 * z2 + w3_2 * z3 + b_2 )
+#!    / (Exp( w1_1 * z1 + w2_1 * z2 + w3_1 * z3 + b_1 )
+#!     + Exp( w1_2 * z1 + w2_2 * z2 + w3_2 * z3 + b_2 ))
+parameters := [ 0.91, 0.24, 0.88, 0.59, 0.67, 0.05, 0.85, 0.31 ];;
+logits := [ 1.0, 2.0, 3.0 ];;
+Eval( probs, [ parameters, logits ] );
+#! [ 0.729088, 0.270912 ]
 #! @EndExample

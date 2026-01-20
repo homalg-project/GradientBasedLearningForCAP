@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# GradientDescentForCAP: Exploring categorical machine learning in CAP
+# GradientBasedLearningForCAP: Gradient Based Learning via Category Theory
 #
 # Implementations
 #
@@ -234,7 +234,7 @@ end );
 #
 # a direct implementation:
 #
-InstallMethod( SwitchSourceAndUnderlyingObject,
+InstallMethod( FlipParameterAndSource,
           [ IsMorphismInCategoryOfParametrisedMorphisms ],
   
   function ( f )
@@ -308,14 +308,19 @@ end );
 InstallOtherMethod( Eval,
         [ IsMorphismInCategoryOfParametrisedMorphisms, IsDenseList ],
   
-  function( f, pair )
+  function( f, input_list )
     
-    return Eval( UnderlyingMorphism( f ), Concatenation( pair ) );
+    # if input_list is a pair of parameter_vector and input_vector, concatenate them
+    if Length( input_list ) = 2 and IsDenseList( input_list[1] ) and IsDenseList( input_list[2] ) then
+        input_list := Concatenation( input_list[1], input_list[2] );
+    fi;
+    
+    return Eval( UnderlyingMorphism( f ), input_list );
     
 end );
 
 ##
-InstallMethod( NaturalEmbeddingIntoCategoryOfParametrisedMorphisms,
+InstallMethod( NaturalEmbedding,
         [ IsCapCategory, IsCategoryOfParametrisedMorphisms ],
   
   function ( C, Para )
@@ -356,7 +361,7 @@ InstallMethod( EmbeddingIntoCategoryOfParametrisedMorphisms,
     
     Lenses := UnderlyingCategory( Para_Lenses );
     
-    iota := EmbeddingIntoCategoryOfLenses( C, Lenses );
+  iota := ReverseDifferentialLensFunctor( C );
     
     delta := CapFunctor( "Embedding into category of parametrised morphisms", Para, Para_Lenses );
     
@@ -391,7 +396,7 @@ InstallOtherMethod( \.,
     
     C := UnderlyingCategory( Para );
     
-    if not IsCategoryOfSkeletalSmoothMaps( C ) then
+    if not IsSkeletalCategoryOfSmoothMaps( C ) then
         TryNextMethod( );
     fi;
     
@@ -462,7 +467,7 @@ InstallOtherMethod( \.,
 end );
 
 ##
-InstallMethod( AdjustToBatchSize,
+InstallMethod( Batchify,
           [ IsMorphismInCategoryOfParametrisedMorphisms, IsInt ],
   
   function ( f, n )

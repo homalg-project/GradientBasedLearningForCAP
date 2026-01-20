@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# GradientDescentForCAP: Exploring categorical machine learning in CAP
+# GradientBasedLearningForCAP: Gradient Based Learning via Category Theory
 #
 # Implementations
 #
@@ -36,7 +36,7 @@ InstallMethod( Expression,
 end );
 
 ##
-InstallMethod( Expression,
+InstallMethod( ConstantExpression,
           [ IsString ],
   
   function ( string )
@@ -47,6 +47,10 @@ InstallMethod( Expression,
                       String, string );
     
     MakeReadWriteGlobal( string );
+    
+    if IsBoundGlobal( string ) then
+        UnbindGlobal( string );
+    fi;
     
     DeclareSynonym( string, constant );
     
@@ -74,7 +78,7 @@ InstallOtherMethod( ViewString,
 end );
 
 ##
-InstallGlobalFunction( ConvertToExpressions,
+InstallGlobalFunction( CreateContextualVariables,
   
   variables -> List( variables, var -> Expression( variables, var ) )
 );
@@ -101,13 +105,13 @@ InstallMethod( DummyInput,
   
   function ( var, r )
     
-    return ConvertToExpressions( DummyInputStrings( var, r ) );
+    return CreateContextualVariables( DummyInputStrings( var, r ) );
     
 end );
 
 ##
 InstallOtherMethod( DummyInput,
-          [ IsString, IsMorphismInCategoryOfSkeletalSmoothMaps ],
+          [ IsString, IsMorphismInSkeletalCategoryOfSmoothMaps ],
   
   function ( var, f )
     
@@ -117,7 +121,7 @@ end );
 
 ##
 InstallOtherMethod( DummyInput,
-          [ IsMorphismInCategoryOfSkeletalSmoothMaps ],
+          [ IsMorphismInSkeletalCategoryOfSmoothMaps ],
   
   function ( f )
     
@@ -130,6 +134,8 @@ InstallGlobalFunction( AssignExpressions,
   
   function ( vars )
     local func;
+    
+    Assert( 0, ForAll( vars, IsExpression ) );
     
     func :=
       function ( e )

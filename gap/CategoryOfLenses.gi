@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0-or-later
-# GradientDescentForCAP: Exploring categorical machine learning in CAP
+# GradientBasedLearningForCAP: Gradient Based Learning via Category Theory
 #
 # Implementations
 #
@@ -414,15 +414,16 @@ InstallOtherMethod( IsCongruentForMorphisms,
 end );
 
 ##
-InstallMethod( EmbeddingIntoCategoryOfLenses,
-          [ IsCategoryOfSkeletalSmoothMaps, IsCategoryOfLenses ],
+InstallMethod( ReverseDifferentialLensFunctor,
+          [ IsSkeletalCategoryOfSmoothMaps, IsCategoryOfLenses ],
   
-  function ( C, Lenses )
+  function ( Smooth, Lenses )
     local F;
     
-    Assert( 0, IsIdenticalObj( C, UnderlyingCategory( Lenses ) ) );
+    Assert( 0, IsIdenticalObj( UnderlyingCategory( Lenses ), Smooth ),
+            "the underlying category of the category of lenses must be the category of smooth maps!" );
     
-    F := CapFunctor( "Embedding functor into category of lenses", C, Lenses );
+    F := CapFunctor( "Embedding functor into category of lenses", Smooth, Lenses );
     
     AddObjectFunction( F,
       function ( A )
@@ -435,11 +436,24 @@ InstallMethod( EmbeddingIntoCategoryOfLenses,
       
       function ( source, f, target )
         
-        return MorphismConstructor( Lenses, source, Pair( f, ReverseDifferential( C, f ) ), target );
+        return MorphismConstructor( Lenses, source, Pair( f, ReverseDifferential( Smooth, f ) ), target );
         
     end );
     
     return F;
+    
+end );
+
+##
+InstallOtherMethod( ReverseDifferentialLensFunctor,
+          [ IsSkeletalCategoryOfSmoothMaps ],
+  
+  function ( Smooth )
+    local Lenses;
+    
+    Lenses := CategoryOfLenses( Smooth );
+    
+    return ReverseDifferentialLensFunctor( Smooth, Lenses );
     
 end );
 
@@ -467,7 +481,7 @@ InstallOtherMethod( \.,
     
     C := UnderlyingCategory( Lenses );
     
-    if not IsCategoryOfSkeletalSmoothMaps( C ) then
+    if not IsSkeletalCategoryOfSmoothMaps( C ) then
         TryNextMethod( );
     fi;
     
@@ -613,10 +627,10 @@ InstallOtherMethod( \.,
                         PreCompose( Smooth, p3, DirectProductFunctorial( Smooth, ListWithIdenticalEntries( n, Smooth.Power( 2 ) ) ) ) );
                 
                 t := MultiplicationForMorphisms( Smooth,
-                        SmoothMorphism( Smooth, P3, ListWithIdenticalEntries( n, learning_rate ), Smooth.( n ) ),
+                        SmoothMap( Smooth, P3, ListWithIdenticalEntries( n, learning_rate ), Smooth.( n ) ),
                         PreCompose( Smooth,
                             AdditionForMorphisms( Smooth,
-                                  SmoothMorphism( Smooth, P3, ListWithIdenticalEntries( n, epsilon ), Smooth.( n ) ),
+                                  SmoothMap( Smooth, P3, ListWithIdenticalEntries( n, epsilon ), Smooth.( n ) ),
                                   PreCompose( Smooth,
                                       s,
                                       DirectProductFunctorial( Smooth, ListWithIdenticalEntries( n, Smooth.Sqrt ) ) ) ),
@@ -821,7 +835,7 @@ InstallOtherMethod( \.,
                 p4 := ProjectionInFactorOfDirectProductWithGivenDirectProduct( Smooth, diagram, 4, TxP4 );
                 p5 := ProjectionInFactorOfDirectProductWithGivenDirectProduct( Smooth, diagram, 5, TxP4 );
                 
-                put_1 := AdditionForMorphisms( Smooth, p1, SmoothMorphism( Smooth, TxP4, [ 1 ], Smooth.( 1 ) ) );
+                put_1 := AdditionForMorphisms( Smooth, p1, SmoothMap( Smooth, TxP4, [ 1 ], Smooth.( 1 ) ) );
                 
                 m := AdditionForMorphisms( Smooth,
                           MultiplyWithElementOfCommutativeRingForMorphisms( Smooth, beta_1, p2 ),
@@ -832,7 +846,7 @@ InstallOtherMethod( \.,
                 b := PreComposeList( Smooth,
                           [ p1,
                             SubtractionForMorphisms( Smooth,
-                              SmoothMorphism( Smooth, Smooth.( 1 ), [ 1 ], Smooth.( 1 ) ),
+                              SmoothMap( Smooth, Smooth.( 1 ), [ 1 ], Smooth.( 1 ) ),
                               Smooth.PowerBase( beta_2 ) ),
                             Smooth.Power( -1 ) ] );
                 
@@ -852,7 +866,7 @@ InstallOtherMethod( \.,
                 b := PreComposeList( Smooth,
                           [ p1,
                             SubtractionForMorphisms( Smooth,
-                                SmoothMorphism( Smooth, Smooth.( 1 ), [ 1 ], Smooth.( 1 ) ),
+                                SmoothMap( Smooth, Smooth.( 1 ), [ 1 ], Smooth.( 1 ) ),
                                 Smooth.PowerBase( beta_2 ) ),
                             Smooth.Power( -1 ) ] );
                 
@@ -861,7 +875,7 @@ InstallOtherMethod( \.,
                 
                 v_hat := MultiplicationForMorphisms( Smooth, v, b );
                 
-                delta_n := SmoothMorphism( Smooth,
+                delta_n := SmoothMap( Smooth,
                               TxP4,
                               ListWithIdenticalEntries( n, epsilon ),
                               Smooth.( n ) );
@@ -1021,13 +1035,13 @@ InstallOtherMethod( \.,
         return
           function ( arg... )
             
-            return ApplyFunctor( EmbeddingIntoCategoryOfLenses( C, Lenses ), CallFuncList( C.( f ), arg ) );
+            return ApplyFunctor( ReverseDifferentialLensFunctor( C ), CallFuncList( C.( f ), arg ) );
             
           end;
           
     elif f in [ "Sqrt", "Exp", "Log", "Sin", "Cos", "BinaryCrossEntropyLoss_", "BinaryCrossEntropyLoss" ] then
         
-        return ApplyFunctor( EmbeddingIntoCategoryOfLenses( C, Lenses ), C.( f ) );
+  return ApplyFunctor( ReverseDifferentialLensFunctor( C ), C.( f ) );
         
     fi;
 end );
@@ -1055,9 +1069,9 @@ InstallMethod( ViewString,
               " -> ",
               ViewString( Target( f ) ),
               " defined by:",
-              "\n\nGet Morphism:\n----------\n",
+              "\n\nGet Morphism:\n------------\n",
               ViewString( GetMorphism( f ) ),
-              "\n\nPut Morphism:\n----------\n",
+              "\n\nPut Morphism:\n------------\n",
               ViewString( PutMorphism( f ) )
             );
     
@@ -1068,36 +1082,25 @@ InstallMethod( DisplayString,
           [ IsMorphismInCategoryOfLenses ],
   
   function ( f )
+    local rank, get_morphism, put_morphism, get_input, put_input;
+    
+    get_morphism := GetMorphism( f );
+    put_morphism := PutMorphism( f );
+    
+    put_input := CAP_INTERNAL_RETURN_OPTION_OR_DEFAULT( "dummy_input", DummyInput( put_morphism ) );
+    
+    rank := RankOfObject( Source( get_morphism ) );
+    
+    get_input := put_input{ [ 1 .. rank ] };
     
     return Concatenation(
               ViewString( Source( f ) ),
               " -> ",
               ViewString( Target( f ) ),
               " defined by:\n",
-              "\nGet Morphism:\n----------\n",
-              DisplayString( GetMorphism( f ) ),
-              "\nPut Morphism:\n----------\n",
-              DisplayString( PutMorphism( f ) ) );
-    
-end );
-
-##
-InstallMethod( Display,
-          [ IsMorphismInCategoryOfLenses ],
-  
-  function ( f )
-    
-    Print( Concatenation(
-              ViewString( Source( f ) ),
-              " -> ",
-              ViewString( Target( f ) ),
-              " defined by:\n",
-              "\nGet Morphism:\n------------\n" ) );
-    
-    Display( GetMorphism( f ) );
-    
-    Print( "\nPut Morphism:\n------------\n" );
-    
-    Display( PutMorphism( f ) );
+              "\nGet Morphism:\n------------\n",
+              DisplayString( GetMorphism( f ) : dummy_input := get_input ),
+              "\n\nPut Morphism:\n------------\n",
+              DisplayString( PutMorphism( f ) : dummy_input := put_input ) );
     
 end );

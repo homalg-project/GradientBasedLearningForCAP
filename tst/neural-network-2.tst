@@ -1,7 +1,7 @@
 gap> Smooth := SkeletalSmoothMaps;;
 gap> Lenses := CategoryOfLenses( Smooth );;
 gap> Para := CategoryOfParametrisedMorphisms( Smooth );;
-gap> f := LossMorphismOfNeuralNetwork( Para, 2, [ 5, 5 ], 4, "Softmax" );;
+gap> f := NeuralNetworkLossMorphism( Para, 2, [ 5, 5 ], 4, "Softmax" );;
 gap> optimizer := Lenses.GradientDescentOptimizer( : learning_rate := 0.01 );;
 gap> training_examples_path := SelectBasedOnCondition( IsExistingFile( "data-2.txt" ), "data-2.txt", "tst/data-2.txt" );;
 gap> batch_size := 1;;

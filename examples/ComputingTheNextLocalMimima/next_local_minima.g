@@ -1,9 +1,9 @@
-LoadPackage( "GradientDescentForCAP" );
+LoadPackage( "GradientBasedLearningForCAP" );
 
 
 # the function f(x1,x2) = sin(x1)^2 + log(x2)^2 has local miminima at the points (πk, 1) where k ∈ ℤ
 
-Smooth := CategoryOfSkeletalSmoothMaps( );
+Smooth := SkeletalCategoryOfSmoothMaps( );
 Lenses := CategoryOfLenses( Smooth );
 Para := CategoryOfParametrisedMorphisms( Smooth );
 
