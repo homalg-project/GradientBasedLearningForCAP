@@ -46,7 +46,7 @@ To obtain current versions of all dependencies, `git clone` (or `git pull` to up
 ### Running the Package with Docker
 To save time on installation, you can use a pre-built Docker image to run the package:
 ```bash
-docker run -it ghcr.io/kamalsaleh/gradient-descent-for-cap-docker:latest
+docker run -it ghcr.io/kamalsaleh/gradient-based-learning-for-cap-docker:latest
 ```
 This will install the computer algebra system Gap and all other dependencies in an isolated container environment.
 
