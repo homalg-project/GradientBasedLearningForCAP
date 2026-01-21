@@ -1,17 +1,26 @@
   
   [1X1 [33X[0;0YIntroduction[133X[101X
   
-  [33X[0;0YThis package provides tools for exploring categorical machine learning using
-  the   CAP   (Categories,  Algorithms,  Programming)  system.  It  implements
-  automatic differentiation using the lens pattern and provides constructs for
-  building and training neural networks.[133X
+  [33X[0;0YThe   GradientBasedLearningForCAP   package  is  a  computational  tool  for
+  categorical   machine  learning  within  the  CAP  (Categories,  Algorithms,
+  Programming)  framework.  It  provides  a  categorical foundation for neural
+  networks   by  modelling  them  as  parametrised  morphisms  and  performing
+  computation  in  the  category  of smooth maps. The system supports symbolic
+  expressions and automatic differentiation via the lens pattern, enabling the
+  bidirectional  data  flow  required  for  backpropagation. Included examples
+  demonstrate  practical  applications  such  as  finding  a local minimum and
+  training  models  for binary classification, multi-class classification, and
+  linear  regression,  using  various  loss functions and optimizers including
+  gradient  descent  and  Adam.  This  implementation  is  based  on the paper
+  [23X\href{https://arxiv.org/abs/2404.00408}{Deep~Learning~with~Parametric~Lenses}[123X.[133X
   
   
   [1X1.1 [33X[0;0YOverview[133X[101X
   
   [33X[0;0YThe package implements the following main concepts:[133X
   
-  [30X    [33X[0;6Y[13XExamples[113X: Examples for creating and training neural networks.[133X
+  [30X    [33X[0;6Y[13XExamples[113X:  Examples  for  creating  and  training  neural networks and
+        computing local minima.[133X
   
   [30X    [33X[0;6Y[13XExpressions[113X:   A   symbolic   expression   system   for   representing
         mathematical formulas.[133X

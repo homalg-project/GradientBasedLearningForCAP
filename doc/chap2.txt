@@ -1,8 +1,8 @@
   
-  [1X2 [33X[0;0YExamples for neural networks[133X[101X
+  [1X2 [33X[0;0YExamples[133X[101X
   
   
-  [1X2.1 [33X[0;0YBinary-class neural network with binary cross-entropy loss function[133X[101X
+  [1X2.1 [33X[0;0YBinary-Class Neural Network with Binary Cross-Entropy Loss Function[133X[101X
   
   [33X[0;0YThis  example  demonstrates how to train a small feed-forward neural network
   for       a       binary       classification       task      using      the
@@ -137,7 +137,7 @@
   );}[123X produces the following plot:[133X
   
   
-  [1X2.2 [33X[0;0YMulti-class neural network with cross-entropy loss function[133X[101X
+  [1X2.2 [33X[0;0YMulti-Class Neural Network with Cross-Entropy Loss Function[133X[101X
   
   [33X[0;0YThis  example  demonstrates how to train a small feed-forward neural network
   for      a      multi-class      classification      task      using     the
@@ -253,7 +253,7 @@
   );}[123X produces the following plot:[133X
   
   
-  [1X2.3 [33X[0;0YNeural network with quadratic loss function[133X[101X
+  [1X2.3 [33X[0;0YNeural Network with Quadratic Loss Function[133X[101X
   
   [33X[0;0YThis  example  demonstrates how to train a small feed-forward neural network
   for   a   regression  task  using  the  [23X\texttt{GradientBasedLearningForCAP}[123X
@@ -354,4 +354,121 @@
   [33X[0;0YWe notice that the learned weights [23Xw_1 \approx 2.01399[123X, [23Xw_2 \approx -2.9546[123X,
   and  [23Xb_1 \approx 0.989903[123X are close to the perfect weights [23X2[123X, [23X-3[123X, and [23X1[123X used
   to generate the dataset.[133X
+  
+  
+  [1X2.4 [33X[0;0YNext Local Minima[133X[101X
+  
+  [33X[0;0YIn  this  example  we  demonstrate  how  to  use  the  fitting  machinery of
+  [23X\texttt{GradientBasedLearningForCAP}[123X  to  find  a  nearby local minimum of a
+  smooth function by gradient-based optimisation.[133X
+  
+  [33X[0;0YWe consider the function which has local minima at the points [23X(\pi k, 1)[123X for
+  [23Xk \in \mathbb{Z}[123X. We use the Adam optimiser to find a local minimum starting
+  from an initial point. Hence, the parameter vector is of the form where [23Xt[123X is
+  the  time  step, [23Xm_1[123X and [23Xm_2[123X are the first moment estimates for [23X\theta_1[123X and
+  [23X\theta_2[123X  respectively,  and [23Xv_1[123X and [23Xv_2[123X are the second moment estimates for
+  [23X\theta_1[123X and [23X\theta_2[123X respectively. We start from the initial point which is
+  close  to  the local minimum at [23X(\pi, 1)[123X. After running the optimisation for
+  [23X500[123X  epochs,  we reach the point where the last two components correspond to
+  the  parameters  [23X\theta_1[123X  and  [23X\theta_2[123X.  Evaluating the function [23Xf[123X at this
+  point gives us the value which is very close to [23X0[123X, the value of the function
+  at  the local minima. Thus, we have successfully found a local minimum using
+  gradient-based  optimisation. Note that during the optimisation process, the
+  [23X\theta_1[123X parameter moved from approximately [23X1.58[123X to approximately [23X\pi[123X, while
+  the [23X\theta_2[123X parameter moved from [23X0.1[123X to approximately [23X1[123X.[133X
+  
+  [4X[32X  Example  [32X[104X
+    [4X[25Xgap>[125X [27XSmooth := SkeletalCategoryOfSmoothMaps( );[127X[104X
+    [4X[28XSkeletalSmoothMaps[128X[104X
+    [4X[25Xgap>[125X [27XLenses := CategoryOfLenses( Smooth );[127X[104X
+    [4X[28XCategoryOfLenses( SkeletalSmoothMaps )[128X[104X
+    [4X[25Xgap>[125X [27XPara := CategoryOfParametrisedMorphisms( Smooth );[127X[104X
+    [4X[28XCategoryOfParametrisedMorphisms( SkeletalSmoothMaps )[128X[104X
+    [4X[25Xgap>[125X [27Xf_smooth := PreCompose( Smooth,[127X[104X
+    [4X[25X>[125X [27X        DirectProductFunctorial( Smooth, [ Smooth.Sin ^ 2, Smooth.Log ^ 2 ] ),[127X[104X
+    [4X[25X>[125X [27X        Smooth.Sum( 2 ) );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^1[128X[104X
+    [4X[25Xgap>[125X [27Xdummy_input := CreateContextualVariables( [ "theta_1", "theta_2" ] );[127X[104X
+    [4X[28X[ theta_1, theta_2 ][128X[104X
+    [4X[25Xgap>[125X [27XDisplay( f_smooth : dummy_input := dummy_input );[127X[104X
+    [4X[28Xℝ^2 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ Sin( theta_1 ) * Sin( theta_1 ) + Log( theta_2 ) * Log( theta_2 )[128X[104X
+    [4X[25Xgap>[125X [27Xf := MorphismConstructor( Para,[127X[104X
+    [4X[25X>[125X [27X        ObjectConstructor( Para, Smooth.( 0 ) ),[127X[104X
+    [4X[25X>[125X [27X        Pair( Smooth.( 2 ), f_smooth ),[127X[104X
+    [4X[25X>[125X [27X        ObjectConstructor( Para, Smooth.( 1 ) ) );[127X[104X
+    [4X[28Xℝ^0 -> ℝ^1 defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Object:[128X[104X
+    [4X[28X-----------------[128X[104X
+    [4X[28Xℝ^2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Morphism:[128X[104X
+    [4X[28X-------------------[128X[104X
+    [4X[28Xℝ^2 -> ℝ^1[128X[104X
+    [4X[25Xgap>[125X [27XDisplay( f : dummy_input := dummy_input );[127X[104X
+    [4X[28Xℝ^0 -> ℝ^1 defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Object:[128X[104X
+    [4X[28X-----------------[128X[104X
+    [4X[28Xℝ^2[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XUnderlying Morphism:[128X[104X
+    [4X[28X-------------------[128X[104X
+    [4X[28Xℝ^2 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ Sin( theta_1 ) * Sin( theta_1 ) + Log( theta_2 ) * Log( theta_2 )[128X[104X
+    [4X[25Xgap>[125X [27Xoptimizer := Lenses.AdamOptimizer( );[127X[104X
+    [4X[28Xfunction( n ) ... end[128X[104X
+    [4X[25Xgap>[125X [27Xtraining_examples := [ [ ] ];[127X[104X
+    [4X[28X[ [ ] ][128X[104X
+    [4X[25Xgap>[125X [27Xbatch_size := 1;[127X[104X
+    [4X[28X1[128X[104X
+    [4X[25Xgap>[125X [27Xone_epoch_update := OneEpochUpdateLens( f, optimizer, training_examples, batch_size );[127X[104X
+    [4X[28X(ℝ^7, ℝ^7) -> (ℝ^1, ℝ^0) defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XGet Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^7 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XPut Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^7 -> ℝ^7[128X[104X
+    [4X[25Xgap>[125X [27Xdummy_input := CreateContextualVariables([127X[104X
+    [4X[25X>[125X [27X      [ "t", "m_1", "m_2", "v_1", "v_2", "theta_1", "theta_2" ] );[127X[104X
+    [4X[28X[ t, m_1, m_2, v_1, v_2, theta_1, theta_2 ][128X[104X
+    [4X[25Xgap>[125X [27XDisplay( one_epoch_update : dummy_input := dummy_input );[127X[104X
+    [4X[28X(ℝ^7, ℝ^7) -> (ℝ^1, ℝ^0) defined by:[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XGet Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^7 -> ℝ^1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ (Sin( theta_1 ) * Sin( theta_1 ) + Log( theta_2 ) * Log( theta_2 )) / 1 / 1[128X[104X
+    [4X[28X[128X[104X
+    [4X[28XPut Morphism:[128X[104X
+    [4X[28X------------[128X[104X
+    [4X[28Xℝ^7 -> ℝ^7[128X[104X
+    [4X[28X[128X[104X
+    [4X[28X‣ t + 1[128X[104X
+    [4X[28X‣ 0.9 * m_1 + 0.1 * (-1 * ((1 * ((1 * (Sin( theta_1 ) * Cos( theta_1 ) + Sin( theta_1 ) * Cos( theta_1 )) + 0) * 1 + 0) * 1 + 0) * 1 + 0))[128X[104X
+    [4X[28X‣ 0.9 * m_2 + 0.1 * (-1 * (0 + (0 + 1 * (0 + (0 + 1 * (Log( theta_2 ) * (1 / theta_2) + Log( theta_2 ) * (1 / theta_2))) * 1) * 1) * 1))[128X[104X
+    [4X[28X‣ 0.999 * v_1 + 0.001 * (-1 * ((1 * ((1 * (Sin( theta_1 ) * Cos( theta_1 ) + Sin( theta_1 ) * Cos( theta_1 )) + 0) * 1 + 0) * 1 + 0) * 1 + 0)) ^ 2[128X[104X
+    [4X[28X‣ 0.999 * v_2 + 0.001 * (-1 * (0 + (0 + 1 * (0 + (0 + 1 * (Log( theta_2 ) * (1 / theta_2) + Log( theta_2 ) * (1 / theta_2))) * 1) * 1) * 1)) ^ 2[128X[104X
+    [4X[28X‣ theta_1 + 0.001 / (1 - 0.999 ^ t) * ((0.9 * m_1 + 0.1 * (-1 * ((1 * ((1 * (Sin( theta_1 ) * Cos( theta_1 ) + Sin( theta_1 ) * Cos( theta_1 )) + 0) * 1 + 0) * 1 + 0) * 1 + 0))) / (1.e-0\[128X[104X
+    [4X[28X7 + Sqrt( (0.999 * v_1 + 0.001 * (-1 * ((1 * ((1 * (Sin( theta_1 ) * Cos( theta_1 ) + Sin( theta_1 ) * Cos( theta_1 )) + 0) * 1 + 0) * 1 + 0) * 1 + 0)) ^ 2) / (1 - 0.999 ^ t) )))[128X[104X
+    [4X[28X‣ theta_2 + 0.001 / (1 - 0.999 ^ t) * ((0.9 * m_2 + 0.1 * (-1 * (0 + (0 + 1 * (0 + (0 + 1 * (Log( theta_2 ) * (1 / theta_2) + Log( theta_2 ) * (1 / theta_2))) * 1) * 1) * 1))) / (1.e-07 \[128X[104X
+    [4X[28X+ Sqrt( (0.999 * v_2 + 0.001 * (-1 * (0 + (0 + 1 * (0 + (0 + 1 * (Log( theta_2 ) * (1 / theta_2) + Log( theta_2 ) * (1 / theta_2))) * 1) * 1) * 1)) ^ 2) / (1 - 0.999 ^ t) )))[128X[104X
+    [4X[25Xgap>[125X [27Xw := [ 1, 0, 0, 0, 0, 1.58, 0.1 ];[127X[104X
+    [4X[28X[ 1, 0, 0, 0, 0, 1.58, 0.1 ][128X[104X
+    [4X[25Xgap>[125X [27Xnr_epochs := 500;[127X[104X
+    [4X[28X500[128X[104X
+    [4X[25Xgap>[125X [27Xw := Fit( one_epoch_update, nr_epochs, w : verbose := false );[127X[104X
+    [4X[28X[ 501, -9.35215e-12, 0.041779, 0.00821802, 1.5526, 3.14159, 0.980292 ][128X[104X
+    [4X[25Xgap>[125X [27Xtheta := w{ [ 6, 7 ] };[127X[104X
+    [4X[28X[ 3.14159, 0.980292 ][128X[104X
+    [4X[25Xgap>[125X [27XMap( f_smooth )( theta );[127X[104X
+    [4X[28X[ 0.000396202 ][128X[104X
+  [4X[32X[104X
   

@@ -46,15 +46,15 @@
   
   [33X[0;0YThis lens merely negates the gradient signal.[133X
   
-  [33X[0;0YFor  example, if we chose the optimizer to be the gradient descent optimizer
-  with  learning  rate  [23X\eta=0.01[123X: The resulting One-Epoch update lens for the
-  example  [23XX_i[123X  is  given  by:  Now, we can start by a random parameter vector
-  [23X\Theta_0  \in  \mathbb{R}^p[123X  and  apply the update morphism of the One-Epoch
-  update  lens  for  [23XX_1[123X  to  obtain a new parameter vector [23X\Theta_1[123X, then use
-  [23X\Theta_1[123X  and  the  One-Epoch update lens for [23XX_2[123X to obtain [23X\Theta_2[123X, and so
-  on.  After  going through all training examples, we have completed one epoch
-  of  training.  To  perform multiple epochs of training, we can simply repeat
-  the process.[133X
+  [33X[0;0YSuppose  we  choose  the optimizer lens to be the gradient descent optimizer
+  with learning rate [23X\eta = 0.01 > 0[123X, then the resulting One-Epoch update lens
+  for  the  example  [23XX_i[123X  is  given by Now, we can start by a random parameter
+  vector  [23X\Theta_0  \in  \mathbb{R}^p[123X  and  apply  the  update morphism of the
+  One-Epoch  update  lens  for  [23XX_1[123X to obtain a new parameter vector [23X\Theta_1[123X,
+  then  use [23X\Theta_1[123X and the One-Epoch update lens for [23XX_2[123X to obtain [23X\Theta_2[123X,
+  and  so on. After going through all training examples, we have completed one
+  epoch  of  training.  To  perform multiple epochs of training, we can simply
+  repeat the process.[133X
   
   [33X[0;0YFor  example,  suppose  we start with the parmetised morphism ([23X\mathbb{R}^2,
   f):\mathbb{R}^2  \to  \mathbb{R}[123X  where [23Xf:\mathbb{R}^{2+2} \to \mathbb{R}[123X is

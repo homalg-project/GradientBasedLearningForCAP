@@ -6,10 +6,10 @@
                  [1X Gradient Based Learning via Category Theory [101X
   
   
-                                   2026.01-01
+                                   2026.01-02
   
   
-                                20 January 2026
+                                21 January 2026
   
   
                                   Kamal Saleh
@@ -32,10 +32,11 @@
   
   1 [33X[0;0YIntroduction[133X
     1.1 [33X[0;0YOverview[133X
-  2 [33X[0;0YExamples for neural networks[133X
-    2.1 [33X[0;0YBinary-class neural network with binary cross-entropy loss function[133X
-    2.2 [33X[0;0YMulti-class neural network with cross-entropy loss function[133X
-    2.3 [33X[0;0YNeural network with quadratic loss function[133X
+  2 [33X[0;0YExamples[133X
+    2.1 [33X[0;0YBinary-Class Neural Network with Binary Cross-Entropy Loss Function[133X
+    2.2 [33X[0;0YMulti-Class Neural Network with Cross-Entropy Loss Function[133X
+    2.3 [33X[0;0YNeural Network with Quadratic Loss Function[133X
+    2.4 [33X[0;0YNext Local Minima[133X
   3 [33X[0;0YExpressions[133X
     3.1 [33X[0;0YConstructors[133X
       3.1-1 Expression

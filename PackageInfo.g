@@ -10,8 +10,8 @@ SetPackageInfo( rec(
 
 PackageName := "GradientBasedLearningForCAP",
 Subtitle := "Gradient Based Learning via Category Theory",
-Version := "2026.01-01",
-Date := "2026-01-20",
+Version := "2026.01-02",
+Date := "2026-01-21",
 License := "GPL-2.0-or-later",
 
 Persons := [

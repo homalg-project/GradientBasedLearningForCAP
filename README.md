@@ -112,7 +112,7 @@ where the activation map applied on the output layer is the identity function _I
 ```julia
 gap> input_dim := 1;; hidden_dims := [ ];; output_dim := 1;;
 
-gap> f := PredictionMorphismOfNeuralNetwork( Para, input_dim, hidden_dims, output_dim, "IdFunc" );;
+gap> f := NeuralNetworkPredictionMorphism( Para, input_dim, hidden_dims, output_dim, "IdFunc" );;
 ```
 As a parametrized map this neural network is defined as:
 
@@ -120,10 +120,10 @@ As a parametrized map this neural network is defined as:
 
 Note that $(\theta_1,\theta_2)$ represents the parameters-vector while $(x)$ represents the input-vector. Hence, the above output is an affine transformation of $(x)\in \mathbb{R}^1$.
 ```julia
-gap> input := ConvertToExpressions( [ "theta_1", "theta_2", "x" ] );
+gap> dummy_input := CreateContextualVariables( [ "theta_1", "theta_2", "x" ] );
 [ theta_1, theta_2, x ]
 
-gap> Display( f : dummy_input := input );
+gap> Display( f : dummy_input := dummy_input );
 ℝ^1 -> ℝ^1 defined by:
 
 Underlying Object:
@@ -156,12 +156,12 @@ Note that $(\theta_1,\theta_2)$ represents the parameters-vector while $(x,y)$ r
 In the following we construct the aforementioned loss-map:
 
 ```julia
-gap> ell := LossMorphismOfNeuralNetwork( Para, input_dim, hidden_dims, output_dim, "IdFunc" );;
+gap> ell := NeuralNetworkLossMorphism( Para, input_dim, hidden_dims, output_dim, "IdFunc" );;
 
-gap> input := ConvertToExpressions( [ "theta_1", "theta_2", "x", "y" ] );
+gap> dummy_input := CreateContextualVariables( [ "theta_1", "theta_2", "x", "y" ] );
 [ theta_1, theta_2, x, y ]
 
-gap> Display( ell : dummy_input := input );
+gap> Display( ell : dummy_input := dummy_input );
 ℝ^2 -> ℝ^1 defined by:
 
 Underlying Object:
@@ -209,7 +209,7 @@ gap> theta := [ 0.1, -0.1 ];;
 
 To perform _nr_epochs_ = 15 updates on $\theta\in\mathbb{R}^2$ we can use the _Fit_ operation:
 ```julia
-gap> nr_epochs := 10;;
+gap> nr_epochs := 15;;
 
 gap> theta := Fit( one_epoch_update, nr_epochs, theta );
 Epoch  0/15 - loss = 26.777499999999993
@@ -321,7 +321,7 @@ Its input dimension is 2 and output dimension is 3 and has no hidden layers.
 ```julia
 gap> input_dim := 2;; hidden_dims := [ ];; output_dim := 3;;
 
-gap> f := PredictionMorphismOfNeuralNetwork( Para, input_dim, hidden_dims, output_dim, "Softmax" );;
+gap> f := NeuralNetworkPredictionMorphism( Para, input_dim, hidden_dims, output_dim, "Softmax" );;
 ```
 
 As a parametrized map this neural network is defined as:
@@ -330,10 +330,10 @@ As a parametrized map this neural network is defined as:
 
 Note that $(\theta_1,\dots,\theta_9)$ represents the parameters-vector while $(x_{1},x_{2})$ represents the input-vector. Hence, the above output is the _Softmax_ of an affine transformation of $(x_{1},x_{2})$.
 ```julia
-gap> input := ConvertToExpressions( [ "theta_1", "theta_2", "theta_3", "theta_4", "theta_5", "theta_6", "theta_7", "theta_8", "theta_9", "x1", "x2" ] );
+gap> dummy_input := CreateContextualVariables( [ "theta_1", "theta_2", "theta_3", "theta_4", "theta_5", "theta_6", "theta_7", "theta_8", "theta_9", "x1", "x2" ] );
 [ theta_1, theta_2, theta_3, theta_4, theta_5, theta_6, theta_7, theta_8, theta_9, x1, x2 ]
 
-gap> Display( f : dummy_input := input );
+gap> Display( f : dummy_input := dummy_input );
 ℝ^2 -> ℝ^3 defined by:
 
 Underlying Object:
@@ -380,11 +380,11 @@ $$\text{Cross-Entropy}((z_1,z_2,z_3),(y_{1},y_{2},y_{3})) := -\frac{1}{3}\left(y
 In the following we construct the aforementioned loss-map:
 
 ```julia
-gap> ell := LossMorphismOfNeuralNetwork( Para, input_dim, hidden_dims, output_dim, "Softmax" );;
+gap> ell := NeuralNetworkLossMorphism( Para, input_dim, hidden_dims, output_dim, "Softmax" );;
 
-gap> input := ConvertToExpressions( [ "theta_1", "theta_2", "theta_3", "theta_4", "theta_5", "theta_6", "theta_7", "theta_8", "theta_9", "x1", "x2", "y1", "y2", "y3" ] );
+gap> dummy_input := CreateContextualVariables( [ "theta_1", "theta_2", "theta_3", "theta_4", "theta_5", "theta_6", "theta_7", "theta_8", "theta_9", "x1", "x2", "y1", "y2", "y3" ] );
 
-gap> Display( ell : dummy_input := input );
+gap> Display( ell : dummy_input := dummy_input );
 ℝ^5 -> ℝ^1 defined by:
 
 Underlying Object:
@@ -416,7 +416,7 @@ CategoryOfLenses( SkeletalSmoothMaps )
 
 gap> optimizer := Lenses.AdamOptimizer( : learning_rate := 0.01, beta_1 := 0.9, beta_2 := 0.999 );;
 
-gap> optimizer( 9 )
+gap> optimizer( 9 );
 (ℝ^28, ℝ^28) -> (ℝ^9, ℝ^9) defined by:
 
 Get Morphism:
@@ -433,7 +433,7 @@ Now we compute the One-Epoch-Update-Lens using the _batch size_ = 1:
 ```julia
 gap> batch_size := 1;;
 
-gap> one_epoch_update := OneEpochUpdateLens( ell, optimizer, D, batch_size );;
+gap> one_epoch_update := OneEpochUpdateLens( ell, optimizer, D, batch_size );
 (ℝ^28, ℝ^28) -> (ℝ^1, ℝ^0) defined by:
 
 Get Morphism:
@@ -494,7 +494,7 @@ Epoch 4/4 - loss = 0.0030655216725219204
 Now let us use the updated theta (is the last $9$ entries) to predict the label $\in$ {_class-1_, _class-2_, _class-3_} of the point $[1,-1]\in\mathbb{R}^2$.
 
 ```julia
-gap> theta := SplitDenseList( w, [ 19, 9 ] )[2];
+gap> theta := w{ [ 20 .. 28 ] };
 [ 5.09137, -4.83379, 3.06257, -5.70976, 0.837175, -4.23622, -1.71171, 5.54301, -4.80856 ]
 
 gap> theta := SkeletalSmoothMaps.Constant( theta );
