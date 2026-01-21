@@ -73,7 +73,7 @@
 #! \]
 #! @EndLatexOnly
 #! 
-#! For example, if we chose the optimizer to be the gradient descent optimizer with learning rate $\eta=0.01$:
+#! Suppose we choose the optimizer lens to be the gradient descent optimizer with learning rate $\eta = 0.01 > 0$,
 #! @BeginLatexOnly
 #! \[
 #! \begin{tikzpicture}
@@ -83,13 +83,13 @@
 #! \node (Ap) at (-3,-1) {$\mathbb{R}^p$};
 #! \node (Bp) at ( 3,-1) {$\mathbb{R}^p$};
 #! \draw (-1.5,-1.8) rectangle (1.5,1.8);
-#! \draw[->] (A) -- node[above] {$\Theta \mapsto f_i(\Theta)$} (B);
+#! \draw[->] (A) -- node[above] {$\Theta \mapsto \Theta$} (B);
 #! \draw[->] (Bp) -- node[midway, below] {$\Theta + \eta g \mapsfrom (\Theta, g)$} (Ap);
 #! \draw[-] (-1,1) to[out=-90, in=90] (1,-1);
 #! \end{tikzpicture}
 #! \]
 #! @EndLatexOnly
-#! The resulting One-Epoch update lens for the example $X_i$ is given by:
+#! then the resulting One-Epoch update lens for the example $X_i$ is given by
 #! @BeginLatexOnly
 #! \[
 #! \begin{tikzpicture}
@@ -99,7 +99,7 @@
 #! \node (Ap) at (-3,-1) {$\mathbb{R}^p$};
 #! \node (Bp) at ( 3,-1) {$\mathbb{R}^0$};
 #! \draw (-1.5,-1.8) rectangle (1.5,1.8);
-#! \draw[->] (A) -- node[above] {$\Theta \mapsto \Theta$} (B);
+#! \draw[->] (A) -- node[above] {$\Theta \mapsto f_i(\Theta)$} (B);
 #! \draw[->] (Bp) -- node[midway, below] {$\Theta - \eta J_{f_i}(\Theta) \mapsfrom \Theta$} (Ap);
 #! \draw[-] (-1,1) to[out=-90, in=90] (1,-1);
 #! \end{tikzpicture}

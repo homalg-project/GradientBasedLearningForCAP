@@ -1,6 +1,6 @@
-#! @Chapter Examples for neural networks
+#! @Chapter Examples
 
-#! @Section Binary-class neural network with binary cross-entropy loss function
+#! @Section Binary-Class Neural Network with Binary Cross-Entropy Loss Function
 
 LoadPackage( "GradientBasedLearningForCAP" );
 

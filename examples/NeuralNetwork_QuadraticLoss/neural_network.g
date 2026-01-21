@@ -1,8 +1,8 @@
 LoadPackage( "GradientBasedLearningForCAP" );
 
-#! @Chapter Examples for neural networks
+#! @Chapter Examples
 
-#! @Section Neural network with quadratic loss function
+#! @Section Neural Network with Quadratic Loss Function
 
 #! This example demonstrates how to train a small feed-forward neural network
 #! for a regression task using the $\texttt{GradientBasedLearningForCAP}$ package. We employ

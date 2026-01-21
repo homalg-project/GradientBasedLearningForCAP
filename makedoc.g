@@ -16,7 +16,8 @@ AutoDoc( rec(
                        "examples/NeuralNetwork_BinaryCrossEntropy", 
                        "examples/NeuralNetwork_CrossEntropy",
                        "examples/NeuralNetwork_QuadraticLoss",
-                        ],
+                       "examples/ComputingTheNextLocalMimima",
+                      ],
     ),
     extract_examples := rec(
         units := "Single",
@@ -28,6 +29,9 @@ AutoDoc( rec(
                 \usetikzlibrary{positioning}
                 \usepackage{mathtools}
                 \usepackage{stmaryrd}
+                \usepackage{fancyvrb}
+                \usepackage{fvextra}
+                \fvset{breaklines=true}
                 \DeclareUnicodeCharacter{211D}{\ensuremath{\mathbb{R}}}
                 \DeclareUnicodeCharacter{2023}{\ensuremath{\blacktriangleright}}
             """,

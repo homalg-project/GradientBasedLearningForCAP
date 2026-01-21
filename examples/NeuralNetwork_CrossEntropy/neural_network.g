@@ -1,6 +1,6 @@
-#! @Chapter Examples for neural networks
+#! @Chapter Examples
 
-#! @Section Multi-class neural network with cross-entropy loss function
+#! @Section Multi-Class Neural Network with Cross-Entropy Loss Function
 
 LoadPackage( "GradientBasedLearningForCAP" );
 

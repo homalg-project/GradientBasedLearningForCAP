@@ -1,13 +1,16 @@
 @Chapter Introduction
 
-This package provides tools for exploring categorical machine learning using the CAP (Categories, Algorithms, Programming) system.
-It implements automatic differentiation using the lens pattern and provides constructs for building and training neural networks.
+The GradientBasedLearningForCAP package is a computational tool for categorical machine learning within the CAP (Categories, Algorithms, Programming) framework.
+It provides a categorical foundation for neural networks by modelling them as parametrised morphisms and performing computation in the category of smooth maps.
+The system supports symbolic expressions and automatic differentiation via the lens pattern, enabling the bidirectional data flow required for backpropagation.
+Included examples demonstrate practical applications such as finding a local minimum and training models for binary classification, multi-class classification, and linear regression, using various loss functions and optimizers including gradient descent and Adam.
+This implementation is based on the paper $\href{https://arxiv.org/abs/2404.00408}{Deep~Learning~with~Parametric~Lenses}$.
 
 @Section Overview
 
 The package implements the following main concepts:
 
-* **Examples**: Examples for creating and training neural networks.
+* **Examples**: Examples for creating and training neural networks and computing local minima.
 
 * **Expressions**: A symbolic expression system for representing mathematical formulas.
 
@@ -26,11 +29,12 @@ The package implements the following main concepts:
 * **Tools**: Few GAP operations and helper functions.
 
 
-@Chapter Examples for neural networks
+@Chapter Examples
 
-@Section Binary-class neural network with binary cross-entropy loss function
-@Section Multi-class neural network with cross-entropy loss function
-@Section Neural network with quadratic loss function
+@Section Binary-Class Neural Network with Binary Cross-Entropy Loss Function
+@Section Multi-Class Neural Network with Cross-Entropy Loss Function
+@Section Neural Network with Quadratic Loss Function
+@Section Next Local Minima
 
 @Chapter Expressions
 
