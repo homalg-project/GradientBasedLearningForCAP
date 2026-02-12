@@ -276,6 +276,9 @@
   [30X    [33X[0;6Y[2XIsEqualToZeroMorphism[102X       ([14XCAP:       IsEqualToZeroMorphism      for
         IsCapCategoryMorphism[114X)[133X
   
+  [30X    [33X[0;6Y[2XIsHomSetInhabited[102X  ([14XCAP:  IsHomSetInhabited  for  IsCapCategoryObject,
+        IsCapCategoryObject[114X)[133X
+  
   [30X    [33X[0;6Y[2XIsIdempotent[102X ([14XCAP: IsIdempotent for IsCapCategoryMorphism[114X)[133X
   
   [30X    [33X[0;6Y[2XIsOne[102X ([14XCAP: IsOne for IsCapCategoryMorphism[114X)[133X
@@ -463,7 +466,7 @@
     [4X[25Xgap>[125X [27XDisplay( Smooth );[127X[104X
     [4X[28XA CAP category with name SkeletalSmoothMaps:[128X[104X
     [4X[28X[128X[104X
-    [4X[28X49 primitive operations were used to derive 92 operations for this category wh\[128X[104X
+    [4X[28X49 primitive operations were used to derive 93 operations for this category wh\[128X[104X
     [4X[28Xich algorithmically[128X[104X
     [4X[28X* IsCartesianCategory[128X[104X
     [4X[28X* IsLinearCategoryOverCommutativeRing[128X[104X

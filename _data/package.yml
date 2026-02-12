@@ -1,7 +1,7 @@
 name: GradientBasedLearningForCAP
-version: "2026.01-02"
+version: "2026.02-01"
 license: "GPL-2.0-or-later"
-date: 2026-01-21
+date: 2026-02-12
 description: |
     Gradient Based Learning via Category Theory
 
@@ -20,7 +20,7 @@ needed-pkgs:
       version: ">= 1.5"
       url: "https://www.math.rwth-aachen.de/~Frank.Luebeck/GAPDoc"
     - name: "CAP"
-      version: ">= 2024.09-12"
+      version: ">= 2026.02-01"
       url: "https://homalg-project.github.io/pkg/CAP"
     - name: "MonoidalCategories"
       version: ">= 2024.04-01"
@@ -42,11 +42,11 @@ packageinfo: https://homalg-project.github.io/GradientBasedLearningForCAP/Packag
 
 downloads:
     - name: .tar.gz
-      url: https://github.com/homalg-project/GradientBasedLearningForCAP/releases/download/v2026.01-02/GradientBasedLearningForCAP-2026.01-02.tar.gz
+      url: https://github.com/homalg-project/GradientBasedLearningForCAP/releases/download/v2026.02-01/GradientBasedLearningForCAP-2026.02-01.tar.gz
     - name: .zip
-      url: https://github.com/homalg-project/GradientBasedLearningForCAP/releases/download/v2026.01-02/GradientBasedLearningForCAP-2026.01-02.zip
+      url: https://github.com/homalg-project/GradientBasedLearningForCAP/releases/download/v2026.02-01/GradientBasedLearningForCAP-2026.02-01.zip
 
-pdf: https://github.com/homalg-project/GradientBasedLearningForCAP/releases/download/v2026.01-02/GradientBasedLearningForCAP-2026.01-02-manual.pdf
+pdf: https://github.com/homalg-project/GradientBasedLearningForCAP/releases/download/v2026.02-01/GradientBasedLearningForCAP-2026.02-01-manual.pdf
 
 abstract: |
 
@@ -57,10 +57,10 @@ keywords: |
     Explore Categorical Machine Learning.
 citeas: |
     <p class='BibEntry'>
-    [<span class='BibKey'>Sal21</span>]   <b class='BibAuthor'>Saleh, K.</b>,
+    [<span class='BibKey'>Sal12</span>]   <b class='BibAuthor'>Saleh, K.</b>,
      <i class='BibTitle'>GradientBasedLearningForCAP, Gradient Based Learning via Category Theory,
-             Version 2026.01-02</i>
-     (<span class='BibYear'>1-21</span>)<br />
+             Version 2026.02-01</i>
+     (<span class='BibYear'>2-12</span>)<br />
     (<span class='BibNote'>GAP package</span>),
     <span class='BibHowpublished'><a href="https://homalg-project.github.io/pkg/GradientBasedLearningForCAP">https://homalg-project.github.io/pkg/GradientBasedLearningForCAP</a></span>.
     </p>
@@ -71,9 +71,9 @@ bibtex: |
       author =           {Saleh, K.},
       title =            {{GradientBasedLearningForCAP},     {Gradient     Based
                           Learning     via     Category    Theory},    {V}ersion
-                          2026.01\texttt{\symbol{45}}02},
+                          2026.02\texttt{\symbol{45}}01},
       month =            {6\texttt{\symbol{45}}},
-      year =             {1\texttt{\symbol{45}}21},
+      year =             {2\texttt{\symbol{45}}12},
       note =             {GAP package},
       howpublished =     {\href
                           {https://homalg-project.github.io/pkg/GradientBasedLearningForCAP}
@@ -81,6 +81,6 @@ bibtex: |
                           {}{}{}\texttt{pkg/}\discretionary
                           {}{}{}\texttt{GradientBasedLearningForCAP}}},
       keywords =         {Explore Categorical Machine Learning},
-      printedkey =       {Sal21}
+      printedkey =       {Sal12}
     }
 

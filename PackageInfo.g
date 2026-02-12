@@ -10,8 +10,8 @@ SetPackageInfo( rec(
 
 PackageName := "GradientBasedLearningForCAP",
 Subtitle := "Gradient Based Learning via Category Theory",
-Version := "2026.01-02",
-Date := "2026-01-21",
+Version := "2026.02-01",
+Date := "2026-02-12",
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -70,7 +70,7 @@ Dependencies := rec(
   GAP := ">= 4.13.0",
   NeededOtherPackages := [
                    [ "GAPDoc", ">= 1.5" ],
-                   [ "CAP", ">= 2024.09-12" ],
+                   [ "CAP", ">= 2026.02-01" ],
                    [ "MonoidalCategories", ">= 2024.04-01" ],
                    [ "CartesianCategories", ">= 2024.04-01" ],
                    [ "ToolsForCategoricalTowers", ">= 2024.06-02" ],
