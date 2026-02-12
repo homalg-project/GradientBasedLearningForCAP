@@ -54,6 +54,7 @@
 #! * <Ref BookName="CAP" Func="IsEqualForObjects" Label="for Is" />
 #! * <Ref BookName="CAP" Func="IsEqualToIdentityMorphism" Label="for Is" />
 #! * <Ref BookName="CAP" Func="IsEqualToZeroMorphism" Label="for Is" />
+#! * <Ref BookName="CAP" Func="IsHomSetInhabited" Label="for Is" />
 #! * <Ref BookName="CAP" Func="IsIdempotent" Label="for Is" />
 #! * <Ref BookName="CAP" Func="IsOne" Label="for Is" />
 #! * <Ref BookName="CAP" Func="IsTerminal" Label="for Is" />
