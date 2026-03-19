@@ -44,11 +44,11 @@ To obtain current versions of all dependencies, `git clone` (or `git pull` to up
 <!-- END FOOTER -->
 
 ### Running the Package with Docker
-To save time on installation, you can use a pre-built Docker image to run the package:
+You can also use a pre-built Docker image to run the package:
 ```bash
 docker run -it ghcr.io/kamalsaleh/gradient-based-learning-for-cap-docker:latest
 ```
-This will install the computer algebra system Gap and all other dependencies in an isolated container environment.
+This will install the computer algebra system GAP and all other dependencies in an isolated container environment.
 
 ### Introduction
 This package is an implementation of the ideas presented in the paper [Deep Learning with Parametric Lenses](https://arxiv.org/abs/2404.00408) using the categorical programming language offered by the [CAP](https://github.com/homalg-project/CAP_project) project. The following is a brief overveiw of the operations offered by this repository.
