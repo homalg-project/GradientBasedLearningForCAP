@@ -375,9 +375,6 @@
 <li><p><code class="func">LeftUnitorWithGivenTensorProduct</code> (<a href="https://homalg-project.github.io/CAP_project/MonoidalCategories/doc/chap1.html#X7ED284DF7BA21774"><span class="RefLink">MonoidalCategories: LeftUnitorWithGivenTensorProduct for IsCapCategoryObject, IsCapCategoryObject</span></a>)</p>
 
 </li>
-<li><p><code class="func">LinearCombinationOfMorphisms</code> (<a href="https://homalg-project.github.io/CAP_project/CAP/doc/chap3.html#X7C101B5C7AC9089C"><span class="RefLink">CAP: LinearCombinationOfMorphisms for IsCapCategoryObject, IsList, IsList, IsCapCategoryObject</span></a>)</p>
-
-</li>
 <li><p><code class="func">MorphismBetweenDirectProducts</code> (<a href="https://homalg-project.github.io/CategoricalTowers/ToolsForCategoricalTowers/doc/chap2.html#X78C812697D083544"><span class="RefLink">ToolsForCategoricalTowers: MorphismBetweenDirectProducts for IsList, IsList, IsList</span></a>)</p>
 
 </li>
@@ -393,7 +390,7 @@
 <li><p><code class="func">MultiplicationForMorphisms</code> (<a href="https://homalg-project.github.io/GradientBasedLearningForCAP/doc/chap9.html#X870E0703869AA672"><span class="RefLink">GradientBasedLearningForCAP: MultiplicationForMorphisms for IsCapCategoryMorphism, IsCapCategoryMorphism</span></a>)</p>
 
 </li>
-<li><p><code class="func">MultiplyWithElementOfCommutativeRingForMorphisms</code> (<a href="https://homalg-project.github.io/CAP_project/CAP/doc/chap3.html#X8187CAF17EB5D6D0"><span class="RefLink">CAP: MultiplyWithElementOfCommutativeRingForMorphisms for IsRingElement, IsCapCategoryMorphism</span></a>)</p>
+<li><p><code class="func">MultiplyWithElementOfCommutativeSemiringForMorphisms</code> (<a href="https://homalg-project.github.io/CAP_project/CAP/doc/chap3.html#X8074C0A882460E8F"><span class="RefLink">CAP: MultiplyWithElementOfCommutativeSemiringForMorphisms for IsSemiringElement, IsCapCategoryMorphism</span></a>)</p>
 
 </li>
 <li><p><code class="func">ObjectConstructor</code> (<a href="https://homalg-project.github.io/CAP_project/CAP/doc/chap2.html#X825D050A8674D377"><span class="RefLink">CAP: ObjectConstructor for IsCapCategory, IsObject</span></a>)</p>
@@ -519,10 +516,10 @@ SkeletalSmoothMaps
 <span class="GAPprompt">gap&gt;</span> <span class="GAPinput">Display( Smooth );</span>
 A CAP category with name SkeletalSmoothMaps:
 
-49 primitive operations were used to derive 93 operations for this category wh\
+49 primitive operations were used to derive 92 operations for this category wh\
 ich algorithmically
+* IsLinearCategoryOverCommutativeSemiring
 * IsCartesianCategory
-* IsLinearCategoryOverCommutativeRing
 * IsSymmetricMonoidalCategory
 and furthermore mathematically
 * IsStrictMonoidalCategory
@@ -889,7 +886,7 @@ SkeletalSmoothMaps
 
 <h5>4.7-1 IsSkeletalCategoryOfSmoothMaps</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSkeletalCategoryOfSmoothMaps</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsSkeletalCategoryOfSmoothMaps</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
 
 <p>The <strong class="pkg">GAP</strong> category of a category of skeletal smooth maps.</p>
@@ -898,7 +895,7 @@ SkeletalSmoothMaps
 
 <h5>4.7-2 IsObjectInSkeletalCategoryOfSmoothMaps</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsObjectInSkeletalCategoryOfSmoothMaps</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsObjectInSkeletalCategoryOfSmoothMaps</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
 
 <p>The <strong class="pkg">GAP</strong> category of objects in a category of skeletal smooth maps.</p>
@@ -907,7 +904,7 @@ SkeletalSmoothMaps
 
 <h5>4.7-3 IsMorphismInSkeletalCategoryOfSmoothMaps</h5>
 
-<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMorphismInSkeletalCategoryOfSmoothMaps</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;filter&nbsp;)</td></tr></table></div>
+<div class="func"><table class="func" width="100%"><tr><td class="tdleft"><code class="func">&#8227; IsMorphismInSkeletalCategoryOfSmoothMaps</code>( <var class="Arg">arg</var> )</td><td class="tdright">(&nbsp;category&nbsp;)</td></tr></table></div>
 <p>Returns: <code class="keyw">true</code> or <code class="keyw">false</code></p>
 
 <p>The <strong class="pkg">GAP</strong> category of morphisms in a category of skeletal smooth maps.</p>

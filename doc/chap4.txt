@@ -316,9 +316,6 @@
         LeftUnitorWithGivenTensorProduct        for       IsCapCategoryObject,
         IsCapCategoryObject[114X)[133X
   
-  [30X    [33X[0;6Y[2XLinearCombinationOfMorphisms[102X  ([14XCAP:  LinearCombinationOfMorphisms  for
-        IsCapCategoryObject, IsList, IsList, IsCapCategoryObject[114X)[133X
-  
   [30X    [33X[0;6Y[2XMorphismBetweenDirectProducts[102X              ([14XToolsForCategoricalTowers:
         MorphismBetweenDirectProducts for IsList, IsList, IsList[114X)[133X
   
@@ -336,9 +333,9 @@
         MultiplicationForMorphisms          for         IsCapCategoryMorphism,
         IsCapCategoryMorphism[114X)[133X
   
-  [30X    [33X[0;6Y[2XMultiplyWithElementOfCommutativeRingForMorphisms[102X                 ([14XCAP:
-        MultiplyWithElementOfCommutativeRingForMorphisms   for  IsRingElement,
-        IsCapCategoryMorphism[114X)[133X
+  [30X    [33X[0;6Y[2XMultiplyWithElementOfCommutativeSemiringForMorphisms[102X             ([14XCAP:
+        MultiplyWithElementOfCommutativeSemiringForMorphisms               for
+        IsSemiringElement, IsCapCategoryMorphism[114X)[133X
   
   [30X    [33X[0;6Y[2XObjectConstructor[102X ([14XCAP: ObjectConstructor for IsCapCategory, IsObject[114X)[133X
   
@@ -466,10 +463,10 @@
     [4X[25Xgap>[125X [27XDisplay( Smooth );[127X[104X
     [4X[28XA CAP category with name SkeletalSmoothMaps:[128X[104X
     [4X[28X[128X[104X
-    [4X[28X49 primitive operations were used to derive 93 operations for this category wh\[128X[104X
+    [4X[28X49 primitive operations were used to derive 92 operations for this category wh\[128X[104X
     [4X[28Xich algorithmically[128X[104X
+    [4X[28X* IsLinearCategoryOverCommutativeSemiring[128X[104X
     [4X[28X* IsCartesianCategory[128X[104X
-    [4X[28X* IsLinearCategoryOverCommutativeRing[128X[104X
     [4X[28X* IsSymmetricMonoidalCategory[128X[104X
     [4X[28Xand furthermore mathematically[128X[104X
     [4X[28X* IsStrictMonoidalCategory[128X[104X
@@ -833,21 +830,21 @@
   
   [1X4.7-1 IsSkeletalCategoryOfSmoothMaps[101X
   
-  [33X[1;0Y[29X[2XIsSkeletalCategoryOfSmoothMaps[102X( [3Xarg[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsSkeletalCategoryOfSmoothMaps[102X( [3Xarg[103X ) [32X Category[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
   [33X[0;0YThe [5XGAP[105X category of a category of skeletal smooth maps.[133X
   
   [1X4.7-2 IsObjectInSkeletalCategoryOfSmoothMaps[101X
   
-  [33X[1;0Y[29X[2XIsObjectInSkeletalCategoryOfSmoothMaps[102X( [3Xarg[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsObjectInSkeletalCategoryOfSmoothMaps[102X( [3Xarg[103X ) [32X Category[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
   [33X[0;0YThe [5XGAP[105X category of objects in a category of skeletal smooth maps.[133X
   
   [1X4.7-3 IsMorphismInSkeletalCategoryOfSmoothMaps[101X
   
-  [33X[1;0Y[29X[2XIsMorphismInSkeletalCategoryOfSmoothMaps[102X( [3Xarg[103X ) [32X filter[133X
+  [33X[1;0Y[29X[2XIsMorphismInSkeletalCategoryOfSmoothMaps[102X( [3Xarg[103X ) [32X Category[133X
   [6XReturns:[106X  [33X[0;10Y[9Xtrue[109X or [9Xfalse[109X[133X
   
   [33X[0;0YThe [5XGAP[105X category of morphisms in a category of skeletal smooth maps.[133X

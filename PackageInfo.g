@@ -10,8 +10,8 @@ SetPackageInfo( rec(
 
 PackageName := "GradientBasedLearningForCAP",
 Subtitle := "Gradient Based Learning via Category Theory",
-Version := "2026.02-01",
-Date := "2026-02-12",
+Version := "2026.04-01",
+Date := "2026-04-13",
 License := "GPL-2.0-or-later",
 
 Persons := [
@@ -70,13 +70,13 @@ Dependencies := rec(
   GAP := ">= 4.13.0",
   NeededOtherPackages := [
                    [ "GAPDoc", ">= 1.5" ],
-                   [ "CAP", ">= 2026.02-01" ],
-                   [ "MonoidalCategories", ">= 2024.04-01" ],
-                   [ "CartesianCategories", ">= 2024.04-01" ],
-                   [ "ToolsForCategoricalTowers", ">= 2024.06-02" ],
+                   [ "CAP", ">= 2026.04-02" ],
+                   [ "MonoidalCategories", ">= 2025.12-01" ],
+                   [ "CartesianCategories", ">= 2025.12-01" ],
+                   [ "ToolsForCategoricalTowers", ">= 2026.04-01" ],
                    ],
   SuggestedOtherPackages := [
-                   [ "ToolsForHigherHomologicalAlgebra", ">= 2023.01-01" ], # for 'Show'ing latex-strings
+                   [ "ToolsForHigherHomologicalAlgebra", ">= 2026.04-01" ], # for 'Show'ing latex-strings
                    ],
   ExternalConditions := [ ],
 ),
@@ -87,6 +87,14 @@ AvailabilityTest := function()
 
 TestFile := "tst/testall.g",
 
-Keywords := [ "Explore Categorical Machine Learning" ],
+Keywords := [ "Skeletal Category of Smooth Maps",
+               "Gradient Based Learning",
+               "Category of Parameterized Smooth Maps",
+               "Category of Lenses",
+               "Neural Networks",
+               "Backpropagation",
+               "Category Theory",
+               "Applied Category Theory",
+                ],
 
 ));
