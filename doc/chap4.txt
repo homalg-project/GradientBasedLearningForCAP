@@ -245,6 +245,16 @@
         DirectProductFunctorialWithGivenDirectProducts                     for
         IsCapCategoryObject, IsList, IsList, IsList, IsCapCategoryObject[114X)[133X
   
+  [30X    [33X[0;6Y[2XDirectProductOnMorphismAndObject[102X                 ([14XCartesianCategories:
+        DirectProductOnMorphismAndObject       for      IsCapCategoryMorphism,
+        IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XDirectProductOnMorphismAndObjectWithGivenDirectProducts[102X
+        ([14XCartesianCategories:
+        DirectProductOnMorphismAndObjectWithGivenDirectProducts            for
+        IsCapCategoryObject,    IsCapCategoryMorphism,    IsCapCategoryObject,
+        IsCapCategoryObject[114X)[133X
+  
   [30X    [33X[0;6Y[2XDirectProductOnMorphisms[102X                         ([14XCartesianCategories:
         DirectProductOnMorphisms           for          IsCapCategoryMorphism,
         IsCapCategoryMorphism[114X)[133X
@@ -252,6 +262,16 @@
   [30X    [33X[0;6Y[2XDirectProductOnMorphismsWithGivenDirectProducts[102X  ([14XCartesianCategories:
         DirectProductOnMorphismsWithGivenDirectProducts                    for
         IsCapCategoryObject,   IsCapCategoryMorphism,   IsCapCategoryMorphism,
+        IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XDirectProductOnObjectAndMorphism[102X                 ([14XCartesianCategories:
+        DirectProductOnObjectAndMorphism        for       IsCapCategoryObject,
+        IsCapCategoryMorphism[114X)[133X
+  
+  [30X    [33X[0;6Y[2XDirectProductOnObjectAndMorphismWithGivenDirectProducts[102X
+        ([14XCartesianCategories:
+        DirectProductOnObjectAndMorphismWithGivenDirectProducts            for
+        IsCapCategoryObject,    IsCapCategoryObject,    IsCapCategoryMorphism,
         IsCapCategoryObject[114X)[133X
   
   [30X    [33X[0;6Y[2XIdentityMorphism[102X ([14XCAP: IdentityMorphism for IsCapCategoryObject[114X)[133X
@@ -393,12 +413,32 @@
   [30X    [33X[0;6Y[2XSumOfMorphisms[102X  ([14XCAP:  SumOfMorphisms for IsCapCategoryObject, IsList,
         IsCapCategoryObject[114X)[133X
   
+  [30X    [33X[0;6Y[2XTensorProductOnMorphismAndObject[102X                  ([14XMonoidalCategories:
+        TensorProductOnMorphismAndObject       for      IsCapCategoryMorphism,
+        IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XTensorProductOnMorphismAndObjectWithGivenTensorProducts[102X
+        ([14XMonoidalCategories:
+        TensorProductOnMorphismAndObjectWithGivenTensorProducts            for
+        IsCapCategoryObject,    IsCapCategoryMorphism,    IsCapCategoryObject,
+        IsCapCategoryObject[114X)[133X
+  
   [30X    [33X[0;6Y[2XTensorProductOnMorphisms[102X ([14XMonoidalCategories: TensorProductOnMorphisms
         for IsCapCategoryMorphism, IsCapCategoryMorphism[114X)[133X
   
   [30X    [33X[0;6Y[2XTensorProductOnMorphismsWithGivenTensorProducts[102X   ([14XMonoidalCategories:
         TensorProductOnMorphismsWithGivenTensorProducts                    for
         IsCapCategoryObject,   IsCapCategoryMorphism,   IsCapCategoryMorphism,
+        IsCapCategoryObject[114X)[133X
+  
+  [30X    [33X[0;6Y[2XTensorProductOnObjectAndMorphism[102X                  ([14XMonoidalCategories:
+        TensorProductOnObjectAndMorphism        for       IsCapCategoryObject,
+        IsCapCategoryMorphism[114X)[133X
+  
+  [30X    [33X[0;6Y[2XTensorProductOnObjectAndMorphismWithGivenTensorProducts[102X
+        ([14XMonoidalCategories:
+        TensorProductOnObjectAndMorphismWithGivenTensorProducts            for
+        IsCapCategoryObject,    IsCapCategoryObject,    IsCapCategoryMorphism,
         IsCapCategoryObject[114X)[133X
   
   [30X    [33X[0;6Y[2XTensorProductOnObjects[102X ([14XMonoidalCategories: TensorProductOnObjects for
@@ -463,7 +503,7 @@
     [4X[25Xgap>[125X [27XDisplay( Smooth );[127X[104X
     [4X[28XA CAP category with name SkeletalSmoothMaps:[128X[104X
     [4X[28X[128X[104X
-    [4X[28X49 primitive operations were used to derive 92 operations for this category wh\[128X[104X
+    [4X[28X49 primitive operations were used to derive 100 operations for this category wh\[128X[104X
     [4X[28Xich algorithmically[128X[104X
     [4X[28X* IsLinearCategoryOverCommutativeSemiring[128X[104X
     [4X[28X* IsCartesianCategory[128X[104X
