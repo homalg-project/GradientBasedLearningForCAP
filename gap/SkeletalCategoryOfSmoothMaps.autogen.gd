@@ -44,8 +44,12 @@
 #! * <Ref BookName="CAP" Func="DirectProduct" Label="" />
 #! * <Ref BookName="CAP" Func="DirectProductFunctorial" Label="for Is" />
 #! * <Ref BookName="CAP" Func="DirectProductFunctorialWithGivenDirectProducts" Label="for Is" />
+#! * <Ref BookName="CartesianCategories" Func="DirectProductOnMorphismAndObject" Label="for Is" />
+#! * <Ref BookName="CartesianCategories" Func="DirectProductOnMorphismAndObjectWithGivenDirectProducts" Label="for Is" />
 #! * <Ref BookName="CartesianCategories" Func="DirectProductOnMorphisms" Label="for Is" />
 #! * <Ref BookName="CartesianCategories" Func="DirectProductOnMorphismsWithGivenDirectProducts" Label="for Is" />
+#! * <Ref BookName="CartesianCategories" Func="DirectProductOnObjectAndMorphism" Label="for Is" />
+#! * <Ref BookName="CartesianCategories" Func="DirectProductOnObjectAndMorphismWithGivenDirectProducts" Label="for Is" />
 #! * <Ref BookName="CAP" Func="IdentityMorphism" Label="for Is" />
 #! * <Ref BookName="CAP" Func="IsCongruentForMorphisms" Label="for Is" />
 #! * <Ref BookName="CAP" Func="IsEndomorphism" Label="for Is" />
@@ -92,8 +96,12 @@
 #! * <Ref BookName="CAP" Func="SimplifyMorphism" Label="for Is" />
 #! * <Ref BookName="CAP" Func="SubtractionForMorphisms" Label="for Is" />
 #! * <Ref BookName="CAP" Func="SumOfMorphisms" Label="for Is" />
+#! * <Ref BookName="MonoidalCategories" Func="TensorProductOnMorphismAndObject" Label="for Is" />
+#! * <Ref BookName="MonoidalCategories" Func="TensorProductOnMorphismAndObjectWithGivenTensorProducts" Label="for Is" />
 #! * <Ref BookName="MonoidalCategories" Func="TensorProductOnMorphisms" Label="for Is" />
 #! * <Ref BookName="MonoidalCategories" Func="TensorProductOnMorphismsWithGivenTensorProducts" Label="for Is" />
+#! * <Ref BookName="MonoidalCategories" Func="TensorProductOnObjectAndMorphism" Label="for Is" />
+#! * <Ref BookName="MonoidalCategories" Func="TensorProductOnObjectAndMorphismWithGivenTensorProducts" Label="for Is" />
 #! * <Ref BookName="MonoidalCategories" Func="TensorProductOnObjects" Label="for Is" />
 #! * <Ref BookName="MonoidalCategories" Func="TensorUnit" Label="for Is" />
 #! * <Ref BookName="CAP" Func="TerminalObject" Label="for Is" />

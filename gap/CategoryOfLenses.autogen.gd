@@ -44,7 +44,11 @@
 #! * <Ref BookName="MonoidalCategories" Func="RightUnitorInverseWithGivenTensorProduct" Label="for Is" />
 #! * <Ref BookName="MonoidalCategories" Func="RightUnitorWithGivenTensorProduct" Label="for Is" />
 #! * <Ref BookName="CAP" Func="SimplifyMorphism" Label="for Is" />
+#! * <Ref BookName="MonoidalCategories" Func="TensorProductOnMorphismAndObject" Label="for Is" />
+#! * <Ref BookName="MonoidalCategories" Func="TensorProductOnMorphismAndObjectWithGivenTensorProducts" Label="for Is" />
 #! * <Ref BookName="MonoidalCategories" Func="TensorProductOnMorphisms" Label="for Is" />
 #! * <Ref BookName="MonoidalCategories" Func="TensorProductOnMorphismsWithGivenTensorProducts" Label="for Is" />
+#! * <Ref BookName="MonoidalCategories" Func="TensorProductOnObjectAndMorphism" Label="for Is" />
+#! * <Ref BookName="MonoidalCategories" Func="TensorProductOnObjectAndMorphismWithGivenTensorProducts" Label="for Is" />
 #! * <Ref BookName="MonoidalCategories" Func="TensorProductOnObjects" Label="for Is" />
 #! * <Ref BookName="MonoidalCategories" Func="TensorUnit" Label="for Is" />
