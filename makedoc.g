@@ -12,12 +12,7 @@ fi;
 AutoDoc( rec(
     autodoc := rec(
         files := [ "doc/Doc.autodoc" ],
-        scan_dirs := [ "doc", "gap", "examples", "examples/doc",
-                       "examples/NeuralNetwork_BinaryCrossEntropy", 
-                       "examples/NeuralNetwork_CrossEntropy",
-                       "examples/NeuralNetwork_QuadraticLoss",
-                       "examples/ComputingTheNextLocalMimima",
-                      ],
+        scan_dirs := [ "doc", "gap", "examples", "examples/doc" ],
     ),
     extract_examples := rec(
         units := "Single",
